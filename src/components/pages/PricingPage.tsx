@@ -76,7 +76,7 @@ export default function PricingPage({ settings, onNavigate }: PricingPageProps) 
   };
 
   return (
-    <div className="flex-1 bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors py-12 text-left">
+    <div className="faster-page faster-pricing flex-1 bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors py-12 text-left">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         
         {/* Title */}
