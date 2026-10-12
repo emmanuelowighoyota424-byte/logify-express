@@ -440,10 +440,80 @@ app.get("/api/alerts", ...adminOnly, asyncRoute(async (_req, res) => {
 }));
 
 app.patch("/api/settings", ...adminOnly, asyncRoute(async (req: AuthedRequest, res) => {
+  const body = req.body;
+  if (!body || typeof body !== "object" || Array.isArray(body)) {
+    return res.status(400).json({ error: "Settings must be sent as an object" });
+  }
+
   const current = await prisma.setting.findUnique({ where: { id: 1 } });
-  const next = { ...(current?.data as any ?? {}), ...(req.body ?? {}) };
+  const previous = current?.data && typeof current.data === "object" && !Array.isArray(current.data)
+    ? current.data as Record<string, any>
+    : {};
+  const next: Record<string, any> = { ...previous };
+  const stringLimits: Record<string, number> = {
+    companyName: 120,
+    contactEmail: 320,
+    contactPhone: 50,
+    faviconEmoji: 32,
+    trackerCustomNotes: 2000
+  };
+  const booleanKeys = [
+    "isSiteActive", "showCookieBanner", "enableLiveChat", "is2FAEnabled",
+    "enableHighContrastStatus", "trackerShowMap", "trackerShowThermalTag",
+    "trackerShowSmsAlerts", "trackerShowEmailAlerts", "trackerShowSimulation",
+    "trackerShowTelemetryDeck", "trackerShowRouteVector", "trackerShowShareButton",
+    "trackerShowEstimatedDelivery", "trackerShowChronologyLog"
+  ];
+  const allowedPresets = ["red-yellow", "slate", "emerald", "cosmic", "cyber"];
+
+  for (const [key, max] of Object.entries(stringLimits)) {
+    if (!Object.prototype.hasOwnProperty.call(body, key)) continue;
+    if (typeof body[key] !== "string" || body[key].trim().length > max) {
+      return res.status(400).json({ error: "Invalid setting: " + key });
+    }
+    next[key] = body[key].trim();
+  }
+
+  if (Object.prototype.hasOwnProperty.call(body, "contactEmail")) {
+    const email = next.contactEmail as string;
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return res.status(400).json({ error: "Invalid contact email address" });
+    }
+    next.contactEmail = email.toLowerCase();
+  }
+
+  for (const key of booleanKeys) {
+    if (!Object.prototype.hasOwnProperty.call(body, key)) continue;
+    if (typeof body[key] !== "boolean") return res.status(400).json({ error: "Invalid setting: " + key });
+    next[key] = body[key];
+  }
+
+  if (Object.prototype.hasOwnProperty.call(body, "trackerCustomBackgroundPreset")) {
+    if (!allowedPresets.includes(body.trackerCustomBackgroundPreset)) {
+      return res.status(400).json({ error: "Invalid tracking background preset" });
+    }
+    next.trackerCustomBackgroundPreset = body.trackerCustomBackgroundPreset;
+  }
+
+  if (Object.prototype.hasOwnProperty.call(body, "pricing")) {
+    const incoming = body.pricing;
+    if (!incoming || typeof incoming !== "object" || Array.isArray(incoming)) {
+      return res.status(400).json({ error: "Pricing must be an object" });
+    }
+    const pricing = { ...(previous.pricing ?? { basePrice: 15, pricePerKg: 3.5, pricePerKm: 0.8 }) };
+    for (const key of ["basePrice", "pricePerKg", "pricePerKm"] as const) {
+      if (!Object.prototype.hasOwnProperty.call(incoming, key)) continue;
+      const value = incoming[key];
+      if (typeof value !== "number" || !Number.isFinite(value) || value < 0 || value > 10000000) {
+        return res.status(400).json({ error: "Invalid pricing value: " + key });
+      }
+      pricing[key] = value;
+    }
+    next.pricing = pricing;
+  }
+
   await prisma.setting.upsert({ where: { id: 1 }, update: { data: next }, create: { id: 1, data: next } });
-  await audit(req.auth!.id, "UPDATE", "Setting", "1");
+  await audit(req.auth!.id, "UPDATE", "Setting", "1", { changedKeys: Object.keys(body) });
   res.json(next);
 }));
 
