@@ -1288,7 +1288,7 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
                       pickupAddress={shipment.pickupAddress}
                       deliveryAddress={shipment.deliveryAddress}
                       theme="dark"
-                    />}
+                    />
                   </div>
                 )}
 
