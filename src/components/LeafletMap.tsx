@@ -83,8 +83,8 @@ export default function LeafletMap({
 
     const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
     const primaryLayer = L.tileLayer(
-      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-      { maxZoom: 19, attribution, keepBuffer: 4, updateWhenIdle: false },
+      'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+      { maxZoom: 19, attribution, referrerPolicy: 'strict-origin-when-cross-origin', keepBuffer: 3, updateWhenIdle: true },
     );
     const fallbackLayer = L.tileLayer(
       'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
@@ -103,14 +103,14 @@ export default function LeafletMap({
     };
     primaryLayer.on('tileerror', () => {
       failedTiles += 1;
-      if (failedTiles >= 3 && loadedTiles === 0) switchToFallback();
+      if (failedTiles >= 3 && failedTiles >= loadedTiles) switchToFallback();
     });
     primaryLayer.on('tileload', () => { loadedTiles += 1; });
     primaryLayer.addTo(map);
     tileLayerRef.current = primaryLayer;
 
     const fallbackTimer = window.setTimeout(() => {
-      if (loadedTiles === 0) switchToFallback();
+      if (loadedTiles === 0 || (failedTiles >= 3 && failedTiles >= loadedTiles)) switchToFallback();
     }, 4500);
 
     return () => {
