@@ -25,6 +25,7 @@ export default function LeafletMap({
   const mapRef = useRef<L.Map | null>(null);
   const tileLayerRef = useRef<L.TileLayer | null>(null);
   const [autoCenter, setAutoCenter] = useState(true);
+  const [mapStyle, setMapStyle] = useState<'street' | 'satellite'>('street');
 
   const markersRef = useRef<{
     pickup?: L.Marker;
@@ -41,7 +42,7 @@ export default function LeafletMap({
       // Default center around USA center
       mapRef.current = L.map(mapContainerRef.current, {
         zoomControl: false,
-        attributionControl: false,
+        attributionControl: true,
       }).setView([37.8, -96], 4);
 
       // Add zoom control at bottom-right
@@ -62,23 +63,26 @@ export default function LeafletMap({
     };
   }, []);
 
-  // Update Tile Layer URL depending on Theme
+  // Street and satellite basemaps with visible provider attribution.
   useEffect(() => {
     const map = mapRef.current;
     if (!map) return;
 
-    const darkUrl = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
-    const lightUrl = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
-    const activeUrl = theme === 'dark' ? darkUrl : lightUrl;
+    const activeUrl = mapStyle === 'satellite'
+      ? 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
+      : theme === 'dark'
+        ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
+        : 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
+    const attribution = mapStyle === 'satellite'
+      ? 'Tiles &copy; Esri — Sources: Esri, Maxar, Earthstar Geographics, and the GIS User Community'
+      : '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
 
-    if (tileLayerRef.current) {
-      tileLayerRef.current.setUrl(activeUrl);
-    } else {
-      tileLayerRef.current = L.tileLayer(activeUrl, {
-        maxZoom: 19,
-      }).addTo(map);
-    }
-  }, [theme]);
+    if (tileLayerRef.current) map.removeLayer(tileLayerRef.current);
+    tileLayerRef.current = L.tileLayer(activeUrl, {
+      maxZoom: mapStyle === 'satellite' ? 19 : 20,
+      attribution,
+    }).addTo(map);
+  }, [theme, mapStyle]);
 
   // 2. Setup Static Routes & Markers
   useEffect(() => {
@@ -267,8 +271,14 @@ export default function LeafletMap({
         GPS SATELLITE FEED
       </div>
 
+      {/* Basemap selector */}
+      <div className="absolute top-4 right-4 z-[400] flex items-center gap-1 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 p-1 shadow-lg">
+        <button type="button" onClick={() => setMapStyle('street')} aria-pressed={mapStyle === 'street'} className={`rounded-lg px-3 py-2 text-[10px] font-bold uppercase tracking-wide transition-colors ${mapStyle === 'street' ? 'bg-amber-500 text-slate-950' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'}`}>Street</button>
+        <button type="button" onClick={() => setMapStyle('satellite')} aria-pressed={mapStyle === 'satellite'} className={`rounded-lg px-3 py-2 text-[10px] font-bold uppercase tracking-wide transition-colors ${mapStyle === 'satellite' ? 'bg-amber-500 text-slate-950' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'}`}>Satellite</button>
+      </div>
+
       {/* Map Interactive Overlay - Top Right Controls */}
-      <div className="absolute top-4 right-4 z-[400] flex items-center gap-2">
+      <div className="absolute top-16 right-4 z-[400] flex items-center gap-2">
         <button
           onClick={() => setAutoCenter(!autoCenter)}
           className={`px-3 py-1.5 rounded-xl text-[10px] font-mono font-bold uppercase transition-all flex items-center gap-1 border shadow-md cursor-pointer ${
