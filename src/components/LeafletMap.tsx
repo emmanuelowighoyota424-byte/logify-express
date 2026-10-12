@@ -99,22 +99,40 @@ export default function LeafletMap({
       streetLayer.addTo(map);
     };
 
-    // CARTO supports a public browser key for basemap requests. Keep it in a
-    // VITE_ variable (never put private/server secrets in client-side env vars).
-    // The key is optional so local previews still work where anonymous tiles are allowed.
+    // Prefer CARTO's dark basemap when a key is configured; otherwise use
+    // OpenStreetMap immediately so missing/blocked CARTO tiles never leave a blank map.
     const cartoApiKey = import.meta.env.VITE_CARTO_API_KEY?.trim();
     const cartoTileUrl = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
-    const darkBlueLayer = L.tileLayer(
-      cartoApiKey ? `${cartoTileUrl}?api_key=${encodeURIComponent(cartoApiKey)}` : cartoTileUrl,
-      {
-        subdomains: 'abcd',
-        maxZoom: 20,
-        attribution: '&copy; OpenStreetMap contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        crossOrigin: true,
-        keepBuffer: 3,
-        updateWhenIdle: false,
-      },
+    const streetLayer = L.tileLayer(
+      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      { maxZoom: 19, attribution: '&copy; OpenStreetMap contributors', crossOrigin: true, keepBuffer: 3, updateWhenIdle: false },
     );
+    const darkBlueLayer = cartoApiKey
+      ? L.tileLayer(cartoTileUrl + '?api_key=' + encodeURIComponent(cartoApiKey), {
+          subdomains: 'abcd', maxZoom: 20,
+          attribution: '&copy; OpenStreetMap contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+          crossOrigin: true, keepBuffer: 3, updateWhenIdle: false,
+        })
+      : null;
+
+    let failedTiles = 0;
+    if (darkBlueLayer) {
+      darkBlueLayer.on('tileerror', () => {
+        failedTiles += 1;
+        if (failedTiles >= 3) {
+          if (map.hasLayer(darkBlueLayer)) map.removeLayer(darkBlueLayer);
+          if (!map.hasLayer(streetLayer)) streetLayer.addTo(map);
+        }
+      });
+      darkBlueLayer.addTo(map);
+      const fallbackTimer = window.setTimeout(() => {
+        if (darkBlueLayer.isLoading() && !map.hasLayer(streetLayer)) streetLayer.addTo(map);
+      }, 3500);
+      tileLayerRef.current = darkBlueLayer;
+      return () => { window.clearTimeout(fallbackTimer); darkBlueLayer.off(); };
+    }
+    streetLayer.addTo(map);
+    tileLayerRef.current = streetLayer;
 
     let failedTiles = 0;
     darkBlueLayer.on('tileerror', () => {
@@ -371,7 +389,7 @@ export default function LeafletMap({
           </span>
           <span className="min-w-0">
             <span className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">Shipment tracking</span>
-            <span className="mt-0.5 block truncate text-sm font-semibold">Dark blue live map</span>
+            <span className="mt-0.5 block truncate text-sm font-semibold">Shipment street map</span>
           </span>
         </div>
         <div className="pointer-events-auto flex shrink-0 items-center gap-2 rounded-2xl border border-white/15 bg-slate-950/85 p-1.5 text-white shadow-xl backdrop-blur-xl">
