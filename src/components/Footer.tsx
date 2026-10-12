@@ -1,5 +1,5 @@
 import React from 'react';
-import { Truck, Mail, Phone, MapPin, Linkedin, Instagram, Facebook, Lock } from 'lucide-react';
+import { Truck, Mail, Phone, Linkedin, Instagram, Facebook } from 'lucide-react';
 import { Settings } from '../types.js';
 
 interface FooterProps {
@@ -8,12 +8,12 @@ interface FooterProps {
 }
 
 export default function Footer({ onNavigate, settings }: FooterProps) {
-  const companyName = settings?.companyName || 'Logify';
-  const contactPhone = settings?.contactPhone || '+1 (800) 555-LOGI';
-  const contactEmail = settings?.contactEmail || 'support@logify.com';
+  const companyName = settings?.companyName || 'Logify Express';
+  const contactPhone = settings?.contactPhone || '';
+  const contactEmail = settings?.contactEmail || '';
 
   return (
-    <footer className="bg-[#111111] text-slate-400 border-t border-slate-900 transition-colors duration-300" id="global-footer">
+    <footer className="bg-[#09264a] text-slate-300 border-t border-white/10 transition-colors duration-300" id="global-footer">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12 text-left">
           
@@ -24,7 +24,7 @@ export default function Footer({ onNavigate, settings }: FooterProps) {
               className="flex items-center gap-2 cursor-pointer group"
               id="footer-logo-container"
             >
-              <div className="w-9 h-9 rounded-xl bg-[#FFCC00] flex items-center justify-center text-[#D40511] font-black shadow-md">
+              <div className="w-9 h-9 rounded-xl bg-[#1769e8] flex items-center justify-center text-white font-black shadow-md">
                 <Truck size={18} className="fill-current" />
               </div>
               <span className="font-sans font-black text-lg tracking-tight text-white uppercase">
@@ -35,7 +35,7 @@ export default function Footer({ onNavigate, settings }: FooterProps) {
               {companyName} is a next-generation smart supply chain solution, delivering freight, documents, express cargo, and digital order tracking globally with extreme precision.
             </p>
             <div className="flex gap-3 text-slate-500">
-              <a href="#" className="hover:text-[#FFCC00] transition-colors" aria-label="Facebook"><Facebook size={16} /></a>
+              <a href="#" className="hover:text-white transition-colors" aria-label="Facebook"><Facebook size={16} /></a>
               <a href="#" className="hover:text-[#FFCC00] transition-colors" aria-label="LinkedIn"><Linkedin size={16} /></a>
               <a href="#" className="hover:text-[#FFCC00] transition-colors" aria-label="Instagram"><Instagram size={16} /></a>
             </div>
@@ -43,7 +43,7 @@ export default function Footer({ onNavigate, settings }: FooterProps) {
 
           {/* Column 2: Quick Links */}
           <div className="space-y-3 col-span-1">
-            <h4 className="text-white text-xs font-black tracking-wider uppercase font-mono border-l-2 border-[#D40511] pl-2">Quick Links</h4>
+            <h4 className="text-white text-xs font-black tracking-wider uppercase font-mono border-l-2 border-[#f28a32] pl-2">Quick Links</h4>
             <ul className="space-y-2 text-xs text-slate-500">
               <li>
                 <button onClick={() => onNavigate('contact')} className="hover:text-[#FFCC00] transition-colors cursor-pointer">
@@ -90,8 +90,6 @@ export default function Footer({ onNavigate, settings }: FooterProps) {
             <h4 className="text-white text-xs font-black tracking-wider uppercase font-mono border-l-2 border-[#D40511] pl-2">Company Information</h4>
             <div className="space-y-2.5 text-slate-500">
               <div className="flex gap-2 items-start">
-                <MapPin size={14} className="text-[#D40511] shrink-0 mt-0.5" />
-                <span>100 Broadway, New York, NY 10005, USA</span>
               </div>
               <div className="flex gap-2 items-center">
                 <Phone size={14} className="text-[#D40511] shrink-0" />
@@ -105,7 +103,7 @@ export default function Footer({ onNavigate, settings }: FooterProps) {
           </div>
         </div>
 
-        <div className="border-t border-slate-900 mt-12 pt-8 flex flex-col md:flex-row md:justify-between text-[11px] text-slate-600 gap-4 text-left md:text-center">
+        <div className="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row md:justify-between text-[11px] text-slate-600 gap-4 text-left md:text-center">
           <p>© 2026 {companyName} Ltd. All rights reserved.</p>
           <div className="flex gap-4">
             <a href="#" className="hover:text-[#FFCC00] transition-colors">Security Guidelines</a>
