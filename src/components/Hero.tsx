@@ -150,18 +150,13 @@ export default function Hero({ onNavigate, onSetTrackId, settings }: HeroProps) 
       {/* 2. FULL-WIDTH VISUAL BANNER */}
       <section className="hero-premium__visual w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10" id="visual-banner-section">
         <div className="relative h-[220px] sm:h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-lg border border-slate-200 dark:border-slate-800">
-          {settings?.publicPageImages?.find((item) => item.page === 'home')?.imageUrl ? (
-            <img
-              src={settings.publicPageImages.find((item) => item.page === 'home')!.imageUrl}
-              alt={settings.publicPageImages.find((item) => item.page === 'home')!.alt || 'Logify Express logistics operations'}
-              className="w-full h-full object-cover"
-              loading="lazy"
-            />
-          ) : (
-            <div className="w-full h-full bg-[radial-gradient(ellipse_at_70%_20%,rgba(47,131,255,.5),transparent_35%),linear-gradient(125deg,#061b35,#0b3970_55%,#041943)]" aria-hidden="true">
-              <div className="absolute inset-0 opacity-20 bg-[linear-gradient(135deg,transparent_49.8%,rgba(255,255,255,.18)_50%,transparent_50.2%)] [background-size:44px_44px]" />
-            </div>
-          )}
+          <img
+            src={settings?.publicPageImages?.find((item) => item.page === 'home')?.imageUrl || oceanCargoImage}
+            onError={(event) => { event.currentTarget.onerror = null; event.currentTarget.src = oceanCargoImage; }}
+            alt={settings?.publicPageImages?.find((item) => item.page === 'home')?.alt || 'Ocean cargo vessel and global freight operations'}
+            className="absolute inset-0 w-full h-full object-cover"
+            loading="lazy"
+          />
           {/* Stark overlay to add luxury feel and high contrast caption */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent flex flex-col justify-end p-6 sm:p-10 text-left">
             <span className="text-[9px] font-mono font-black text-[#1769e8] uppercase tracking-widest mb-1 block">
