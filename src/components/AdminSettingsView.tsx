@@ -115,7 +115,7 @@ export default function AdminSettingsView({
       };
 
       const response = await fetch('/api/settings', {
-        method: 'PUT',
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -205,7 +205,7 @@ export default function AdminSettingsView({
   const triggerSettingsUpdate = async (updated: Settings) => {
     try {
       await fetch('/api/settings', {
-        method: 'PUT',
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -277,7 +277,8 @@ export default function AdminSettingsView({
                     type="email"
                     required
                     value={contactEmail}
-                    onChange={(e) => setContactEmail(e.target.value)}
+                    onInvalid={(e) => e.currentTarget.setCustomValidity('Enter a valid support email address, such as support@yourdomain.com.')}
+                    onChange={(e) => { e.currentTarget.setCustomValidity(''); setContactEmail(e.target.value); }}
                     placeholder="support@logify.com"
                     className="w-full bg-neutral-950/80 border border-neutral-800 hover:border-neutral-700 focus:border-[#ff7a1a] rounded-xl p-3 outline-none text-white transition-colors"
                   />
