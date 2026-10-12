@@ -77,11 +77,39 @@ export default function LeafletMap({
       ? 'Tiles &copy; Esri — Sources: Esri, Maxar, Earthstar Geographics, and the GIS User Community'
       : '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
 
-    if (tileLayerRef.current) map.removeLayer(tileLayerRef.current);
-    tileLayerRef.current = L.tileLayer(activeUrl, {
+    if (tileLayerRef.current) {
+      map.removeLayer(tileLayerRef.current);
+      tileLayerRef.current = null;
+    }
+
+    const layer = L.tileLayer(activeUrl, {
       maxZoom: mapStyle === 'satellite' ? 19 : 20,
       attribution,
-    }).addTo(map);
+      subdomains: 'abcd',
+      crossOrigin: true,
+      keepBuffer: 2,
+    });
+
+    // If CARTO street tiles are blocked or unavailable, switch to OpenStreetMap
+    // rather than leaving the user with an empty street basemap.
+    let usingFallback = false;
+    layer.on('tileerror', () => {
+      if (mapStyle !== 'street' || usingFallback) return;
+      usingFallback = true;
+      map.removeLayer(layer);
+      const fallback = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        subdomains: 'abc',
+        crossOrigin: true,
+        keepBuffer: 2,
+      });
+      tileLayerRef.current = fallback;
+      fallback.addTo(map);
+    });
+
+    tileLayerRef.current = layer;
+    layer.addTo(map);
   }, [theme, mapStyle]);
 
   // 2. Setup Static Routes & Markers
