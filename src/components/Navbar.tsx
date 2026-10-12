@@ -34,7 +34,7 @@ export default function Navbar({ currentView, onNavigate, user, onLogout, theme,
           <div className="flex items-center gap-4 text-slate-400"><span>GLOBAL FREIGHT NETWORK</span><span>24/7 CONTROL TOWER</span></div>
         </div>
       </div>
-      <nav className="sticky top-0 z-45 w-full border-b border-slate-200/80 dark:border-slate-800/80 bg-white/95 dark:bg-[#071521]/95 backdrop-blur-xl transition-colors duration-300">
+      <nav className="premium-navbar sticky top-0 z-45 w-full border-b border-slate-200/80 dark:border-slate-800/80 bg-white/95 dark:bg-[#071521]/95 backdrop-blur-xl transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-[68px]">
             <button onClick={() => navigate('home')} className="flex items-center gap-3 cursor-pointer group" aria-label={`${companyName} home`}>
@@ -44,7 +44,7 @@ export default function Navbar({ currentView, onNavigate, user, onLogout, theme,
               </span>
               <span className="text-left leading-none">
                 <span className="block font-display font-bold text-xl tracking-tight text-[#0b1f33] dark:text-white">Logify</span>
-                <span className="block mt-1 text-[8px] font-mono font-bold tracking-[.22em] text-slate-400 uppercase">Logistics Network</span>
+                <span className="block mt-1 text-[8px] font-mono font-bold tracking-[.22em] text-slate-400 uppercase">Express logistics</span>
               </span>
             </button>
 
