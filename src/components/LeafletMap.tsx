@@ -52,17 +52,26 @@ export default function LeafletMap({
 
     const map = mapRef.current;
 
-    // Force tile recalculation in container
-    const resizeTimer = setTimeout(() => {
-      map.invalidateSize();
-    }, 150);
+    // Recalculate Leaflet dimensions after mobile layout changes, browser
+    // chrome resizing, orientation changes, and delayed font/layout rendering.
+    const resizeTimers = [100, 350, 800].map((delay) =>
+      window.setTimeout(() => map.invalidateSize({ pan: false }), delay),
+    );
+    const container = mapContainerRef.current;
+    const observer = container && typeof ResizeObserver !== 'undefined'
+      ? new ResizeObserver(() => map.invalidateSize({ pan: false, debounceMoveend: true }))
+      : null;
+    if (container && observer) observer.observe(container);
+    window.addEventListener('orientationchange', () => map.invalidateSize({ pan: false }));
 
     return () => {
-      clearTimeout(resizeTimer);
+      resizeTimers.forEach(window.clearTimeout);
+      observer?.disconnect();
     };
   }, []);
 
-  // Satellite imagery is the only basemap in the tracking experience.
+  // Prefer satellite imagery, but automatically fall back to a street map if
+  // imagery tiles are blocked or unavailable on a mobile network/browser.
   useEffect(() => {
     const map = mapRef.current;
     if (!map) return;
@@ -72,18 +81,59 @@ export default function LeafletMap({
       tileLayerRef.current = null;
     }
 
-    const layer = L.tileLayer(
+    let fallbackStarted = false;
+    const addStreetFallback = () => {
+      if (fallbackStarted || !mapRef.current) return;
+      fallbackStarted = true;
+      const streetLayer = L.tileLayer(
+        'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        {
+          maxZoom: 19,
+          attribution: '&copy; OpenStreetMap contributors',
+          crossOrigin: true,
+          keepBuffer: 3,
+          updateWhenIdle: false,
+        },
+      );
+      tileLayerRef.current = streetLayer;
+      streetLayer.addTo(map);
+    };
+
+    const satelliteLayer = L.tileLayer(
       'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
       {
         maxZoom: 19,
         attribution: 'Tiles &copy; Esri — Sources: Esri, Maxar, Earthstar Geographics, and the GIS User Community',
         crossOrigin: true,
-        keepBuffer: 2,
+        keepBuffer: 3,
+        updateWhenIdle: false,
       },
     );
 
-    tileLayerRef.current = layer;
-    layer.addTo(map);
+    let failedTiles = 0;
+    satelliteLayer.on('tileerror', () => {
+      failedTiles += 1;
+      // A few missing edge tiles are normal; switch only when the layer is
+      // broadly failing so the map never remains an empty dark canvas.
+      if (failedTiles >= 3) {
+        map.removeLayer(satelliteLayer);
+        addStreetFallback();
+      }
+    });
+    satelliteLayer.on('load', () => {
+      failedTiles = 0;
+    });
+
+    tileLayerRef.current = satelliteLayer;
+    satelliteLayer.addTo(map);
+    const fallbackTimer = window.setTimeout(() => {
+      if (satelliteLayer.isLoading()) addStreetFallback();
+    }, 5000);
+
+    return () => {
+      window.clearTimeout(fallbackTimer);
+      satelliteLayer.off();
+    };
   }, []);
 
   // 2. Setup Static Routes & Markers
