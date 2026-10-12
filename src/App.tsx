@@ -5,6 +5,7 @@ import Footer from './components/Footer.tsx';
 import Hero from './components/Hero.tsx';
 import TrustCenter from './components/TrustCenter.tsx';
 import PublicTracker from './components/PublicTracker.tsx';
+import PublicTestimonials from './components/PublicTestimonials.tsx';
 import QuoteCalculator from './components/QuoteCalculator.tsx';
 import AdminPanel from './components/AdminPanel.tsx';
 import PublicLiveChat from './components/PublicLiveChat.tsx';
@@ -39,7 +40,7 @@ export default function App() {
 
   return <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col font-sans transition-colors duration-300">
     {view!=='admin'&&settings.isSiteActive!==false&&<Navbar currentView={view} onNavigate={handleNavigate} user={user} onLogout={handleLogout} theme={theme} onToggleTheme={toggleTheme} settings={settings}/>}<div className="flex-1 flex flex-col">{authLoading?<div className="flex-1 flex flex-col items-center justify-center min-h-[70vh]"><Loader2 className="text-[#1769e8] animate-spin" size={36}/><p className="text-xs font-mono text-slate-400 mt-2">Authenticating credentials...</p></div>:settings.isSiteActive===false&&view!=='admin'&&view!=='auth'?<MaintenancePage/>:<>
-      {view==='home'&&<><Hero onNavigate={handleNavigate} onSetTrackId={setTrackId}/><TrustCenter onNavigate={handleNavigate}/></>}
+      {view==='home'&&<><Hero onNavigate={handleNavigate} onSetTrackId={setTrackId}/><TrustCenter onNavigate={handleNavigate}/><PublicTestimonials testimonials={settings.testimonials}/></>}
       {view==='track'&&<PublicTracker initialTrackId={trackId} onClearTrackId={()=>setTrackId('')} theme={theme} settings={settings}/>} {view==='send'&&<SendPackagePage settings={settings} onNavigate={handleNavigate} onSetTrackId={setTrackId}/>} {view==='pricing'&&<PricingPage settings={settings} onNavigate={handleNavigate}/>} {view==='about'&&<AboutPage onNavigate={handleNavigate}/>} {view==='quote'&&<QuoteCalculator settings={settings} onNavigate={handleNavigate} token={token}/>} {view==='services'&&<ServicesPage/>} {view==='contact'&&<ContactPage/>} {view==='auth'&&<AdminLogin onLoginSuccess={handleLoginSuccess} onNavigate={handleNavigate}/>} {view==='admin'&&user&&token&&<AdminPanel user={user} token={token} settings={settings} onUpdateSettings={setSettings} onLogout={handleLogout} theme={theme} onToggleTheme={toggleTheme}/>}</>}</div>
     {view!=='admin'&&<Footer onNavigate={handleNavigate} settings={settings}/>} {view!=='admin'&&settings.enableLiveChat!==false&&<PublicLiveChat companyName={settings.companyName||'Logify'}/>}</div>;
 }
