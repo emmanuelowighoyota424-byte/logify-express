@@ -50,7 +50,7 @@ export default function Navbar({ currentView, onNavigate, user, onLogout, theme,
 
             <div className="hidden lg:flex items-center gap-1">
               {navItems.map((item) => (
-                <button key={item.view} onClick={() => navigate(item.view)} className={`px-3.5 py-2.5 rounded-lg text-[11px] font-bold tracking-wide transition-all cursor-pointer ${currentView === item.view ? 'bg-slate-100 text-[#0b1f33] dark:bg-slate-800 dark:text-white' : 'text-slate-500 hover:text-[#0b1f33] hover:bg-slate-50 dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-900'}`}>
+                <button key={item.view} onClick={() => navigate(item.view)} aria-current={currentView === item.view ? "page" : undefined} className={`px-3.5 py-2.5 rounded-lg text-[11px] font-bold tracking-wide transition-all cursor-pointer ${currentView === item.view ? 'bg-slate-100 text-[#0b1f33] dark:bg-slate-800 dark:text-white' : 'text-slate-500 hover:text-[#0b1f33] hover:bg-slate-50 dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-900'}`}>
                   {item.label}
                 </button>
               ))}
@@ -71,16 +71,16 @@ export default function Navbar({ currentView, onNavigate, user, onLogout, theme,
 
             <div className="lg:hidden flex items-center gap-2">
               <button onClick={onToggleTheme} className="p-2 rounded-lg bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-300 cursor-pointer" aria-label="Toggle theme">{theme === 'light' ? <Moon size={15} /> : <Sun size={15} />}</button>
-              <button onClick={() => setIsOpen(!isOpen)} className="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900 cursor-pointer" aria-label="Open menu">{isOpen ? <X size={20} /> : <Menu size={20} />}</button>
+              <button onClick={() => setIsOpen(!isOpen)} className="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900 cursor-pointer" aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"} aria-expanded={isOpen} aria-controls="logify-mobile-navigation">{isOpen ? <X size={20} /> : <Menu size={20} />}</button>
             </div>
           </div>
         </div>
 
-        {isOpen && <div className="lg:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#071521] px-4 py-4 space-y-1 shadow-xl">
-          {navItems.map((item) => <button key={item.view} onClick={() => navigate(item.view)} className={`flex items-center justify-between w-full text-left px-3 py-3 rounded-lg text-sm font-bold cursor-pointer ${currentView === item.view ? 'bg-slate-100 text-[#0b1f33] dark:bg-slate-800 dark:text-white' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900'}`}><span className="flex items-center gap-2"><Package size={15} />{item.label}</span><ChevronRight size={14} /></button>)}
+        {isOpen && <div id="logify-mobile-navigation" className="lg:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#071521] px-4 py-4 space-y-1 shadow-xl">
+          {navItems.map((item) => <button key={item.view} onClick={() => navigate(item.view)} aria-current={currentView === item.view ? "page" : undefined} className={`flex items-center justify-between w-full text-left px-3 py-3 rounded-lg text-sm font-bold cursor-pointer ${currentView === item.view ? 'bg-slate-100 text-[#0b1f33] dark:bg-slate-800 dark:text-white' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900'}`}><span className="flex items-center gap-2"><Package size={15} />{item.label}</span><ChevronRight size={14} /></button>)}
           <div className="pt-3 mt-2 border-t border-slate-100 dark:border-slate-800 space-y-2">
-            <button onClick={() => navigate('track')} className="w-full py-3 rounded-lg bg-amber-400 text-[#0b1f33] text-xs font-black cursor-pointer">Track shipment</button>
-            {user && <><button onClick={() => navigate('admin')} className="w-full py-3 rounded-lg bg-[#0b1f33] text-white text-xs font-black cursor-pointer">Open control tower</button><button onClick={() => { setIsOpen(false); onLogout(); }} className="w-full py-3 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 text-xs font-bold cursor-pointer">Log out</button></>}
+            <button onClick={() => navigate('track')} className="w-full min-h-12 py-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-[#0b1f33] text-xs font-black shadow-sm cursor-pointer">Track a shipment <span aria-hidden="true">→</span></button>
+            {user && <><button onClick={() => navigate('admin')} className="w-full min-h-12 py-3 rounded-xl bg-[#0b1f33] hover:bg-[#123552] text-white text-xs font-black cursor-pointer">Open control tower</button><button onClick={() => { setIsOpen(false); onLogout(); }} className="w-full min-h-12 py-3 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 text-xs font-bold cursor-pointer"><span className="inline-flex items-center justify-center gap-2"><LogOut size={14} /> Log out</span></button></>}
           </div>
         </div>}
       </nav>
