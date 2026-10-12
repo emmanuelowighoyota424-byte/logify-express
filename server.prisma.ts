@@ -201,7 +201,7 @@ app.post("/api/auth/login", loginRateLimit, asyncRoute(async (req, res) => {
   if (!user || user.status !== UserStatus.ACTIVE) return res.status(401).json({ error: "Invalid credentials" });
   const valid = safeEqual(hashPassword(password, user.salt), user.passwordHash);
   if (!valid) return res.status(401).json({ error: "Invalid credentials" });
-  if (![UserRole.SUPER_ADMIN, UserRole.ADMIN].includes(user.role)) return res.status(403).json({ error: "Administrative access required" });
+  if (user.role !== UserRole.SUPER_ADMIN && user.role !== UserRole.ADMIN) return res.status(403).json({ error: "Administrative access required" });
   const token = signToken({ id: user.id, email: user.email, role: user.role });
   await audit(user.id, "LOGIN", "User", user.id);
   res.json({ token, user: { id: user.id, email: user.email, name: user.name, role: user.role.toLowerCase(), status: user.status.toLowerCase() } });
