@@ -231,13 +231,8 @@ app.get("/api/track/:id", asyncRoute(async (req, res) => {
   res.json(shipmentPublicView(shipment));
 }));
 
-app.post("/api/track/:id/subscribe", asyncRoute(async (req, res) => {
-  const email = normalizeString(req.body?.email, 320).toLowerCase();
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return res.status(400).json({ error: "Valid email is required" });
-  const shipment = await prisma.shipment.findUnique({ where: { id: req.params.id }, select: { id: true } });
-  if (!shipment) return res.status(404).json({ error: "Shipment not found" });
-  await prisma.shipmentSubscriber.upsert({ where: { shipmentId_email: { shipmentId: shipment.id, email } }, update: {}, create: { shipmentId: shipment.id, email } });
-  res.status(201).json({ subscribed: true });
+app.post("/api/track/:id/subscribe", asyncRoute(async (_req, res) => {
+  res.status(503).json({ error: "Email alert delivery is not configured yet. No subscription was created." });
 }));
 
 app.post("/api/quotes", asyncRoute(async (req, res) => {
