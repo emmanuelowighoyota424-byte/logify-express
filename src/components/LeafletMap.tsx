@@ -70,8 +70,9 @@ export default function LeafletMap({
     };
   }, []);
 
-  // Use a premium dark-blue CARTO basemap so routes and live courier markers
-  // stand out clearly. Fall back to OpenStreetMap if dark tiles are unavailable.
+  // Use OpenStreetMap as the dependable base layer. It does not require a
+  // browser API key, so missing or misconfigured CARTO credentials cannot blank
+  // the shipment map. The dark-blue visual treatment is applied through CSS.
   useEffect(() => {
     const map = mapRef.current;
     if (!map) return;
@@ -81,61 +82,25 @@ export default function LeafletMap({
       tileLayerRef.current = null;
     }
 
-    let fallbackStarted = false;
-    const addStreetFallback = () => {
-      if (fallbackStarted || !mapRef.current) return;
-      fallbackStarted = true;
-      const streetLayer = L.tileLayer(
-        'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-        {
-          maxZoom: 19,
-          attribution: '&copy; OpenStreetMap contributors',
-          crossOrigin: true,
-          keepBuffer: 3,
-          updateWhenIdle: false,
-        },
-      );
-      tileLayerRef.current = streetLayer;
-      streetLayer.addTo(map);
-    };
-
-    // Prefer CARTO's dark basemap when a key is configured; otherwise use
-    // OpenStreetMap immediately so missing/blocked CARTO tiles never leave a blank map.
-    const cartoApiKey = import.meta.env.VITE_CARTO_API_KEY?.trim();
-    const cartoTileUrl = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
     const streetLayer = L.tileLayer(
       'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-      { maxZoom: 19, attribution: '&copy; OpenStreetMap contributors', crossOrigin: true, keepBuffer: 3, updateWhenIdle: false },
+      {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        className: theme === 'dark' ? 'logify-dark-map-tiles' : '',
+        keepBuffer: 4,
+        updateWhenIdle: false,
+      },
     );
-    const darkBlueLayer = cartoApiKey
-      ? L.tileLayer(cartoTileUrl + '?key=' + encodeURIComponent(cartoApiKey), {
-          subdomains: 'abcd', maxZoom: 20,
-          attribution: '&copy; OpenStreetMap contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-          crossOrigin: true, keepBuffer: 3, updateWhenIdle: false,
-        })
-      : null;
 
-    let failedTiles = 0;
-    if (darkBlueLayer) {
-      darkBlueLayer.on('tileerror', () => {
-        failedTiles += 1;
-        if (failedTiles >= 3) {
-          if (map.hasLayer(darkBlueLayer)) map.removeLayer(darkBlueLayer);
-          if (!map.hasLayer(streetLayer)) streetLayer.addTo(map);
-        }
-      });
-      darkBlueLayer.addTo(map);
-      const fallbackTimer = window.setTimeout(() => {
-        if (darkBlueLayer.isLoading() && !map.hasLayer(streetLayer)) streetLayer.addTo(map);
-      }, 3500);
-      tileLayerRef.current = darkBlueLayer;
-      return () => { window.clearTimeout(fallbackTimer); darkBlueLayer.off(); };
-    }
     streetLayer.addTo(map);
     tileLayerRef.current = streetLayer;
 
-
-  }, []);
+    return () => {
+      streetLayer.off();
+      if (map.hasLayer(streetLayer)) map.removeLayer(streetLayer);
+    };
+  }, [theme]);
 
   // 2. Setup Static Routes & Markers
   useEffect(() => {
