@@ -1,0 +1,68 @@
+/* Faster logistics template integration — adapted to Logify Express brand and React app.
+   Keeps the live tracking workflow and blue-first theme; no static template routes or fake forms. */
+:root {
+  --faster-navy: #041943;
+  --faster-blue: #087cff;
+  --faster-sky: #38bdf8;
+  --faster-paper: #f4f8ff;
+}
+.hero-premium__masthead {
+  min-height: 510px;
+  display: flex;
+  align-items: center;
+  background:
+    radial-gradient(ellipse at 78% 20%, rgba(8,124,255,.30), transparent 32%),
+    linear-gradient(125deg,#041943 0%,#082e70 60%,#031333 100%) !important;
+}
+.hero-premium__masthead .hero-premium__title {
+  max-width: 900px;
+  margin-inline: auto;
+  font-size: clamp(2.7rem,6.5vw,5.6rem) !important;
+  line-height: .99 !important;
+  font-weight: 800 !important;
+  letter-spacing: -.065em !important;
+}
+#hero-tracking-input-container {
+  width: min(100%, 700px);
+  padding: 7px;
+  border: 1px solid rgba(125,182,255,.25);
+  border-radius: 18px;
+  background: rgba(3,19,51,.68);
+  box-shadow: 0 20px 65px rgba(0,0,0,.2);
+  backdrop-filter: blur(16px);
+}
+.hero-premium__visual > div {
+  min-height: 260px;
+  border-radius: 22px !important;
+  border: 1px solid rgba(125,182,255,.25) !important;
+  background-color: #082b68;
+}
+#hero-quick-action-cards button {
+  min-height: 106px;
+  border-radius: 15px !important;
+  background: linear-gradient(145deg,#0b3970,#082b68) !important;
+  border-color: rgba(125,182,255,.24) !important;
+  box-shadow: 0 12px 32px rgba(0,12,35,.2) !important;
+}
+#hero-quick-action-cards button:hover {
+  border-color: #38bdf8 !important;
+  transform: translateY(-3px);
+}
+#core-services-section > div:nth-child(2) > div {
+  border-radius: 18px !important;
+  background: linear-gradient(145deg,#0b3970,#082b68) !important;
+  border-color: rgba(125,182,255,.22) !important;
+}
+#core-services-section > div:nth-child(2) > div h3 { font-size: 1.1rem; }
+.hero-premium section:not(.hero-premium__masthead) { scroll-margin-top: 90px; }
+.tracking-panel-premium {
+  border-radius: 18px !important;
+  border-color: rgba(125,182,255,.28) !important;
+}
+.premium-navbar { backdrop-filter: blur(18px); }
+@media (max-width: 640px) {
+  .hero-premium__masthead { min-height: 0; padding-top: 3.25rem !important; padding-bottom: 3.25rem !important; }
+  #hero-tracking-input-container { padding: 5px; }
+  #hero-quick-action-cards button { min-height: 82px; }
+  .hero-premium__visual { padding-top: 1.5rem !important; padding-bottom: 1.5rem !important; }
+}
