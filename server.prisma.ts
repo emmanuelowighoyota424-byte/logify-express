@@ -343,23 +343,10 @@ app.post("/api/shipments", ...staffOnly, asyncRoute(async (req: AuthedRequest, r
   const senderName = normalizeString(b.senderName, 120), senderEmail = normalizeString(b.senderEmail, 320).toLowerCase(), senderPhone = normalizeString(b.senderPhone, 40);
   const receiverName = normalizeString(b.receiverName, 120), pickupAddress = normalizeString(b.pickupAddress, 500), deliveryAddress = normalizeString(b.deliveryAddress, 500);
   const weight = Number(b.weight), price = Number(b.price ?? 0);
-  const packageValue = Number(b.packageValue ?? 0);
-  if (!senderName || !senderEmail || !senderPhone || !receiverName || !pickupAddress || !deliveryAddress || !Number.isFinite(weight) || weight <= 0 || weight > 100000 || !Number.isFinite(price) || price < 0 || price > 100000000 || !Number.isFinite(packageValue) || packageValue < 0 || packageValue > 100000000) return res.status(400).json({ error: "Required shipment fields are missing or invalid" });
-  const coordinates: Record<string, number | null> = {};
-  for (const [key, min, max] of [["pickupLat", -90, 90], ["deliveryLat", -90, 90], ["pickupLng", -180, 180], ["deliveryLng", -180, 180]] as const) {
-    if (b[key] === undefined || b[key] === null || b[key] === "") { coordinates[key] = null; continue; }
-    const value = Number(b[key]);
-    if (!Number.isFinite(value) || value < min || value > max) return res.status(400).json({ error: "Invalid " + key });
-    coordinates[key] = value;
-  }
-  let estimatedDelivery: Date | null = null;
-  if (b.estimatedDelivery) {
-    estimatedDelivery = new Date(b.estimatedDelivery);
-    if (!Number.isFinite(estimatedDelivery.getTime())) return res.status(400).json({ error: "Invalid estimated delivery date" });
-  }
+  if (!senderName || !senderEmail || !senderPhone || !receiverName || !pickupAddress || !deliveryAddress || !Number.isFinite(weight) || weight <= 0) return res.status(400).json({ error: "Required shipment fields are missing or invalid" });
   const type = Object.values(ShipmentType).includes(b.type) ? b.type : ShipmentType.STANDARD;
   const id = normalizeString(b.id, 80) || `LOG-${Date.now().toString(36).toUpperCase()}-${crypto.randomBytes(3).toString("hex").toUpperCase()}`;
-  const shipment = await prisma.shipment.create({ data: { id, senderId: req.auth!.role === UserRole.DRIVER ? undefined : (normalizeString(b.senderId, 100) || undefined), senderName, senderEmail, senderPhone, receiverName, receiverEmail: normalizeString(b.receiverEmail, 320).toLowerCase() || null, receiverPhone: normalizeString(b.receiverPhone, 40) || null, pickupAddress, deliveryAddress, pickupLat: coordinates.pickupLat, pickupLng: coordinates.pickupLng, deliveryLat: coordinates.deliveryLat, deliveryLng: coordinates.deliveryLng, weight, type, price, packageValue, description: normalizeString(b.description, 2000) || null, deliveryType: normalizeString(b.deliveryType, 50) || "Standard", tag: normalizeString(b.tag, 100) || null, estimatedDelivery, timeline: { create: { status: ShipmentStatus.PENDING, description: "Shipment created", location: pickupAddress } } });
+  const shipment = await prisma.shipment.create({ data: { id, senderId: req.auth!.role === UserRole.DRIVER ? undefined : (normalizeString(b.senderId, 100) || undefined), senderName, senderEmail, senderPhone, receiverName, receiverEmail: normalizeString(b.receiverEmail, 320).toLowerCase() || null, receiverPhone: normalizeString(b.receiverPhone, 40) || null, pickupAddress, deliveryAddress, pickupLat: Number.isFinite(Number(b.pickupLat)) ? Number(b.pickupLat) : null, pickupLng: Number.isFinite(Number(b.pickupLng)) ? Number(b.pickupLng) : null, deliveryLat: Number.isFinite(Number(b.deliveryLat)) ? Number(b.deliveryLat) : null, deliveryLng: Number.isFinite(Number(b.deliveryLng)) ? Number(b.deliveryLng) : null, weight, type, price: Number.isFinite(price) && price >= 0 ? price : 0, packageValue: Number.isFinite(Number(b.packageValue)) ? Number(b.packageValue) : 0, description: normalizeString(b.description, 2000) || null, deliveryType: normalizeString(b.deliveryType, 50) || "Standard", tag: normalizeString(b.tag, 100) || null, estimatedDelivery: b.estimatedDelivery ? new Date(b.estimatedDelivery) : null, timeline: { create: { status: ShipmentStatus.PENDING, description: "Shipment created", location: pickupAddress } } } });
   await audit(req.auth!.id, "CREATE", "Shipment", shipment.id);
   res.status(201).json(shipment);
 }));
@@ -372,16 +359,8 @@ app.patch("/api/shipments/:id/status", ...staffOnly, asyncRoute(async (req: Auth
   if (req.auth!.role === UserRole.DRIVER && existing.assignedDriverId !== req.auth!.id) return res.status(403).json({ error: "Forbidden" });
   const location = normalizeString(req.body?.location, 300) || existing.location;
   const description = normalizeString(req.body?.description, 500) || `Shipment status changed to ${status}`;
-  const coordinatePatch: { currentLat?: number | null; currentLng?: number | null } = {};
-  for (const [key, field, min, max] of [["lat", "currentLat", -90, 90], ["lng", "currentLng", -180, 180]] as const) {
-    if (req.body?.[key] === undefined) continue;
-    if (req.body[key] === null || req.body[key] === "") { coordinatePatch[field] = null; continue; }
-    const value = Number(req.body[key]);
-    if (!Number.isFinite(value) || value < min || value > max) return res.status(400).json({ error: "Invalid " + key + " coordinate" });
-    coordinatePatch[field] = value;
-  }
   const shipment = await prisma.$transaction(async tx => {
-    const updated = await tx.shipment.update({ where: { id: existing.id }, data: { status, location, ...coordinatePatch } });
+    const updated = await tx.shipment.update({ where: { id: existing.id }, data: { status, location, currentLat: Number.isFinite(Number(req.body?.lat)) ? Number(req.body.lat) : existing.currentLat, currentLng: Number.isFinite(Number(req.body?.lng)) ? Number(req.body.lng) : existing.currentLng } });
     await tx.timelineEvent.create({ data: { shipmentId: existing.id, status, location, description } });
     return updated;
   });
