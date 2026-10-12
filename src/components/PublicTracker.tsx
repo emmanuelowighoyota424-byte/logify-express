@@ -355,7 +355,7 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
           
           setSimLogs((prev) => [
             ...prev,
-            `[${new Date().toLocaleTimeString()}] 🔄 Synced telemetry with live database.`
+            `[${new Date().toLocaleTimeString()}] 🔄 Refreshed shipment tracking view.`
           ]);
         }
       } catch (err) {
@@ -768,7 +768,7 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
                        shipment.status === 'Picked Up' ? 'Picked Up / Traveling' : 'Shipment Created'}
                     </h2>
                     <p className="text-xs text-slate-300">
-                      Last scanned coordinate update received: {new Date().toLocaleTimeString()}
+                      Tracking view refreshed: {new Date().toLocaleTimeString()}
                     </p>
                   </div>
                 </div>
@@ -778,7 +778,7 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                   </span>
-                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-400">Live SLA Active</span>
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-400">Status Monitoring</span>
                 </div>
               </div>
 
@@ -1162,7 +1162,7 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                 <h3 className="text-xs font-bold uppercase text-slate-300 tracking-wider font-mono flex items-center gap-1.5">
                   <Map size={13} className="text-amber-400 animate-pulse" />
-                  Live Fleet Interactive Telemetry
+                  Shipment Route & Tracking Tools
                 </h3>
 
                 <div className="flex items-center gap-2 flex-wrap">
