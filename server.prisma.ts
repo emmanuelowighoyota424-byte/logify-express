@@ -280,7 +280,7 @@ app.get("/api/chats/:id", ...staffOnly, asyncRoute(async (req, res) => {
   res.json(conversation);
 }));
 
-app.post("/api/chats/:id/messages", ...authenticate, asyncRoute(async (req: AuthedRequest, res) => {
+app.post("/api/chats/:id/messages", authenticate, asyncRoute(async (req: AuthedRequest, res) => {
   const text = normalizeString(req.body?.text, 4000);
   if (!text) return res.status(400).json({ error: "Message text is required" });
   const conversation = await prisma.chatConversation.upsert({ where: { id: req.params.id }, update: {}, create: { id: req.params.id, status: ChatStatus.OPEN } });
