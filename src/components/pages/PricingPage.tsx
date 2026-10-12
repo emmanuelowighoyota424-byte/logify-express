@@ -19,28 +19,28 @@ export default function PricingPage({ settings, onNavigate }: PricingPageProps) 
   const [loading, setLoading] = useState(false);
   const [calculatedQuote, setCalculatedQuote] = useState<any>(null);
 
-  // Static reference rates
+  // Service examples only; pricing and transit times must be confirmed for each route.
   const referenceRates = [
     {
       icon: <Truck size={20} className="text-blue-500" />,
       title: 'Ground Standard',
-      price: '$15.00',
+      price: 'Contact for rate',
       description: 'Affordable overland parcel delivery',
-      features: ['3-5 Business Days', 'Basic GPS tracking', 'Standard cargo cover']
+      features: ['Availability depends on route', 'Tracking options vary by shipment', 'Confirm coverage before booking']
     },
     {
       icon: <Plane size={20} className="text-blue-500" />,
       title: 'Premium Air Express',
-      price: '$45.00',
+      price: 'Contact for rate',
       description: 'Overnight priority cargo dispatch',
-      features: ['1-2 Business Days', 'Live Satellite GPS logs', 'Premium SLA cover']
+      features: ['Transit time requires confirmation', 'Tracking options vary by shipment', 'Service terms confirmed at booking']
     },
     {
       icon: <Ship size={20} className="text-blue-500" />,
       title: 'Heavy Ocean Cargo',
-      price: '$95.00',
+      price: 'Contact for rate',
       description: 'Bulk logistics for pallets and machinery',
-      features: ['10-15 Business Days', 'Seaport custom clearance logs', 'Heavy-handling cargo gear']
+      features: ['Transit time requires confirmation', 'Handling depends on cargo', 'Service terms confirmed at booking']
     }
   ];
 
@@ -55,24 +55,21 @@ export default function PricingPage({ settings, onNavigate }: PricingPageProps) 
     setTimeout(() => {
       const base = settings.pricing.basePrice;
       const kg = settings.pricing.pricePerKg;
-      const km = settings.pricing.pricePerKm;
-      
-      const simulatedDist = Math.max(50, (pickup.length + delivery.length) * 6 + 120);
-      let calculatedPrice = base + (Number(weight) * kg) + (simulatedDist * km);
+      let calculatedPrice = base + (Number(weight) * kg);
 
       if (cargoType === 'Express') calculatedPrice *= 1.5;
       if (cargoType === 'Freight') calculatedPrice *= 1.8;
       if (cargoType === 'Document') calculatedPrice = base + 5;
 
       setCalculatedQuote({
-        id: 'QTE-' + Math.floor(100000 + Math.random() * 900000),
+        id: 'EST-' + Math.floor(100000 + Math.random() * 900000),
         pickup,
         delivery,
         weight: Number(weight),
         type: cargoType,
-        distanceKm: Math.round(simulatedDist),
+        distanceKm: null,
         price: Number(calculatedPrice.toFixed(2)),
-        time: cargoType === 'Express' ? '1-2 Days' : cargoType === 'Freight' ? '10-15 Days' : '3-5 Days'
+        time: 'Confirm after route review'
       });
       setLoading(false);
     }, 1000);
@@ -85,13 +82,13 @@ export default function PricingPage({ settings, onNavigate }: PricingPageProps) 
         {/* Title */}
         <div className="text-center space-y-3 max-w-2xl mx-auto">
           <h1 className="text-xs font-black uppercase text-blue-600 dark:text-blue-400 tracking-widest font-mono">
-            Transparent Logistics Tariffs
+            Route-dependent pricing
           </h1>
           <h2 className="text-3xl sm:text-4xl font-sans font-black text-slate-900 dark:text-white tracking-tight">
             Shipping Rates & Calculator
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
-            No surprise fees. Our rates are calculated directly using base weights and simulated road transit distances. Access instant price calculations below.
+            This preliminary estimate uses configured base and weight rates only. Route distance is not verified, so the result is not a final shipping quote or delivery promise.
           </p>
         </div>
 
@@ -176,7 +173,7 @@ export default function PricingPage({ settings, onNavigate }: PricingPageProps) 
                 className="w-full py-3.5 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-black text-xs uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-lg shadow-blue-600/10 cursor-pointer"
               >
                 {loading ? <Loader2 size={13} className="animate-spin" /> : <Calculator size={13} />}
-                Calculate Instant Rate Quote
+                Calculate Preliminary Estimate
               </button>
             </form>
 
@@ -185,25 +182,25 @@ export default function PricingPage({ settings, onNavigate }: PricingPageProps) 
               <div className="p-5 bg-gradient-to-r from-blue-900/10 to-blue-500/5 dark:from-blue-950/20 dark:to-blue-900/5 rounded-2xl border border-blue-500/20 space-y-4">
                 <div className="flex justify-between items-center text-[10px] font-mono border-b border-blue-500/10 pb-2">
                   <span className="text-blue-600 dark:text-blue-400 font-extrabold uppercase tracking-widest flex items-center gap-1">
-                    <Sparkles size={11} className="animate-spin" /> Live Calculation Complete
+                    <Sparkles size={11} className="animate-spin" /> Preliminary estimate only
                   </span>
                   <span className="text-slate-400">{calculatedQuote.id}</span>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4 text-xs">
                   <div>
-                    <span className="text-[9px] text-slate-400 uppercase font-bold block">Distance (Est)</span>
-                    <span className="font-mono font-bold text-slate-800 dark:text-slate-200">{calculatedQuote.distanceKm} KM</span>
+                    <span className="text-[9px] text-slate-400 uppercase font-bold block">Route distance</span>
+                    <span className="font-mono font-bold text-slate-800 dark:text-slate-200">Not verified</span>
                   </div>
                   <div>
-                    <span className="text-[9px] text-slate-400 uppercase font-bold block">ETA Transit Days</span>
+                    <span className="text-[9px] text-slate-400 uppercase font-bold block">Transit estimate</span>
                     <span className="font-bold text-slate-800 dark:text-slate-200">{calculatedQuote.time}</span>
                   </div>
                 </div>
 
                 <div className="bg-white dark:bg-slate-950 p-4 rounded-xl border border-slate-100 dark:border-slate-850 flex items-center justify-between">
                   <div className="text-left space-y-0.5">
-                    <span className="text-[9px] text-slate-400 uppercase font-black tracking-wide block">Billed Rate</span>
+                    <span className="text-[9px] text-slate-400 uppercase font-black tracking-wide block">Preliminary estimate</span>
                     <span className="text-xl font-black text-slate-950 dark:text-white font-mono">${calculatedQuote.price}</span>
                   </div>
                   <button
@@ -218,10 +215,10 @@ export default function PricingPage({ settings, onNavigate }: PricingPageProps) 
             )}
           </div>
 
-          {/* Static Tariffs Board (Right - 5 cols) */}
+          {/* Service options (pricing confirmed per route) */}
           <div className="lg:col-span-5 space-y-4 text-xs text-left">
             <h3 className="text-sm font-black uppercase text-slate-400 tracking-wider font-mono">
-              Base Reference Rates
+              Service options — confirm pricing
             </h3>
 
             <div className="space-y-4">
@@ -240,7 +237,7 @@ export default function PricingPage({ settings, onNavigate }: PricingPageProps) 
                         <p className="text-[10px] text-slate-400">{rate.description}</p>
                       </div>
                     </div>
-                    <span className="text-sm font-extrabold text-blue-600 dark:text-blue-400 font-mono">from {rate.price}</span>
+                    <span className="text-sm font-extrabold text-blue-600 dark:text-blue-400 font-mono">{rate.price}</span>
                   </div>
 
                   <ul className="grid grid-cols-1 gap-1.5 border-t border-slate-50 dark:border-slate-850 pt-3">
