@@ -70,8 +70,8 @@ export default function LeafletMap({
     };
   }, []);
 
-  // Prefer satellite imagery, but automatically fall back to a street map if
-  // imagery tiles are blocked or unavailable on a mobile network/browser.
+  // Use a premium dark-blue CARTO basemap so routes and live courier markers
+  // stand out clearly. Fall back to OpenStreetMap if dark tiles are unavailable.
   useEffect(() => {
     const map = mapRef.current;
     if (!map) return;
@@ -99,11 +99,12 @@ export default function LeafletMap({
       streetLayer.addTo(map);
     };
 
-    const satelliteLayer = L.tileLayer(
-      'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    const darkBlueLayer = L.tileLayer(
+      'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
       {
-        maxZoom: 19,
-        attribution: 'Tiles &copy; Esri — Sources: Esri, Maxar, Earthstar Geographics, and the GIS User Community',
+        subdomains: 'abcd',
+        maxZoom: 20,
+        attribution: '&copy; OpenStreetMap contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
         crossOrigin: true,
         keepBuffer: 3,
         updateWhenIdle: false,
@@ -111,28 +112,28 @@ export default function LeafletMap({
     );
 
     let failedTiles = 0;
-    satelliteLayer.on('tileerror', () => {
+    darkBlueLayer.on('tileerror', () => {
       failedTiles += 1;
-      // A few missing edge tiles are normal; switch only when the layer is
-      // broadly failing so the map never remains an empty dark canvas.
+      // Switch only when several tiles fail, so isolated missing edge tiles
+      // do not unexpectedly change the visual style.
       if (failedTiles >= 3) {
-        map.removeLayer(satelliteLayer);
+        map.removeLayer(darkBlueLayer);
         addStreetFallback();
       }
     });
-    satelliteLayer.on('load', () => {
+    darkBlueLayer.on('load', () => {
       failedTiles = 0;
     });
 
-    tileLayerRef.current = satelliteLayer;
-    satelliteLayer.addTo(map);
+    tileLayerRef.current = darkBlueLayer;
+    darkBlueLayer.addTo(map);
     const fallbackTimer = window.setTimeout(() => {
-      if (satelliteLayer.isLoading()) addStreetFallback();
+      if (darkBlueLayer.isLoading()) addStreetFallback();
     }, 5000);
 
     return () => {
       window.clearTimeout(fallbackTimer);
-      satelliteLayer.off();
+      darkBlueLayer.off();
     };
   }, []);
 
@@ -365,7 +366,7 @@ export default function LeafletMap({
           </span>
           <span className="min-w-0">
             <span className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">Shipment tracking</span>
-            <span className="mt-0.5 block truncate text-sm font-semibold">Satellite live view</span>
+            <span className="mt-0.5 block truncate text-sm font-semibold">Dark blue live map</span>
           </span>
         </div>
         <div className="pointer-events-auto flex shrink-0 items-center gap-2 rounded-2xl border border-white/15 bg-slate-950/85 p-1.5 text-white shadow-xl backdrop-blur-xl">
