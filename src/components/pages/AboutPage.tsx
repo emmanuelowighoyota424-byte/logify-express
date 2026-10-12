@@ -1,11 +1,13 @@
 import React from 'react';
+import { Settings } from '../../types.js';
 import { Shield, Clock, Award, Globe, Users, Target, CheckCircle2, ChevronRight, Zap, TrendingUp } from 'lucide-react';
 
 interface AboutPageProps {
   onNavigate: (view: string) => void;
+  settings?: Settings;
 }
 
-export default function AboutPage({ onNavigate }: AboutPageProps) {
+export default function AboutPage({ onNavigate, settings }: AboutPageProps) {
   const stats = [
     { value: 'Track', label: 'Shipment visibility' },
     { value: 'Plan', label: 'Quote and rate tools' },
@@ -34,6 +36,7 @@ export default function AboutPage({ onNavigate }: AboutPageProps) {
   return (
     <div className="flex-1 bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors py-12">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+        {settings?.publicPageImages?.find((item) => item.page === 'about')?.imageUrl && <img src={settings.publicPageImages.find((item) => item.page === 'about')!.imageUrl} alt={settings.publicPageImages.find((item) => item.page === 'about')!.alt || 'About our company'} className="w-full h-56 sm:h-80 rounded-3xl object-cover border border-slate-200 dark:border-slate-800 shadow-lg" loading="lazy" />}
         
         {/* 1. Header Hero section */}
         <div className="text-center space-y-4 max-w-3xl mx-auto">
