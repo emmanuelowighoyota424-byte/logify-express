@@ -468,3 +468,97 @@ body { background: var(--lx-page); color: var(--lx-ink); }
 :where(.hero-premium,.tracking-panel-premium) :where(.bg-amber-400,.bg-amber-500,.bg-orange-500) { background-color: #1769e8 !important; }
 :where(.hero-premium,.tracking-panel-premium) :where(.hover\\:bg-amber-300:hover,.hover\\:bg-amber-400:hover) { background-color: #1257bf !important; }
 :where(.hero-premium,.tracking-panel-premium) :where(.border-amber-400,.border-amber-500) { border-color: #f28a32 !important; }
+
+
+/* Blue-first interface refresh: remove the white canvas and white cards across
+   public pages, tracking, customer flows and admin workspaces. */
+:root {
+  --lx-surface: #103b68;
+  --lx-page: #08264a;
+  --lx-ink: #edf5ff;
+  --lx-muted: #b7cbe2;
+  --lx-border: #28527b;
+  --lx-brand: #2f83ff;
+}
+html:not(.dark) body,
+html:not(.dark) .hero-premium,
+html:not(.dark) .admin-control-tower,
+html:not(.dark) .min-h-screen.bg-slate-50 {
+  background: #08264a !important;
+  color: #edf5ff !important;
+}
+/* Former white and pale-gray cards become layered navy/blue surfaces. */
+html:not(.dark) .bg-white,
+html:not(.dark) [class*="bg-white/"],
+html:not(.dark) .tracking-panel-premium,
+html:not(.dark) .admin-control-tower main [class*="bg-white"] {
+  background-color: #103b68 !important;
+  color: #edf5ff;
+}
+html:not(.dark) .bg-slate-50,
+html:not(.dark) .bg-slate-100,
+html:not(.dark) [class*="bg-gray-50"],
+html:not(.dark) [class*="bg-neutral-50"] {
+  background-color: #0b3158 !important;
+}
+html:not(.dark) [class*="border-slate-100"],
+html:not(.dark) [class*="border-slate-200"],
+html:not(.dark) [class*="border-gray-100"],
+html:not(.dark) [class*="border-gray-200"],
+html:not(.dark) .tracking-panel-premium {
+  border-color: #28527b !important;
+}
+/* Improve contrast where the old light theme used dark typography. */
+html:not(.dark) :is(.text-slate-900,.text-slate-800,.text-slate-700,.text-gray-900,.text-gray-800,.text-gray-700) {
+  color: #edf5ff !important;
+}
+html:not(.dark) :is(.text-slate-600,.text-slate-500,.text-slate-400,.text-gray-600,.text-gray-500,.text-gray-400) {
+  color: #b7cbe2 !important;
+}
+html:not(.dark) .premium-navbar {
+  background: rgba(8,38,74,.96) !important;
+  border-bottom-color: #28527b !important;
+}
+html:not(.dark) .premium-navbar button[aria-current="page"] {
+  background: #174f89 !important;
+  color: #ffffff !important;
+}
+html:not(.dark) input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+html:not(.dark) select,
+html:not(.dark) textarea {
+  background-color: #092e54 !important;
+  color: #f4f8ff !important;
+  border-color: #37658f !important;
+}
+html:not(.dark) input::placeholder,
+html:not(.dark) textarea::placeholder {
+  color: #a9bfd7 !important;
+}
+html:not(.dark) .hero-premium__masthead {
+  background:
+    radial-gradient(ellipse at 78% 12%, rgba(47,131,255,.22), transparent 34%),
+    linear-gradient(125deg,#061b35 0%,#0c3765 58%,#08264a 100%) !important;
+}
+html:not(.dark) .admin-control-tower aside {
+  background: linear-gradient(180deg,#061b35 0%,#08264a 100%) !important;
+}
+html:not(.dark) .admin-control-tower main [class*="bg-white"][class*="border"] {
+  border-color: #28527b !important;
+  box-shadow: 0 8px 24px rgba(0,10,28,.12) !important;
+}
+html:not(.dark) table th,
+html:not(.dark) table td {
+  border-color: #28527b !important;
+}
+html:not(.dark) tbody tr:hover { background-color: rgba(47,131,255,.12) !important; }
+html:not(.dark) .shadow-sm,
+html:not(.dark) .shadow-lg {
+  box-shadow: 0 10px 30px rgba(0,10,28,.14) !important;
+}
+html:not(.dark) ::selection { background: #2f83ff; color: #ffffff; }
+html:not(.dark) :focus-visible { outline-color: #66a7ff; }
+html:not(.dark) .text-blue-600,
+html:not(.dark) .text-\[\#1769e8\] { color: #66a7ff !important; }
+html:not(.dark) .bg-blue-600,
+html:not(.dark) .bg-\[\#1769e8\] { background-color: #1769e8 !important; color: #fff !important; }
+html:not(.dark) .hover\:bg-blue-700:hover { background-color: #1257bf !important; }
