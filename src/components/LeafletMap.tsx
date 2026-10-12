@@ -108,7 +108,7 @@ export default function LeafletMap({
       { maxZoom: 19, attribution: '&copy; OpenStreetMap contributors', crossOrigin: true, keepBuffer: 3, updateWhenIdle: false },
     );
     const darkBlueLayer = cartoApiKey
-      ? L.tileLayer(cartoTileUrl + '?api_key=' + encodeURIComponent(cartoApiKey), {
+      ? L.tileLayer(cartoTileUrl + '?key=' + encodeURIComponent(cartoApiKey), {
           subdomains: 'abcd', maxZoom: 20,
           attribution: '&copy; OpenStreetMap contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
           crossOrigin: true, keepBuffer: 3, updateWhenIdle: false,
