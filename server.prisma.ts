@@ -452,6 +452,7 @@ app.patch("/api/settings", ...adminOnly, asyncRoute(async (req: AuthedRequest, r
   const next: Record<string, any> = { ...previous };
   const stringLimits: Record<string, number> = {
     companyName: 120,
+    brandLogoUrl: 2048,
     contactEmail: 320,
     contactPhone: 50,
     faviconEmoji: 32,
@@ -472,6 +473,34 @@ app.patch("/api/settings", ...adminOnly, asyncRoute(async (req: AuthedRequest, r
       return res.status(400).json({ error: "Invalid setting: " + key });
     }
     next[key] = body[key].trim();
+  }
+
+  if (Object.prototype.hasOwnProperty.call(body, "brandLogoUrl")) {
+    const logoUrl = next.brandLogoUrl as string;
+    if (logoUrl && !/^https:\/\//i.test(logoUrl)) {
+      return res.status(400).json({ error: "Logo URL must start with https://" });
+    }
+  }
+
+  if (Object.prototype.hasOwnProperty.call(body, "testimonials")) {
+    const incoming = body.testimonials;
+    if (!Array.isArray(incoming) || incoming.length > 12) {
+      return res.status(400).json({ error: "Testimonials must be a list of up to 12 entries" });
+    }
+    const testimonials = [];
+    for (const item of incoming) {
+      if (!item || typeof item !== "object" || Array.isArray(item)) {
+        return res.status(400).json({ error: "Invalid testimonial entry" });
+      }
+      const name = normalizeString(item.name, 100);
+      const role = normalizeString(item.role, 120);
+      const quote = normalizeString(item.quote, 600);
+      const photoUrl = normalizeString(item.photoUrl, 2048);
+      if (!name || !quote) return res.status(400).json({ error: "Each testimonial needs a name and quote" });
+      if (photoUrl && !/^https:\/\//i.test(photoUrl)) return res.status(400).json({ error: "Testimonial photo URLs must start with https://" });
+      testimonials.push({ name, role, quote, photoUrl });
+    }
+    next.testimonials = testimonials;
   }
 
   if (Object.prototype.hasOwnProperty.call(body, "contactEmail")) {
