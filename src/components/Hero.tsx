@@ -6,13 +6,15 @@ import {
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import TrackingBox from './TrackingBox.tsx';
+import { Settings } from '../types.js';
 
 interface HeroProps {
   onNavigate: (view: string) => void;
   onSetTrackId: (id: string) => void;
+  settings?: Settings;
 }
 
-export default function Hero({ onNavigate, onSetTrackId }: HeroProps) {
+export default function Hero({ onNavigate, onSetTrackId, settings }: HeroProps) {
   const handleTrack = (trackingNumber: string) => {
     onSetTrackId(trackingNumber);
     onNavigate('track');
@@ -23,6 +25,8 @@ export default function Hero({ onNavigate, onSetTrackId }: HeroProps) {
       
       {/* 1. HERO SECTION (TOP AREA) */}
       <section className="hero-premium__masthead relative overflow-hidden bg-gradient-to-br from-[#09264a] via-[#123a63] to-[#071521] text-white py-16 sm:py-24 border-b border-slate-900 px-4 sm:px-6 lg:px-8">
+        {/* Admin-managed public homepage image */}
+        {settings?.publicPageImages?.find((item) => item.page === 'home')?.imageUrl && <div className="absolute inset-0 pointer-events-none" aria-hidden="true"><img src={settings.publicPageImages.find((item) => item.page === 'home')!.imageUrl} alt="" className="h-full w-full object-cover opacity-30" /><div className="absolute inset-0 bg-gradient-to-br from-[#09264a]/90 via-[#123a63]/85 to-[#071521]/90" /></div>}
         {/* Subtle Decorative SVG grids and radial yellow glow spots */}
         <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px]" />
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[#1769e8]/5 rounded-full blur-3xl pointer-events-none" />
