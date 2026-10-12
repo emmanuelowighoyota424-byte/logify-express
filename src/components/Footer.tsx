@@ -24,8 +24,8 @@ export default function Footer({ onNavigate, settings }: FooterProps) {
               className="flex items-center gap-2 cursor-pointer group"
               id="footer-logo-container"
             >
-              <div className="w-9 h-9 rounded-xl bg-[#1769e8] flex items-center justify-center text-white font-black shadow-md">
-                <Truck size={18} className="fill-current" />
+              <div className="w-9 h-9 rounded-xl bg-[#1769e8] flex items-center justify-center text-white font-black shadow-md overflow-hidden">
+                {settings?.brandLogoUrl ? <img src={settings.brandLogoUrl} alt="" className="w-full h-full object-contain bg-white p-1" onError={(e) => { e.currentTarget.style.display = 'none'; }} /> : <Truck size={18} className="fill-current" />}
               </div>
               <span className="font-sans font-black text-lg tracking-tight text-white uppercase">
                 <span className="text-[#65a2ff]">{companyName}</span>
