@@ -19,6 +19,17 @@ const jwtSecret = JWT_SECRET || crypto.randomBytes(32).toString("hex");
 
 app.disable("x-powered-by");
 app.set("trust proxy", 1);
+app.use((_req, res, next) => {
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader("X-Frame-Options", "DENY");
+  res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+  res.setHeader("Permissions-Policy", "camera=(self), microphone=(self), geolocation=(self)");
+  next();
+});
+app.use("/api/auth", (_req, res, next) => {
+  res.setHeader("Cache-Control", "no-store");
+  next();
+});
 app.use(express.json({ limit: "2mb" }));
 
 const asyncRoute = (fn: (req: Request, res: Response, next: NextFunction) => Promise<unknown>) =>
@@ -48,6 +59,12 @@ function rateLimit(options: { limit: number; windowMs: number; namespace: string
     if (rateLimitBuckets.size > 5000) {
       for (const [bucketKey, value] of rateLimitBuckets) {
         if (value.resetAt <= now) rateLimitBuckets.delete(bucketKey);
+      }
+      // Avoid unbounded memory use if a large number of distinct clients arrive.
+      while (rateLimitBuckets.size > 5000) {
+        const oldestKey = rateLimitBuckets.keys().next().value;
+        if (oldestKey === undefined) break;
+        rateLimitBuckets.delete(oldestKey);
       }
     }
 
