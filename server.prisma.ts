@@ -136,7 +136,7 @@ app.get("/api/health", asyncRoute(async (_req, res) => {
 
 app.get("/api/settings", asyncRoute(async (_req, res) => {
   const row = await prisma.setting.findUnique({ where: { id: 1 } });
-  res.json(row?.data ?? { companyName: "Logify Logistics", contactEmail: "support@logify.com", contactPhone: "", pricing: { basePrice: 15, pricePerKg: 3.5, pricePerKm: 0.8 }, isSiteActive: true, enableLiveChat: true });
+  res.json(row?.data ?? { companyName: "Logify Logistics", contactEmail: "", contactPhone: "", pricing: { basePrice: 15, pricePerKg: 3.5, pricePerKm: 0.8 }, isSiteActive: true, enableLiveChat: true });
 }));
 
 app.post("/api/auth/login", asyncRoute(async (req, res) => {
