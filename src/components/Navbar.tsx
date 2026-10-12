@@ -30,8 +30,8 @@ export default function Navbar({ currentView, onNavigate, user, onLogout, theme,
     <>
       <div className="logistics-status-bar hidden sm:block text-[10px] font-mono">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-8 flex items-center justify-between">
-          <div className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />Network operational · 99.98% on-time</div>
-          <div className="flex items-center gap-4 text-slate-400"><span>GLOBAL FREIGHT NETWORK</span><span>GLOBAL OPERATIONS</span></div>
+          <div className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />Shipment tracking and logistics support</div>
+          <div className="flex items-center gap-4 text-slate-400"><span>SHIPMENT VISIBILITY</span><span>CUSTOMER SUPPORT</span></div>
         </div>
       </div>
       <nav className="premium-navbar sticky top-0 z-45 w-full border-b border-slate-200/80 dark:border-slate-800/80 bg-white/95 dark:bg-[#071521]/95 backdrop-blur-xl transition-colors duration-300">
