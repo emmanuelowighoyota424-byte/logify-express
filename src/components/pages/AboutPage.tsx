@@ -34,7 +34,7 @@ export default function AboutPage({ onNavigate, settings }: AboutPageProps) {
   ];
 
   return (
-    <div className="flex-1 bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors py-12">
+    <div className="faster-page faster-about flex-1 bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors py-12">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         {settings?.publicPageImages?.find((item) => item.page === 'about')?.imageUrl && <img src={settings.publicPageImages.find((item) => item.page === 'about')!.imageUrl} alt={settings.publicPageImages.find((item) => item.page === 'about')!.alt || 'About our company'} className="w-full h-56 sm:h-80 rounded-3xl object-cover border border-slate-200 dark:border-slate-800 shadow-lg" loading="lazy" />}
         
