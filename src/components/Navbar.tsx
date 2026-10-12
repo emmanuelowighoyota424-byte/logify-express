@@ -40,10 +40,10 @@ export default function Navbar({ currentView, onNavigate, user, onLogout, theme,
             <button onClick={() => navigate('home')} className="flex items-center gap-3 cursor-pointer group" aria-label={`${companyName} home`}>
               <span className="relative w-10 h-10 rounded-xl bg-[#0b1f33] text-white flex items-center justify-center shadow-lg shadow-slate-900/10 group-hover:-translate-y-0.5 transition-transform">
                 <Truck size={19} strokeWidth={2.4} />
-                <span className="absolute -right-1 -bottom-1 w-3.5 h-3.5 rounded-full bg-amber-400 border-2 border-white dark:border-[#071521]" />
+                <span className="absolute -right-1 -bottom-1 w-3.5 h-3.5 rounded-full bg-[#f28a32] border-2 border-white dark:border-[#071521]" />
               </span>
               <span className="text-left leading-none">
-                <span className="block font-display font-bold text-xl tracking-tight text-[#0b1f33] dark:text-white">Logify</span>
+                <span className="block font-display font-bold text-xl tracking-tight text-[#102b4e] dark:text-white">{companyName}</span>
                 <span className="block mt-1 text-[8px] font-mono font-bold tracking-[.22em] text-slate-400 uppercase">Express logistics</span>
               </span>
             </button>
@@ -60,7 +60,7 @@ export default function Navbar({ currentView, onNavigate, user, onLogout, theme,
               <button onClick={onToggleTheme} className="w-9 h-9 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-300 flex items-center justify-center hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors cursor-pointer" aria-label="Toggle theme">
                 {theme === 'light' ? <Moon size={15} /> : <Sun size={15} />}
               </button>
-              <button onClick={() => navigate('track')} className="flex items-center gap-2 px-3.5 py-2.5 rounded-lg bg-amber-400 hover:bg-amber-300 text-[#0b1f33] text-[11px] font-black transition-colors cursor-pointer shadow-sm">
+              <button onClick={() => navigate('track')} className="flex items-center gap-2 px-3.5 py-2.5 rounded-lg bg-[#1769e8] hover:bg-[#1257bf] text-white text-[11px] font-black transition-colors cursor-pointer shadow-sm">
                 <MapPinned size={14} /> Track shipment
               </button>
               {user && <>
