@@ -88,8 +88,8 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
   // Custom tracking dashboard states
   const [activeTab, setActiveTab] = useState<'history' | 'facts'>('history');
   const [smsNumber, setSmsNumber] = useState('');
-  const [smsSubscribed, setSmsSubscribed] = useState(false);
-  const [smsLoading, setSmsLoading] = useState(false);
+  const [smsSubscribed] = useState(false);
+  const [smsLoading] = useState(false);
 
   // Email Subscription States
   const [emailValue, setEmailValue] = useState('');
@@ -1150,6 +1150,7 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
             {/* LIVE INTERACTIVE MAP & TELEMETRY TERMINAL */}
             {(settings?.trackerShowMap !== false || settings?.trackerShowTelemetryDeck !== false) && (
               <div className="space-y-4">
+              {settings?.trackerShowTelemetryDeck !== false && <div className="rounded-xl border border-blue-200 bg-blue-50 px-4 py-3 text-xs leading-5 text-blue-950 dark:border-blue-900 dark:bg-blue-950/40 dark:text-blue-100"><strong>Demo telemetry:</strong> movement, sensor readings, and satellite/network values in this panel are simulated for illustration and are not live vehicle data.</div>}
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                 <h3 className="text-xs font-bold uppercase text-slate-300 tracking-wider font-mono flex items-center gap-1.5">
                   <Map size={13} className="text-amber-400 animate-pulse" />
