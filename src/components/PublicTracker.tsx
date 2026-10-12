@@ -460,16 +460,7 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
 
   const handleSmsSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!smsNumber.trim()) return;
-    setSmsLoading(true);
-    setTimeout(() => {
-      setSmsSubscribed(true);
-      setSmsLoading(false);
-      setSimLogs((prev) => [
-        ...prev,
-        `[${new Date().toLocaleTimeString()}] 📱 Registered SMS transit exception notifications for ${smsNumber}.`
-      ]);
-    }, 1000);
+    window.alert('SMS shipment alerts are not configured for this site yet. No subscription was created. Please use email updates instead.');
   };
 
   const handleEmailSubscribe = async (e: React.FormEvent) => {
@@ -979,9 +970,9 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
                   <div className="flex items-center justify-between text-[9px] font-mono text-slate-300">
                     <span className="flex items-center gap-0.5">
                       <Compass size={10} className="text-amber-400 animate-spin" style={{ animationDuration: '6s' }} />
-                      GPS Connection
+                      Shipment location source
                     </span>
-                    <span className="text-amber-400 font-bold uppercase tracking-wider">Active Stream</span>
+                    <span className="text-blue-400 font-bold uppercase tracking-wider">{isSimulating ? "DEMO SIMULATION" : shipment.currentCoords ? "Stored coordinates" : "No live GPS feed"}</span>
                   </div>
                 </div>
               )}
@@ -1374,7 +1365,7 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
                             {/* Network Ping Sparks widget */}
                             <div className="bg-[#181a22] border border-[#282d3b] rounded-xl p-2.5 flex flex-col justify-between">
                               <div className="flex justify-between items-start">
-                                <span className="text-[7.5px] font-mono uppercase text-slate-300 tracking-wider block">Starlink Ping</span>
+                                <span className="text-[7.5px] font-mono uppercase text-slate-300 tracking-wider block">Sample Network Ping</span>
                                 <span className="text-[8px] font-mono text-emerald-400 font-bold flex items-center gap-0.5">
                                   <Wifi size={9} />
                                   100%
@@ -1395,7 +1386,7 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
                                 </svg>
                               </div>
                               <span className="text-[7px] font-mono text-slate-400 leading-none block pt-1 border-t border-[#282d3b]">
-                                SAT ID: SL-7389-X
+                                Illustrative sample data
                               </span>
                             </div>
                           </div>
