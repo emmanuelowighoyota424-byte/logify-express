@@ -38,8 +38,8 @@ export default function Navbar({ currentView, onNavigate, user, onLogout, theme,
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-[68px]">
             <button onClick={() => navigate('home')} className="flex items-center gap-3 cursor-pointer group" aria-label={`${companyName} home`}>
-              <span className="relative w-10 h-10 rounded-xl bg-[#0b1f33] text-white flex items-center justify-center shadow-lg shadow-slate-900/10 group-hover:-translate-y-0.5 transition-transform">
-                <Truck size={19} strokeWidth={2.4} />
+              <span className="relative w-10 h-10 rounded-xl bg-[#0b1f33] text-white flex items-center justify-center overflow-hidden shadow-lg shadow-slate-900/10 group-hover:-translate-y-0.5 transition-transform">
+                {settings?.brandLogoUrl ? <img src={settings.brandLogoUrl} alt="" onError={(e) => { e.currentTarget.style.display = 'none'; }} className="absolute inset-0 w-full h-full object-contain bg-white rounded-xl p-1" /> : <Truck size={19} strokeWidth={2.4} />}
                 <span className="absolute -right-1 -bottom-1 w-3.5 h-3.5 rounded-full bg-[#f28a32] border-2 border-white dark:border-[#071521]" />
               </span>
               <span className="text-left leading-none">
