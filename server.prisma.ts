@@ -477,8 +477,10 @@ app.patch("/api/settings", ...adminOnly, asyncRoute(async (req: AuthedRequest, r
 
   if (Object.prototype.hasOwnProperty.call(body, "brandLogoUrl")) {
     const logoUrl = next.brandLogoUrl as string;
-    if (logoUrl && !/^https:\/\//i.test(logoUrl)) {
-      return res.status(400).json({ error: "Logo URL must start with https://" });
+    const isHttpsUrl = /^https:\/\//i.test(logoUrl);
+    const isUploadedImage = /^data:image\/(png|jpeg|webp|gif);base64,[A-Za-z0-9+/=]+$/i.test(logoUrl) && logoUrl.length <= 1400000;
+    if (logoUrl && !isHttpsUrl && !isUploadedImage) {
+      return res.status(400).json({ error: "Logo must be a public HTTPS URL or an uploaded PNG, JPEG, WEBP, or GIF image under 1 MB" });
     }
   }
 
