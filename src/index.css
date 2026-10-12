@@ -249,3 +249,61 @@ html.dark .admin-control-tower header { border-bottom-color: #203649 !important;
   .admin-control-tower header { padding-left: 14px !important; padding-right: 14px !important; }
   .admin-control-tower main { padding-top: 18px !important; padding-bottom: 24px !important; }
 }
+
+
+/* Shipment operations workspace */
+.admin-shipments-premium > div:not(.fixed) {
+  border-color: var(--logify-line, #e2e8ee);
+}
+.admin-shipments-premium table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+}
+.admin-shipments-premium thead { background: #f3f6f8; }
+.admin-shipments-premium thead th {
+  color: #5c7082;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .075em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.admin-shipments-premium tbody tr { transition: background-color 150ms ease; }
+.admin-shipments-premium tbody tr:hover { background: rgba(21,94,138,.035); }
+html.dark .admin-shipments-premium thead { background: #102b43; }
+html.dark .admin-shipments-premium thead th { color: #a9bdcc; }
+html.dark .admin-shipments-premium tbody tr:hover { background: rgba(29,155,240,.07); }
+.admin-shipments-premium input[type="checkbox"] {
+  accent-color: #155e8a;
+  width: 15px;
+  height: 15px;
+}
+.admin-shipments-premium button { letter-spacing: -.01em; }
+.admin-shipments-premium .fixed > div { box-shadow: 0 24px 80px rgba(4,18,30,.28); }
+
+/* Public tracking: premium waybill lookup surface */
+.tracking-panel-premium {
+  border-color: #dfe7ed !important;
+  box-shadow: 0 18px 55px rgba(11,31,51,.09), 0 2px 8px rgba(11,31,51,.035) !important;
+}
+.tracking-panel-premium h3 {
+  font-size: clamp(1.2rem, 2.5vw, 1.45rem);
+  letter-spacing: -.04em;
+}
+.tracking-panel-premium #tracking-input-field { min-height: 52px; font-size: 14px; }
+.tracking-panel-premium #tracking-submit-btn {
+  min-height: 48px;
+  background: linear-gradient(135deg,#102b43,#0b1f33) !important;
+  color: #f5b52e !important;
+  border-color: #28465e !important;
+  box-shadow: 0 8px 20px rgba(11,31,51,.15);
+}
+.tracking-panel-premium #tracking-submit-btn:hover {
+  background: linear-gradient(135deg,#155e8a,#0b1f33) !important;
+}
+@media (max-width: 640px) {
+  .admin-shipments-premium { min-width: 0; }
+  .admin-shipments-premium table { min-width: 680px; }
+  .tracking-panel-premium { padding: 18px !important; }
+}
