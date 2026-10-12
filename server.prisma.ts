@@ -24,6 +24,40 @@ app.use(express.json({ limit: "2mb" }));
 const asyncRoute = (fn: (req: Request, res: Response, next: NextFunction) => Promise<unknown>) =>
   (req: Request, res: Response, next: NextFunction) => Promise.resolve(fn(req, res, next)).catch(next);
 
+type RateLimitBucket = { count: number; resetAt: number };
+const rateLimitBuckets = new Map<string, RateLimitBucket>();
+
+function rateLimit(options: { limit: number; windowMs: number; namespace: string }) {
+  return (req: Request, res: Response, next: NextFunction) => {
+    const now = Date.now();
+    const key = `${options.namespace}:${req.ip || req.socket.remoteAddress || "unknown"}`;
+    let bucket = rateLimitBuckets.get(key);
+
+    if (!bucket || bucket.resetAt <= now) {
+      bucket = { count: 0, resetAt: now + options.windowMs };
+      rateLimitBuckets.set(key, bucket);
+    }
+
+    bucket.count += 1;
+    if (bucket.count > options.limit) {
+      res.setHeader("Retry-After", String(Math.max(1, Math.ceil((bucket.resetAt - now) / 1000))));
+      return res.status(429).json({ error: "Too many attempts. Please try again later." });
+    }
+
+    // Keep the in-memory limiter bounded on long-running instances.
+    if (rateLimitBuckets.size > 5000) {
+      for (const [bucketKey, value] of rateLimitBuckets) {
+        if (value.resetAt <= now) rateLimitBuckets.delete(bucketKey);
+      }
+    }
+
+    next();
+  };
+}
+
+const loginRateLimit = rateLimit({ namespace: "login", limit: 10, windowMs: 15 * 60 * 1000 });
+const registrationRateLimit = rateLimit({ namespace: "registration", limit: 5, windowMs: 60 * 60 * 1000 });
+
 function hashPassword(password: string, salt: string) {
   return crypto.createHmac("sha256", salt).update(password).digest("hex");
 }
@@ -139,9 +173,10 @@ app.get("/api/settings", asyncRoute(async (_req, res) => {
   res.json(row?.data ?? { companyName: "Logify Logistics", contactEmail: "", contactPhone: "", pricing: { basePrice: 15, pricePerKg: 3.5, pricePerKm: 0.8 }, isSiteActive: true, enableLiveChat: true });
 }));
 
-app.post("/api/auth/login", asyncRoute(async (req, res) => {
+app.post("/api/auth/login", loginRateLimit, asyncRoute(async (req, res) => {
   const email = normalizeString(req.body?.email, 320).toLowerCase();
   const password = typeof req.body?.password === "string" ? req.body.password : "";
+  if (password.length > 1024) return res.status(400).json({ error: "Password is too long" });
   if (!email || !password) return res.status(400).json({ error: "Email and password are required" });
   const user = await prisma.user.findUnique({ where: { email } });
   if (!user || user.status !== UserStatus.ACTIVE) return res.status(401).json({ error: "Invalid credentials" });
@@ -159,10 +194,11 @@ app.get("/api/auth/verify-session", authenticate, asyncRoute(async (req: AuthedR
   res.json({ valid: true, user: { ...user, role: user.role.toLowerCase(), status: user.status.toLowerCase() } });
 }));
 
-app.post("/api/auth/register", asyncRoute(async (req, res) => {
+app.post("/api/auth/register", registrationRateLimit, asyncRoute(async (req, res) => {
   const email = normalizeString(req.body?.email, 320).toLowerCase();
   const name = normalizeString(req.body?.name, 120);
   const password = typeof req.body?.password === "string" ? req.body.password : "";
+  if (password.length > 1024) return res.status(400).json({ error: "Password is too long" });
   if (!email || !name || password.length < 12) return res.status(400).json({ error: "Name, valid email and a password of at least 12 characters are required" });
   const existing = await prisma.user.findUnique({ where: { email } });
   if (existing) return res.status(409).json({ error: "Account already exists" });
