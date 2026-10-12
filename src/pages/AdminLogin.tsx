@@ -63,7 +63,7 @@ export default function AdminLogin({ onLoginSuccess, onNavigate }: AdminLoginPro
   };
 
   return (
-    <div className="flex-1 flex items-center justify-center py-16 px-4 bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+    <div className="admin-login-premium flex-1 flex items-center justify-center py-16 px-4 bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
       <div className="max-w-md w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6 text-left">
         
         {/* Header/Logo */}
