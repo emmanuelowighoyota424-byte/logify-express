@@ -30,7 +30,7 @@ app.use("/api/auth", (_req, res, next) => {
   res.setHeader("Cache-Control", "no-store");
   next();
 });
-app.use(express.json({ limit: "2mb" }));
+app.use(express.json({ limit: "8mb" }));
 
 const asyncRoute = (fn: (req: Request, res: Response, next: NextFunction) => Promise<unknown>) =>
   (req: Request, res: Response, next: NextFunction) => Promise.resolve(fn(req, res, next)).catch(next);
