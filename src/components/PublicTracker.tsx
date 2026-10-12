@@ -530,7 +530,7 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
     switch (preset) {
       case 'emerald':
         return {
-          wrapper: 'bg-[#0f1d19] border border-emerald-900/60 p-6 md:p-10 rounded-3xl shadow-2xl transition-all duration-300 text-slate-100',
+          wrapper: 'rounded-[26px] border border-slate-200 bg-white p-5 text-slate-900 shadow-sm transition-all duration-300 sm:p-8 lg:p-10',
           cardBorder: 'border-emerald-500',
           accentText: 'text-emerald-400',
           accentBg: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
@@ -540,7 +540,7 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
         };
       case 'cosmic':
         return {
-          wrapper: 'bg-[#0d0e19] border border-indigo-900/60 p-6 md:p-10 rounded-3xl shadow-2xl transition-all duration-300 text-slate-100',
+          wrapper: 'rounded-[26px] border border-slate-200 bg-white p-5 text-slate-900 shadow-sm transition-all duration-300 sm:p-8 lg:p-10',
           cardBorder: 'border-indigo-500',
           accentText: 'text-indigo-400',
           accentBg: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20',
@@ -551,7 +551,7 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
       case 'dark-ash':
       default:
         return {
-          wrapper: 'bg-[#121418] border border-[#282d3b] p-6 md:p-10 rounded-3xl shadow-2xl transition-all duration-300 text-slate-100',
+          wrapper: 'rounded-[26px] border border-slate-200 bg-white p-5 text-slate-900 shadow-sm transition-all duration-300 sm:p-8 lg:p-10',
           cardBorder: 'border-amber-500',
           accentText: 'text-amber-400',
           accentBg: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
@@ -565,20 +565,16 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
   const presetStyle = getBackgroundPresetStyles();
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8 md:py-12 space-y-8 min-h-[70vh] bg-[#121418] text-slate-100 rounded-3xl">
+    <div className="mx-auto min-h-[70vh] max-w-[1440px] space-y-7 rounded-[28px] bg-[#f4f6f8] px-3 py-5 text-slate-900 sm:px-6 sm:py-8 lg:px-8">
       <div className={presetStyle.wrapper}>
         {/* FedEx Style Corporate Header Branding */}
         <div className="text-center space-y-4 max-w-2xl mx-auto">
           <div className="flex items-center justify-center gap-1 font-sans">
-            <span className={`text-4xl font-black tracking-tighter ${presetStyle.logoColor}`}>Logify</span>
-            <span className={`${presetStyle.logoTag} text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-wider`}>Express®</span>
+            <span className="text-4xl font-black tracking-[-0.06em] text-slate-950">Logify</span>
+            <span className="rounded-md bg-orange-500 px-2 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-white">Express</span>
           </div>
-          <h1 className="text-xl md:text-2xl font-sans font-bold text-slate-100 uppercase tracking-tight">
-            Global Logistics Waybill Tracking
-          </h1>
-          <p className="text-xs text-slate-400 max-w-md mx-auto">
-            Input your 12-digit tracking reference code below to view active status, scheduled milestones, and live driver telemetry feeds.
-          </p>
+          <h1 className="text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">Track your shipment</h1>
+          <p className="mx-auto max-w-lg text-sm leading-6 text-slate-500">Every delivery, one clear view. Enter your tracking number for the latest shipment status and journey details.</p>
         </div>
 
         {/* Track Search Form with Custom Focus & Style Button */}
@@ -591,7 +587,7 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
                 placeholder="Enter Tracking Number (e.g. LOG-583019-US)"
                 value={trackId}
                 onChange={(e) => setTrackId(e.target.value)}
-                className="w-full bg-[#1a1d25] border-2 border-[#2b303d] rounded-xl pl-4 pr-12 py-3.5 text-sm font-mono text-white placeholder-slate-400 outline-none transition-colors shadow-sm focus:ring-1 focus:ring-amber-500 focus:border-amber-500"
+                className="w-full rounded-2xl border border-slate-200 bg-slate-50 py-4 pl-4 pr-12 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-orange-400 focus:bg-white focus:ring-4 focus:ring-orange-500/10"
               />
               <button
                 type="button"
@@ -685,7 +681,7 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                 </span>
-                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-300">Live Connection Active</span>
+                <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-600">Shipment record loaded</span>
               </div>
               <div className="flex items-center gap-2">
                 {/* Refresh Button */}
@@ -713,7 +709,7 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
             </div>
 
             {/* PROMINENT SHIPMENT OVERVIEW CARD - DARK ASH LAYOUT */}
-            <div className={`bg-[#181a22] border-t-8 ${presetStyle.cardBorder} border-x border-b border-[#2b303e] rounded-2xl p-6 sm:p-8 shadow-xl space-y-6 text-slate-100`}>
+            <div className="space-y-6 rounded-[24px] border border-slate-200 border-t-4 border-t-orange-500 bg-white p-5 text-slate-900 shadow-sm sm:p-8">
               
               {/* Main tracking banner */}
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-[#2b303e]">
@@ -752,7 +748,7 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
               </div>
 
               {/* ACTION-ORIENTED STATUS WITH HIGH DENSITY INFO */}
-              <div className="bg-[#20232e] border border-[#2c3242] rounded-xl p-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+              <div className="flex flex-col items-start justify-between gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-5 md:flex-row md:items-center">
                 <div className="flex items-center gap-4">
                   <div className={`p-3.5 rounded-full ${
                     shipment.status === 'Delivered'
