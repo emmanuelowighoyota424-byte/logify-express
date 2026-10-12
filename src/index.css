@@ -1193,3 +1193,66 @@ body { font-family:Poppins,Arial,sans-serif; }
   #root .max-w-6xl.mx-auto.px-4.py-16, #root .max-w-5xl.mx-auto.px-4.py-16 { padding-top:2.5rem; padding-bottom:2.5rem; }
   #root .faster-article-grid { grid-template-columns:1fr; }
 }
+
+
+/* Public photography treatment — inspired by Faster's wide, darkened logistics photography. */
+#root .logify-public-image-hero {
+  isolation:isolate;
+  background:#1f1f2e !important;
+  background-image:none !important;
+}
+#root .logify-public-hero-image {
+  position:absolute; inset:0; width:100%; height:100%;
+  object-fit:cover; object-position:center 48%;
+  opacity:.72 !important;
+  filter:saturate(.82) contrast(1.06);
+  transform:scale(1.015);
+}
+#root .logify-public-hero-overlay {
+  background:linear-gradient(90deg,rgba(31,31,46,.86) 0%,rgba(31,31,46,.66) 52%,rgba(31,31,46,.35) 100%) !important;
+}
+#root .logify-public-image-hero .hero-premium__title { text-shadow:0 2px 28px rgba(0,0,0,.25); }
+#root .logify-public-image-hero .hero-premium__title span { color:#ff4800 !important; }
+#root .logify-public-image-banner {
+  position:relative; isolation:isolate; width:100%; height:clamp(220px,31vw,390px);
+  overflow:hidden; background:#1f1f2e; margin:0;
+}
+#root .logify-public-banner-image {
+  display:block; width:100%; height:100%; object-fit:cover; object-position:center 48%;
+  filter:saturate(.8) contrast(1.06);
+}
+#root .logify-public-banner-shade {
+  position:absolute; inset:0;
+  background:linear-gradient(90deg,rgba(31,31,46,.86),rgba(31,31,46,.5) 58%,rgba(31,31,46,.2));
+}
+#root .logify-public-banner-caption {
+  position:absolute; inset:0; display:flex; flex-direction:column; justify-content:center;
+  width:min(100% - 2rem,1200px); margin-inline:auto; padding:1rem;
+  color:#fff; pointer-events:none;
+}
+#root .logify-public-banner-caption span {
+  color:#ff7542; font-size:.7rem; font-weight:800; letter-spacing:.22em;
+}
+#root .logify-public-banner-caption h1 {
+  max-width:760px; margin-top:.7rem; font-size:clamp(2rem,5vw,4rem);
+  line-height:1.04; font-weight:800; letter-spacing:-.045em; color:#fff;
+}
+#root .faster-about > div > img {
+  display:block; width:100%; height:clamp(230px,34vw,440px);
+  object-fit:cover; object-position:center 45%; border-radius:0 !important;
+  border:0 !important; box-shadow:none !important;
+}
+#root .faster-article-art {
+  position:relative; min-height:235px; overflow:hidden; border-radius:0 !important;
+  background-size:cover !important; background-position:center !important;
+}
+#root .faster-article-art:after {
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(135deg,rgba(31,31,46,.12),rgba(31,31,46,.72));
+}
+#root .faster-article-art > * { position:relative; z-index:1; }
+#root .faster-article-art span { color:#fff !important; }
+@media(max-width:640px) {
+  #root .logify-public-banner-caption { padding:.5rem 1.25rem; }
+  #root .logify-public-banner-caption h1 { max-width:90%; }
+}
