@@ -152,7 +152,7 @@ export default function LeafletMap({
       bounds.push(deliveryLatLng);
     }
 
-    // Draw Route Path Polyline
+    // Draw a temporary direct route; the OSRM road route replaces it when available.
     if (pickupCoords && deliveryCoords) {
       const polylinePoints: L.LatLngTuple[] = [
         [pickupCoords.lat, pickupCoords.lng],
@@ -180,6 +180,49 @@ export default function LeafletMap({
     }, 200);
 
   }, [pickupCoords, deliveryCoords]);
+
+  // Prefer a road-following route from the public OSRM routing service.
+  // Keep the straight-line route above as a graceful fallback if routing is unavailable.
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !pickupCoords || !deliveryCoords) return;
+
+    let cancelled = false;
+    const controller = new AbortController();
+    const routeUrl = `https://router.project-osrm.org/route/v1/driving/${pickupCoords.lng},${pickupCoords.lat};${deliveryCoords.lng},${deliveryCoords.lat}?overview=full&geometries=geojson`;
+
+    fetch(routeUrl, { signal: controller.signal })
+      .then((response) => {
+        if (!response.ok) throw new Error('Routing service unavailable');
+        return response.json();
+      })
+      .then((data) => {
+        const coordinates = data?.routes?.[0]?.geometry?.coordinates;
+        if (cancelled || !Array.isArray(coordinates) || coordinates.length < 2) return;
+
+        const roadPath = coordinates.map(
+          ([lng, lat]: [number, number]): L.LatLngTuple => [lat, lng],
+        );
+        if (markersRef.current.route) map.removeLayer(markersRef.current.route);
+        markersRef.current.route = L.polyline(roadPath, {
+          color: '#ff7a1a',
+          weight: 4,
+          opacity: 0.9,
+          lineCap: 'round',
+          lineJoin: 'round',
+        }).addTo(map);
+      })
+      .catch((error) => {
+        if (error?.name !== 'AbortError') {
+          console.warn('Road route unavailable; using direct route fallback.', error);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+      controller.abort();
+    };
+  }, [pickupCoords?.lat, pickupCoords?.lng, deliveryCoords?.lat, deliveryCoords?.lng]);
 
   // 3. Setup / Update Dynamic Vehicle GPS Marker
   useEffect(() => {
