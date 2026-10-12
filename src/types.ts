@@ -84,6 +84,8 @@ export interface PricingRule {
 
 export interface Settings {
   companyName: string;
+  brandLogoUrl?: string;
+  testimonials?: Array<{ name: string; role?: string; quote: string; photoUrl?: string }>;
   contactEmail: string;
   contactPhone: string;
   pricing: PricingRule;
