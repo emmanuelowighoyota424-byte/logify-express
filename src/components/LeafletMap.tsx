@@ -70,9 +70,8 @@ export default function LeafletMap({
     };
   }, []);
 
-  // Use OpenStreetMap as the dependable base layer. It does not require a
-  // browser API key, so missing or misconfigured CARTO credentials cannot blank
-  // the shipment map. The dark-blue visual treatment is applied through CSS.
+  // Use standard OSM tiles first, then switch providers if tile requests fail.
+  // A provider fallback prevents the tracking map from showing only a blank canvas.
   useEffect(() => {
     const map = mapRef.current;
     if (!map) return;
@@ -82,23 +81,47 @@ export default function LeafletMap({
       tileLayerRef.current = null;
     }
 
-    const streetLayer = L.tileLayer(
+    const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+    const primaryLayer = L.tileLayer(
       'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-      {
-        maxZoom: 19,
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        className: theme === 'dark' ? 'logify-dark-map-tiles' : '',
-        keepBuffer: 4,
-        updateWhenIdle: false,
-      },
+      { maxZoom: 19, attribution, keepBuffer: 4, updateWhenIdle: false },
+    );
+    const fallbackLayer = L.tileLayer(
+      'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+      { subdomains: 'abc', maxZoom: 19, attribution: attribution + ' &copy; HOT', keepBuffer: 4, updateWhenIdle: false },
     );
 
-    streetLayer.addTo(map);
-    tileLayerRef.current = streetLayer;
+    let failedTiles = 0;
+    let loadedTiles = 0;
+    let switched = false;
+    const switchToFallback = () => {
+      if (switched || !mapRef.current) return;
+      switched = true;
+      if (map.hasLayer(primaryLayer)) map.removeLayer(primaryLayer);
+      fallbackLayer.addTo(map);
+      tileLayerRef.current = fallbackLayer;
+    };
+    primaryLayer.on('tileerror', () => {
+      failedTiles += 1;
+      if (failedTiles >= 3 && loadedTiles === 0) switchToFallback();
+    });
+    primaryLayer.on('tileload', () => { loadedTiles += 1; });
+    primaryLayer.addTo(map);
+    tileLayerRef.current = primaryLayer;
+
+    const fallbackTimer = window.setTimeout(() => {
+      if (loadedTiles === 0) switchToFallback();
+    }, 4500);
 
     return () => {
-      streetLayer.off();
-      if (map.hasLayer(streetLayer)) map.removeLayer(streetLayer);
+      window.clearTimeout(fallbackTimer);
+      primaryLayer.off();
+      fallbackLayer.off();
+      if (map.hasLayer(primaryLayer)) map.removeLayer(primaryLayer);
+      if (map.hasLayer(fallbackLayer)) map.removeLayer(fallbackLayer);
+      if (tileLayerRef.current === primaryLayer || tileLayerRef.current === fallbackLayer) {
+        tileLayerRef.current = null;
+      }
     };
   }, [theme]);
 
