@@ -1029,3 +1029,82 @@ html.dark ::-webkit-scrollbar-thumb:hover { background: #4f85bb; }
     transition-duration: 0.01ms !important;
   }
 }
+
+
+/* Logify Express full-site deep-blue brand theme (public, tracking and admin). */
+:root {
+  --logify-ink: #e8f3ff;
+  --logify-navy: #041943;
+  --logify-blue: #087cff;
+  --logify-amber: #38bdf8;
+  --logify-paper: #061d49;
+  --logify-line: rgba(69, 150, 255, .36);
+  color-scheme: dark;
+}
+html, body, #root { min-height: 100%; background: #041943 !important; }
+body, html:not(.dark) body, html.dark body {
+  background: linear-gradient(180deg,#08275e 0%,#041943 58%,#031333 100%) fixed !important;
+  color: #e8f3ff !important;
+}
+main, section, footer, .hero-premium, .admin-control-tower,
+.admin-shipments-premium, .admin-settings-premium {
+  background-color: transparent !important;
+}
+nav.sticky, .premium-navbar, header {
+  background: rgba(5, 30, 75, .96) !important;
+  color: #e8f3ff !important;
+  border-color: rgba(69,150,255,.35) !important;
+}
+[class*="bg-white"], [class*="bg-slate-50"], [class*="bg-slate-100"],
+[class*="bg-gray-50"], [class*="bg-gray-100"] {
+  background-color: #082b68 !important;
+  color: #e8f3ff !important;
+}
+[class*="bg-slate-900"], [class*="bg-slate-950"], [class*="bg-gray-900"] {
+  background-color: #031638 !important;
+  color: #e8f3ff !important;
+}
+[class*="text-slate-950"], [class*="text-slate-900"], [class*="text-slate-800"],
+[class*="text-slate-700"], [class*="text-slate-600"], [class*="text-slate-500"],
+[class*="text-gray-900"], [class*="text-gray-800"], [class*="text-gray-700"],
+[class*="text-gray-600"] { color: #d9ebff !important; }
+[class*="text-slate-400"], [class*="text-slate-300"], [class*="text-gray-500"],
+[class*="text-gray-400"] { color: #a6c8f4 !important; }
+[class*="border-slate-100"], [class*="border-slate-200"], [class*="border-slate-700"],
+[class*="border-slate-800"], [class*="border-gray-200"] {
+  border-color: rgba(69,150,255,.34) !important;
+}
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+select, textarea {
+  background: #031b46 !important;
+  color: #f0f7ff !important;
+  border-color: #1766c6 !important;
+}
+input::placeholder, textarea::placeholder { color: #8eb5e8 !important; }
+button[class*="bg-blue-600"], a[class*="bg-blue-600"],
+button[class*="bg-emerald-600"], button[class*="bg-emerald-500"],
+.admin-active-nav {
+  background: linear-gradient(135deg,#087cff,#0754c6) !important;
+  color: #fff !important;
+}
+.admin-control-tower { background: transparent !important; color: #e8f3ff !important; }
+.admin-control-tower aside { background: linear-gradient(180deg,#05245b,#031638) !important; }
+.admin-control-tower main [class*="bg-white"],
+.admin-control-tower main [class*="bg-slate-50"],
+.admin-control-tower main [class*="bg-slate-100"] {
+  background: #082b68 !important;
+}
+.admin-control-tower table thead { background: #06245a !important; }
+.admin-control-tower table td, .admin-control-tower table th {
+  color: #d9ebff !important; border-color: rgba(69,150,255,.3) !important;
+}
+.hero-premium__masthead, .admin-settings-premium > div:first-child {
+  background: linear-gradient(135deg,#06245a 0%,#0754ad 100%) !important;
+}
+.tracking-panel-premium, .logify-tracking-premium > div:first-child {
+  background: linear-gradient(145deg,#082e70,#06265e) !important;
+  color: #e8f3ff !important;
+  border-color: rgba(69,150,255,.4) !important;
+}
+footer { color: #c4dcfb !important; border-color: rgba(69,150,255,.28) !important; }
+::selection { background: #168bff; color: white; }
