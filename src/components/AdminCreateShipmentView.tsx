@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Package, Truck, Calendar, DollarSign, Upload, CheckCircle, Info, Shield, MapPin, Sparkles, Loader2, Printer } from 'lucide-react';
+import { Package, Truck, Calendar, DollarSign, Upload, CheckCircle, Info, Shield, MapPin, Sparkles, Loader2, Printer, Copy, ExternalLink } from 'lucide-react';
 import { Settings } from '../types.js';
 
 interface AdminCreateShipmentViewProps {
@@ -45,6 +45,7 @@ export default function AdminCreateShipmentView({
   const [formError, setFormError] = useState<string | null>(null);
   const [bookingSuccess, setBookingSuccess] = useState<string | null>(null);
   const [createdShipment, setCreatedShipment] = useState<any | null>(null);
+  const [trackingLinkCopied, setTrackingLinkCopied] = useState(false);
 
   // Dynamic estimated price state
   const [estimatedPrice, setEstimatedPrice] = useState<number>(0);
@@ -324,6 +325,17 @@ export default function AdminCreateShipmentView({
               Done & Return to Logs
             </button>
           </div>
+        </div>
+
+        <div className="rounded-2xl border border-blue-200 bg-blue-50/80 dark:border-blue-900/60 dark:bg-blue-950/30 p-4 sm:p-5 space-y-3">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div><p className="text-[10px] font-black uppercase tracking-widest text-blue-700 dark:text-blue-300">Customer tracking link</p><p className="text-xs text-slate-600 dark:text-slate-300 mt-1">This URL is generated from the saved tracking number. Share it with the customer.</p></div>
+            <div className="flex gap-2 shrink-0">
+              <button type="button" onClick={async () => { const url = window.location.origin + "/track?track=" + encodeURIComponent(createdShipment.id); try { await navigator.clipboard.writeText(url); setTrackingLinkCopied(true); window.setTimeout(() => setTrackingLinkCopied(false), 1800); } catch { window.prompt("Copy the customer tracking link:", url); } }} className="inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 hover:bg-blue-700 px-3 py-2 text-xs font-bold text-white">{trackingLinkCopied ? <CheckCircle size={14} /> : <Copy size={14} />}{trackingLinkCopied ? "Copied" : "Copy tracking link"}</button>
+              <a href={"/track?track=" + encodeURIComponent(createdShipment.id)} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 rounded-lg border border-blue-200 dark:border-blue-800 px-3 py-2 text-xs font-bold text-blue-700 dark:text-blue-300"><ExternalLink size={14} /> Open link</a>
+            </div>
+          </div>
+          <input readOnly value={window.location.origin + "/track?track=" + encodeURIComponent(createdShipment.id)} onFocus={(event) => event.currentTarget.select()} className="w-full rounded-lg border border-blue-200 dark:border-blue-900 bg-white dark:bg-slate-950 px-3 py-2.5 text-xs font-mono text-slate-700 dark:text-slate-200 outline-none" aria-label="Customer tracking URL" />
         </div>
 
         {/* Outer Receipt container */}
