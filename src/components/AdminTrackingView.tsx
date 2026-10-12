@@ -646,11 +646,11 @@ export default function AdminTrackingView({
                     </div>
 
                     <div className="space-y-1">
-                      <label className="text-[9px] font-bold font-mono uppercase tracking-wider text-slate-400">Estimated Delivery Date</label>
+                      <label className="text-[9px] font-bold font-mono uppercase tracking-wider text-slate-400">Estimated Delivery Date & Time</label>
                       <input
-                        type="date"
-                        value={estimatedDelivery ? estimatedDelivery.split('T')[0] : ''}
-                        onChange={(e) => setEstimatedDelivery(e.target.value)}
+                        type="datetime-local"
+                        value={estimatedDelivery ? (() => { const d = new Date(estimatedDelivery); return Number.isNaN(d.getTime()) ? estimatedDelivery : new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 16); })() : ''}
+                        onChange={(e) => setEstimatedDelivery(e.target.value ? new Date(e.target.value).toISOString() : '')}
                         className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs outline-none focus:ring-1 focus:ring-blue-500 text-slate-950 dark:text-white"
                       />
                     </div>
