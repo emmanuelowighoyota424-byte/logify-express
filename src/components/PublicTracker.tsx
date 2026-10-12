@@ -8,6 +8,7 @@ import {
 import { motion, AnimatePresence } from 'motion/react';
 import { Shipment, Coordinates, Settings } from '../types.js';
 import LeafletMap from './LeafletMap.tsx';
+import './logify-tracking-premium.css';
 import QrScannerModal from './QrScannerModal.tsx';
 
 const detectLogisticsPartner = (id: string) => {
@@ -564,7 +565,7 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
   const presetStyle = getBackgroundPresetStyles();
 
   return (
-    <div className="mx-auto min-h-[70vh] max-w-[1440px] space-y-7 rounded-[28px] bg-[#f4f6f8] px-3 py-5 text-slate-900 sm:px-6 sm:py-8 lg:px-8">
+    <div className="logify-tracking-premium mx-auto min-h-[70vh] max-w-[1440px] space-y-7 rounded-[28px] bg-[#f4f6f8] px-3 py-5 text-slate-900 sm:px-6 sm:py-8 lg:px-8">
       <div className={presetStyle.wrapper}>
         {/* FedEx Style Corporate Header Branding */}
         <div className="text-center space-y-4 max-w-2xl mx-auto">
