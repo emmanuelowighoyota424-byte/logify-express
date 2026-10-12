@@ -34,13 +34,6 @@ export default function AdminLogin({ onLoginSuccess, onNavigate }: AdminLoginPro
 
     const normalizedEmail = email.trim().toLowerCase();
 
-    // Strict check to ensure authorized admin email is permitted
-    const isAllowedAdmin = normalizedEmail === 'owighoyotaemmanuel424@gmail.com';
-    if (!isAllowedAdmin) {
-      setError('Access Denied: Only owighoyotaemmanuel424@gmail.com is permitted.');
-      setLoading(false);
-      return;
-    }
 
     try {
       const response = await fetch('/api/auth/login', {
@@ -54,8 +47,8 @@ export default function AdminLogin({ onLoginSuccess, onNavigate }: AdminLoginPro
         throw new Error(data.error || 'Authentication failed. Please check your credentials.');
       }
 
-      if (data.user?.role !== 'super_admin') {
-        throw new Error('Unauthorized role. Only super_admin role can access dashboard.');
+      if (!['super_admin', 'admin'].includes(data.user?.role)) {
+        throw new Error('Administrative access is required for this account.');
       }
 
       setSuccessMsg('Authentication successful. Redirecting to workspace...');
@@ -82,7 +75,7 @@ export default function AdminLogin({ onLoginSuccess, onNavigate }: AdminLoginPro
             ADMIN WORKSPACE ACCESS
           </h2>
           <p className="text-[11px] text-slate-500 max-w-xs mx-auto">
-            Authorized administrative personnel only. System is protected by end-to-end security policies.
+            Sign in with an administrator account provisioned in the Logify database.
           </p>
         </div>
 
@@ -108,7 +101,7 @@ export default function AdminLogin({ onLoginSuccess, onNavigate }: AdminLoginPro
             <input
               type="email"
               required
-              placeholder="e.g. owighoyotaemmanuel424@gmail.com"
+              placeholder="admin@your-company.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 outline-none focus:border-amber-500 transition-all text-slate-900 dark:text-white"
