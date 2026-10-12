@@ -648,8 +648,102 @@ html:not(.dark) hr { border-color: #28527b; }
 html:not(.dark) ::-webkit-scrollbar-track { background: #08264a; }
 html:not(.dark) ::-webkit-scrollbar-thumb { background: #37658f; }
 html:not(.dark) ::-webkit-scrollbar-thumb:hover { background: #4f85bb; }
-/* Preserve semantic success/warning/error colors for statuses and alerts. */
-html:not(.dark) :is(.text-emerald-500,.text-emerald-600,.text-green-500,.text-green-600,
-.text-red-500,.text-red-600,.text-rose-500,.text-rose-600,.text-amber-500,.text-orange-500) {
-  color: revert-layer;
+
+/* DARK-BLUE DEFAULT THEME — match the dark class used by App.tsx. */
+html.dark {
+  color-scheme: dark;
+  --lx-surface: #103b68;
+  --lx-page: #061b35;
+  --lx-ink: #edf5ff;
+  --lx-muted: #b7cbe2;
+  --lx-border: #28527b;
+  --lx-brand: #2f83ff;
 }
+html.dark body,
+html.dark #root,
+html.dark #root > div,
+html.dark .hero-premium,
+html.dark .admin-control-tower,
+html.dark .admin-shipments-premium thead {
+  background-color: #061b35 !important;
+  color: #edf5ff;
+}
+html.dark :is(
+  .bg-white,.bg-slate-50,.bg-slate-100,.bg-slate-200,
+  .bg-gray-50,.bg-gray-100,.bg-gray-200,
+  .bg-neutral-50,.bg-neutral-100,.bg-neutral-200,
+  .bg-zinc-50,.bg-zinc-100,.bg-zinc-200,
+  .bg-stone-50,.bg-stone-100,.bg-stone-200
+) {
+  background-color: #103b68 !important;
+}
+html.dark [class*="bg-white/"],
+html.dark [class*="bg-slate-50/"],
+html.dark [class*="bg-gray-50/"],
+html.dark [class*="bg-neutral-50/"] {
+  background-color: rgb(16 59 104 / 88%) !important;
+}
+html.dark :is(
+  .border-white,.border-slate-100,.border-slate-200,.border-slate-300,
+  .border-gray-100,.border-gray-200,.border-gray-300,
+  .border-neutral-100,.border-neutral-200,.border-zinc-100,.border-zinc-200
+) {
+  border-color: #28527b !important;
+}
+html.dark :is(
+  .text-slate-950,.text-slate-900,.text-slate-800,.text-slate-700,
+  .text-gray-950,.text-gray-900,.text-gray-800,.text-gray-700,
+  .text-neutral-900,.text-neutral-800,.text-zinc-900,.text-zinc-800,
+  .text-stone-900,.text-stone-800
+) {
+  color: #edf5ff !important;
+}
+html.dark :is(
+  .text-slate-600,.text-slate-500,.text-gray-600,.text-gray-500,
+  .text-neutral-600,.text-neutral-500,.text-zinc-600,.text-zinc-500,
+  .text-stone-600,.text-stone-500
+) {
+  color: #b7cbe2 !important;
+}
+html.dark .premium-navbar {
+  background: rgb(6 27 53 / 96%) !important;
+  border-bottom-color: #28527b !important;
+}
+html.dark .premium-navbar button[aria-current="page"] {
+  background: #174f89 !important;
+  color: #ffffff !important;
+}
+html.dark input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+html.dark select,
+html.dark textarea {
+  background-color: #092e54 !important;
+  color: #f4f8ff !important;
+  border-color: #37658f !important;
+}
+html.dark input::placeholder,
+html.dark textarea::placeholder { color: #a9bfd7 !important; }
+html.dark .tracking-panel-premium,
+html.dark .admin-control-tower main [class*="bg-white"] {
+  background-color: #103b68 !important;
+  color: #edf5ff !important;
+  border-color: #28527b !important;
+}
+html.dark .admin-control-tower aside {
+  background: linear-gradient(180deg,#04152b 0%,#08264a 100%) !important;
+}
+html.dark :is(.bg-blue-50,.bg-blue-100,.bg-indigo-50,.bg-indigo-100) {
+  background-color: #174f89 !important;
+}
+html.dark :is(.text-blue-700,.text-blue-800,.text-indigo-700,.text-indigo-800) {
+  color: #9bc5ff !important;
+}
+html.dark :is(.border-blue-100,.border-blue-200,.border-indigo-100,.border-indigo-200) {
+  border-color: #376da3 !important;
+}
+html.dark table th,
+html.dark table td,
+html.dark hr { border-color: #28527b !important; }
+html.dark tbody tr:hover { background-color: rgb(47 131 255 / 12%) !important; }
+html.dark ::-webkit-scrollbar-track { background: #061b35; }
+html.dark ::-webkit-scrollbar-thumb { background: #37658f; }
+html.dark ::-webkit-scrollbar-thumb:hover { background: #4f85bb; }
