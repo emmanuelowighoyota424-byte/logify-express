@@ -66,3 +66,120 @@ html:not(.dark) input,html:not(.dark) select,html:not(.dark) textarea { backgrou
 html.dark ::-webkit-scrollbar-track { background:#0b1f33; }
 html.dark ::-webkit-scrollbar-thumb { background:#31516a; }
 @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; transition-duration:.01ms !important; } }
+
+
+/* --------------------------------------------------------------------------
+   Logify Express · Premium design system
+   A restrained enterprise logistics aesthetic across public, customer and admin
+   surfaces. Deep ink, quiet steel, warm amber and generous breathing room.
+   -------------------------------------------------------------------------- */
+:root {
+  color-scheme: light;
+  --logify-ink: #0b1f33;
+  --logify-ink-raised: #102b43;
+  --logify-blue: #155e8a;
+  --logify-amber: #f5b52e;
+  --logify-paper: #f5f7f9;
+  --logify-line: #e2e8ee;
+  --logify-muted: #647587;
+  --logify-radius: 16px;
+}
+html.dark { color-scheme: dark; }
+html { text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }
+body { letter-spacing: -0.008em; }
+h1,h2,h3,h4 { letter-spacing: -0.035em; }
+p { text-wrap: pretty; }
+a,button,input,select,textarea { transition-property: color,background-color,border-color,box-shadow,transform,opacity; transition-duration: 160ms; transition-timing-function: ease-out; }
+:focus-visible { outline: 3px solid rgba(245,181,46,.75); outline-offset: 3px; }
+
+/* Cleaner canvas and more consistent component geometry */
+html:not(.dark) body { background: var(--logify-paper) !important; color: #172b3d; }
+html.dark body { background: #071521 !important; color: #e8eef3; }
+.bg-white { --tw-bg-opacity: 1; }
+[class*="border-slate-100"],[class*="border-slate-200"] { border-color: #e3e9ef; }
+html.dark [class*="border-slate-800"],html.dark [class*="border-slate-700"] { border-color: #203649; }
+.rounded-xl { border-radius: 13px; }
+.rounded-2xl { border-radius: 17px; }
+.rounded-3xl { border-radius: 22px; }
+.shadow-sm { box-shadow: 0 2px 5px rgba(11,31,51,.025), 0 10px 30px rgba(11,31,51,.035); }
+.shadow-lg { box-shadow: 0 10px 30px rgba(11,31,51,.09); }
+html.dark .shadow-sm,html.dark .shadow-lg { box-shadow: 0 8px 28px rgba(0,0,0,.14); }
+
+/* Inputs: unified, legible, accessible across quote, tracking, login and settings */
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+select,textarea {
+  border-radius: 12px;
+  border-color: #d9e2e9;
+  box-shadow: inset 0 1px 1px rgba(11,31,51,.015);
+}
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):focus,
+select:focus,textarea:focus {
+  border-color: #155e8a !important;
+  box-shadow: 0 0 0 4px rgba(21,94,138,.11) !important;
+  outline: none;
+}
+html.dark input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+html.dark select,html.dark textarea {
+  border-color: #294256;
+  color: #edf3f7;
+}
+::placeholder { color: #8a9aa8 !important; opacity: 1; }
+
+/* Buttons get a confident, tactile feel without overriding semantic colors */
+button { font-weight: 600; }
+button:active:not(:disabled) { transform: translateY(1px); }
+button:disabled { cursor: not-allowed; }
+button:focus-visible,a:focus-visible { border-radius: 10px; }
+button[class*="bg-amber-400"],a[class*="bg-amber-400"] {
+  background-image: linear-gradient(135deg,#ffd46d 0%,#f5b52e 100%);
+  box-shadow: 0 5px 14px rgba(245,181,46,.16);
+}
+button[class*="bg-blue-600"],button[class*="bg-[#155e8a]"] {
+  box-shadow: 0 5px 16px rgba(21,94,138,.13);
+}
+
+/* Premium public header, hero and footer surfaces */
+.logistics-status-bar { min-height: 32px; letter-spacing: .045em; }
+nav.sticky {
+  border-bottom-color: rgba(214,224,232,.8);
+  box-shadow: 0 5px 20px rgba(11,31,51,.025);
+}
+html.dark nav.sticky { border-bottom-color: rgba(255,255,255,.075); box-shadow: 0 5px 20px rgba(0,0,0,.12); }
+nav.sticky button { letter-spacing: -.005em; }
+nav.sticky button:hover { transform: translateY(-1px); }
+footer { letter-spacing: -.005em; }
+main { min-width: 0; }
+
+/* Content panels and operational tables */
+[class*="bg-white"][class*="border"][class*="rounded"] {
+  border-color: #e3e9ef;
+}
+html.dark [class*="bg-slate-900"][class*="border"] { border-color: #203649; }
+table { border-collapse: separate; border-spacing: 0; }
+th { font-size: 10px; text-transform: uppercase; letter-spacing: .075em; font-weight: 700; }
+td,th { border-color: #e8edf1; }
+html.dark td,html.dark th { border-color: #203649; }
+tbody tr { transition: background-color 140ms ease; }
+tbody tr:hover { background-color: rgba(21,94,138,.035); }
+html.dark tbody tr:hover { background-color: rgba(255,255,255,.025); }
+
+/* Control tower: quieter chrome, stronger hierarchy, responsive workspace */
+.admin-control-tower { min-height: 100vh; }
+.admin-sidebar-brand { box-shadow: inset -1px 0 rgba(255,255,255,.06); }
+.admin-active-nav { border: 1px solid rgba(255,255,255,.08); }
+.admin-metric { border: 1px solid rgba(218,228,236,.8); }
+html.dark .admin-metric { border-color: #203649; }
+.admin-metric:hover { transform: translateY(-2px); transition: transform 180ms ease, box-shadow 180ms ease; }
+.admin-control-tower input,.admin-control-tower select,.admin-control-tower textarea { max-width: 100%; }
+@media (max-width: 767px) {
+  body { font-size: 14px; }
+  .admin-control-tower main { padding-left: 14px !important; padding-right: 14px !important; }
+  .admin-control-tower [class*="overflow-x-auto"] { -webkit-overflow-scrolling: touch; }
+  h1 { line-height: 1.12; }
+}
+@media (min-width: 1280px) {
+  .max-w-7xl { max-width: 1320px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after { transition-duration: .01ms !important; }
+}
