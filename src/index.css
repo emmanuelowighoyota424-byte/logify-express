@@ -413,3 +413,49 @@ html.dark .premium-navbar {
     transition-duration: .01ms !important;
   }
 }
+
+
+/* Unified 2026 premium system across public pages — retire legacy mixed-brand styling. */
+:root {
+  --lx-surface: #ffffff;
+  --lx-page: #f4f7fb;
+  --lx-ink: #102b4e;
+  --lx-muted: #647991;
+  --lx-border: #dce6f0;
+  --lx-brand: #1769e8;
+  --lx-accent: #f28a32;
+}
+body { background: var(--lx-page); color: var(--lx-ink); }
+::selection { background: rgb(23 105 232 / 18%); color: #09264a; }
+.premium-navbar {
+  background: rgb(255 255 255 / 94%) !important;
+  border-bottom: 1px solid var(--lx-border) !important;
+  box-shadow: 0 5px 24px rgb(16 43 78 / 5%) !important;
+}
+.premium-navbar button[aria-current="page"] {
+  background: #eaf2ff !important; color: #1257bf !important;
+}
+.hero-premium { background-color: #f4f7fb; }
+.hero-premium :where(h1,h2,h3) { letter-spacing: -.04em; }
+.hero-premium__title { text-wrap: balance; }
+:where(.hero-premium,.tracking-panel-premium,.admin-login-premium,.admin-settings-premium,.admin-shipments-premium) :where(input,select,textarea) {
+  border-radius: 12px;
+}
+:where(.hero-premium,.tracking-panel-premium) :where(a,button):focus-visible {
+  outline: 3px solid rgb(23 105 232 / 28%); outline-offset: 3px;
+}
+.tracking-panel-premium {
+  background: #fff !important; border: 1px solid var(--lx-border) !important;
+  box-shadow: 0 16px 42px rgb(16 43 78 / 7%) !important;
+}
+.tracking-panel-premium #tracking-submit-btn {
+  background: #09264a !important; color: #fff !important;
+  border-color: #09264a !important; border-radius: 12px !important;
+}
+.tracking-panel-premium #tracking-submit-btn:hover {
+  background: #1769e8 !important; border-color: #1769e8 !important;
+}
+@media (max-width: 767px) {
+  body { overflow-x: hidden; }
+  .hero-premium, .tracking-panel-premium { max-width: 100%; }
+}
