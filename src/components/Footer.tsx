@@ -1,5 +1,5 @@
 import React from 'react';
-import { Truck, Mail, Phone, Linkedin, Instagram, Facebook } from 'lucide-react';
+import { Truck, Mail, Phone } from 'lucide-react';
 import { Settings } from '../types.js';
 
 interface FooterProps {
