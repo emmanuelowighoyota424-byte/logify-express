@@ -134,30 +134,7 @@ export default function LeafletMap({
     streetLayer.addTo(map);
     tileLayerRef.current = streetLayer;
 
-    let failedTiles = 0;
-    darkBlueLayer.on('tileerror', () => {
-      failedTiles += 1;
-      // Switch only when several tiles fail, so isolated missing edge tiles
-      // do not unexpectedly change the visual style.
-      if (failedTiles >= 3) {
-        map.removeLayer(darkBlueLayer);
-        addStreetFallback();
-      }
-    });
-    darkBlueLayer.on('load', () => {
-      failedTiles = 0;
-    });
 
-    tileLayerRef.current = darkBlueLayer;
-    darkBlueLayer.addTo(map);
-    const fallbackTimer = window.setTimeout(() => {
-      if (darkBlueLayer.isLoading()) addStreetFallback();
-    }, 5000);
-
-    return () => {
-      window.clearTimeout(fallbackTimer);
-      darkBlueLayer.off();
-    };
   }, []);
 
   // 2. Setup Static Routes & Markers
