@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Mail, Phone, MapPin, Send, HelpCircle, ShieldCheck, Ship, Plane, Truck, Warehouse, Lock, ArrowRight, Loader2 } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, HelpCircle, ShieldCheck, Ship, Plane, Truck, Warehouse, Lock, ArrowRight, Loader2, Package } from 'lucide-react';
 import Navbar from './components/Navbar.tsx';
 import Footer from './components/Footer.tsx';
 import Hero from './components/Hero.tsx';
