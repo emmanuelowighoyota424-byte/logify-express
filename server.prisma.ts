@@ -184,6 +184,105 @@ app.get("/api/shipments/:id", ...staffOnly, asyncRoute(async (req: AuthedRequest
   res.json(shipment);
 }));
 
+app.put("/api/shipments/:id", ...adminOnly, asyncRoute(async (req: AuthedRequest, res) => {
+  const existing = await prisma.shipment.findUnique({ where: { id: req.params.id }, include: { timeline: { orderBy: { timestamp: "asc" } } } });
+  if (!existing) return res.status(404).json({ error: "Shipment not found" });
+  const b = req.body ?? {};
+  const data: Record<string, any> = {};
+  const stringFields: Record<string, number> = {
+    senderName: 120, senderEmail: 320, senderPhone: 40, receiverName: 120,
+    receiverEmail: 320, receiverPhone: 40, pickupAddress: 500, deliveryAddress: 500,
+    tag: 100, description: 2000, deliveryType: 50, proofOfDelivery: 2000
+  };
+  for (const [key, max] of Object.entries(stringFields)) {
+    if (Object.prototype.hasOwnProperty.call(b, key)) {
+      const value = normalizeString(b[key], max);
+      data[key] = ["receiverEmail", "senderEmail"].includes(key) ? (value ? value.toLowerCase() : null) : (value || (["receiverEmail", "receiverPhone", "tag", "description", "proofOfDelivery"].includes(key) ? null : ""));
+    }
+  }
+  if (Object.prototype.hasOwnProperty.call(b, "status")) {
+    const raw = normalizeString(b.status, 50).toUpperCase().replace(/[\s-]+/g, "_");
+    const aliases: Record<string, string> = { "PICKEDUP": "PICKED_UP", "INTRANSIT": "IN_TRANSIT", "OUTFORDELIVERY": "OUT_FOR_DELIVERY" };
+    const status = aliases[raw] || raw;
+    if (!Object.values(ShipmentStatus).includes(status as any)) return res.status(400).json({ error: "Invalid shipment status" });
+    data.status = status;
+  }
+  if (Object.prototype.hasOwnProperty.call(b, "type")) {
+    const rawType = normalizeString(b.type, 50).toUpperCase();
+    const aliases: Record<string, string> = { "STANDARD": "STANDARD", "EXPRESS": "EXPRESS", "FREIGHT": "FREIGHT", "DOCUMENT": "DOCUMENT", "FRAGILE": "FRAGILE" };
+    const type = aliases[rawType] || rawType;
+    if (!Object.values(ShipmentType).includes(type as any)) return res.status(400).json({ error: "Invalid shipment type" });
+    data.type = type;
+  }
+  for (const key of ["weight", "price", "packageValue"] as const) {
+    if (Object.prototype.hasOwnProperty.call(b, key)) {
+      const value = Number(b[key]);
+      if (!Number.isFinite(value) || value < 0 || (key === "weight" && value <= 0)) return res.status(400).json({ error: "Invalid " + key });
+      data[key] = value;
+    }
+  }
+  if (Object.prototype.hasOwnProperty.call(b, "estimatedDelivery")) {
+    if (!b.estimatedDelivery) data.estimatedDelivery = null;
+    else { const date = new Date(b.estimatedDelivery); if (!Number.isFinite(date.getTime())) return res.status(400).json({ error: "Invalid estimated delivery date" }); data.estimatedDelivery = date; }
+  }
+  if (Object.prototype.hasOwnProperty.call(b, "packageDimensions")) data.packageDimensions = b.packageDimensions && typeof b.packageDimensions === "object" ? b.packageDimensions : null;
+  const readCoords = (key: string, latKey: string, lngKey: string) => {
+    if (!Object.prototype.hasOwnProperty.call(b, key)) return;
+    const coords = b[key];
+    if (coords == null) { data[latKey] = null; data[lngKey] = null; return; }
+    const lat = Array.isArray(coords) ? Number(coords[0]) : Number(coords.lat);
+    const lng = Array.isArray(coords) ? Number(coords[1]) : Number(coords.lng);
+    if (!Number.isFinite(lat) || !Number.isFinite(lng) || lat < -90 || lat > 90 || lng < -180 || lng > 180) throw new Error("Invalid coordinates for " + key);
+    data[latKey] = lat; data[lngKey] = lng;
+  };
+  try {
+    readCoords("pickupCoords", "pickupLat", "pickupLng");
+    readCoords("deliveryCoords", "deliveryLat", "deliveryLng");
+    readCoords("currentCoords", "currentLat", "currentLng");
+    for (const key of ["pickupLat", "pickupLng", "deliveryLat", "deliveryLng", "currentLat", "currentLng"]) {
+      if (Object.prototype.hasOwnProperty.call(b, key)) {
+        const value = b[key] == null || b[key] === "" ? null : Number(b[key]);
+        if (value !== null && (!Number.isFinite(value) || (key.endsWith("Lat") ? value < -90 || value > 90 : value < -180 || value > 180))) throw new Error("Invalid coordinate " + key);
+        data[key] = value;
+      }
+    }
+  } catch (error) {
+    return res.status(400).json({ error: error instanceof Error ? error.message : "Invalid coordinates" });
+  }
+  if (Object.prototype.hasOwnProperty.call(b, "assignedDriverId")) {
+    const driverId = normalizeString(b.assignedDriverId, 100) || null;
+    if (driverId && !(await prisma.driver.findUnique({ where: { id: driverId }, select: { id: true } }))) return res.status(404).json({ error: "Driver not found" });
+    data.assignedDriverId = driverId;
+  }
+  const timeline = Array.isArray(b.timeline) ? b.timeline : null;
+  if (timeline && timeline.length > 500) return res.status(400).json({ error: "Too many tracking milestones" });
+  if (timeline) {
+    for (const event of timeline) {
+      if (!normalizeString(event?.status, 80) || !normalizeString(event?.description, 1000)) return res.status(400).json({ error: "Every tracking milestone needs a status and description" });
+      const timestamp = event?.timestamp ? new Date(event.timestamp) : new Date();
+      if (!Number.isFinite(timestamp.getTime())) return res.status(400).json({ error: "Invalid tracking milestone timestamp" });
+    }
+  }
+  const shipment = await prisma.$transaction(async tx => {
+    const updated = await tx.shipment.update({ where: { id: existing.id }, data });
+    if (timeline) {
+      await tx.timelineEvent.deleteMany({ where: { shipmentId: existing.id } });
+      if (timeline.length) await tx.timelineEvent.createMany({ data: timeline.map((event: any) => ({
+        shipmentId: existing.id,
+        status: normalizeString(event.status, 80),
+        location: normalizeString(event.location, 300) || null,
+        description: normalizeString(event.description, 1000),
+        timestamp: event.timestamp ? new Date(event.timestamp) : new Date()
+      })) });
+    } else if (data.status && data.status !== existing.status) {
+      await tx.timelineEvent.create({ data: { shipmentId: existing.id, status: data.status, location: data.location ?? existing.location, description: "Shipment status updated to " + data.status, timestamp: new Date() } });
+    }
+    return tx.shipment.findUnique({ where: { id: existing.id }, include: { timeline: { orderBy: { timestamp: "asc" } }, assignedDriver: true, payments: true } });
+  });
+  await audit(req.auth!.id, "UPDATE_TRACKING", "Shipment", existing.id, { fields: Object.keys(data), milestones: timeline?.length });
+  res.json(shipment);
+}));
+
 app.post("/api/shipments", ...staffOnly, asyncRoute(async (req: AuthedRequest, res) => {
   const b = req.body ?? {};
   const senderName = normalizeString(b.senderName, 120), senderEmail = normalizeString(b.senderEmail, 320).toLowerCase(), senderPhone = normalizeString(b.senderPhone, 40);
