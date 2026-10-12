@@ -459,3 +459,12 @@ body { background: var(--lx-page); color: var(--lx-ink); }
   body { overflow-x: hidden; }
   .hero-premium, .tracking-panel-premium { max-width: 100%; }
 }
+
+
+/* Final shared public-site palette: replace leftover legacy carrier colors. */
+:root { --lx-brand: #1769e8; --lx-accent: #f28a32; }
+::selection { background: rgb(23 105 232 / 20%); color: #09264a; }
+:where(.hero-premium,.tracking-panel-premium) :where(.text-amber-400,.text-amber-500,.text-orange-500) { color: #1769e8 !important; }
+:where(.hero-premium,.tracking-panel-premium) :where(.bg-amber-400,.bg-amber-500,.bg-orange-500) { background-color: #1769e8 !important; }
+:where(.hero-premium,.tracking-panel-premium) :where(.hover\\:bg-amber-300:hover,.hover\\:bg-amber-400:hover) { background-color: #1257bf !important; }
+:where(.hero-premium,.tracking-panel-premium) :where(.border-amber-400,.border-amber-500) { border-color: #f28a32 !important; }
