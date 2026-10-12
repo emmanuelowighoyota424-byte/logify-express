@@ -1,5 +1,5 @@
-/* Faster logistics template integration — adapted to Logify Express brand and React app.
-   Keeps the live tracking workflow and blue-first theme; no static template routes or fake forms. */
+/* Full-site Faster template adaptation for Logify Express.
+   Uses the React app's existing navigation, forms, tracking and admin-managed content. */
 :root {
   --faster-navy: #041943;
   --faster-blue: #087cff;
@@ -10,59 +10,68 @@
   min-height: 510px;
   display: flex;
   align-items: center;
-  background:
-    radial-gradient(ellipse at 78% 20%, rgba(8,124,255,.30), transparent 32%),
-    linear-gradient(125deg,#041943 0%,#082e70 60%,#031333 100%) !important;
+  background: radial-gradient(ellipse at 78% 20%,rgba(8,124,255,.30),transparent 32%),linear-gradient(125deg,#041943 0%,#082e70 60%,#031333 100%) !important;
 }
 .hero-premium__masthead .hero-premium__title {
-  max-width: 900px;
-  margin-inline: auto;
-  font-size: clamp(2.7rem,6.5vw,5.6rem) !important;
-  line-height: .99 !important;
-  font-weight: 800 !important;
-  letter-spacing: -.065em !important;
+  max-width: 900px; margin-inline: auto; font-size: clamp(2.7rem,6.5vw,5.6rem) !important;
+  line-height: .99 !important; font-weight: 800 !important; letter-spacing: -.065em !important;
 }
 #hero-tracking-input-container {
-  width: min(100%, 700px);
-  padding: 7px;
-  border: 1px solid rgba(125,182,255,.25);
-  border-radius: 18px;
-  background: rgba(3,19,51,.68);
-  box-shadow: 0 20px 65px rgba(0,0,0,.2);
-  backdrop-filter: blur(16px);
+  width: min(100%,700px); padding: 7px; border: 1px solid rgba(125,182,255,.25); border-radius: 18px;
+  background: rgba(3,19,51,.68); box-shadow: 0 20px 65px rgba(0,0,0,.2); backdrop-filter: blur(16px);
 }
-.hero-premium__visual > div {
-  min-height: 260px;
-  border-radius: 22px !important;
-  border: 1px solid rgba(125,182,255,.25) !important;
-  background-color: #082b68;
-}
+.hero-premium__visual > div { min-height:260px; border-radius:22px !important; border:1px solid rgba(125,182,255,.25) !important; background-color:#082b68; }
 #hero-quick-action-cards button {
-  min-height: 106px;
-  border-radius: 15px !important;
-  background: linear-gradient(145deg,#0b3970,#082b68) !important;
-  border-color: rgba(125,182,255,.24) !important;
-  box-shadow: 0 12px 32px rgba(0,12,35,.2) !important;
+  min-height:106px; border-radius:15px !important; background:linear-gradient(145deg,#0b3970,#082b68) !important;
+  border-color:rgba(125,182,255,.24) !important; box-shadow:0 12px 32px rgba(0,12,35,.2) !important;
 }
-#hero-quick-action-cards button:hover {
-  border-color: #38bdf8 !important;
-  transform: translateY(-3px);
-}
+#hero-quick-action-cards button:hover { border-color:#38bdf8 !important; transform:translateY(-3px); }
 #core-services-section > div:nth-child(2) > div {
-  border-radius: 18px !important;
-  background: linear-gradient(145deg,#0b3970,#082b68) !important;
-  border-color: rgba(125,182,255,.22) !important;
+  border-radius:18px !important; background:linear-gradient(145deg,#0b3970,#082b68) !important;
+  border-color:rgba(125,182,255,.22) !important;
 }
-#core-services-section > div:nth-child(2) > div h3 { font-size: 1.1rem; }
-.hero-premium section:not(.hero-premium__masthead) { scroll-margin-top: 90px; }
-.tracking-panel-premium {
-  border-radius: 18px !important;
-  border-color: rgba(125,182,255,.28) !important;
+/* Consistent page headers and content panels across the original Faster-inspired pages. */
+#root > div > div.flex-1 > div.max-w-6xl,
+#root > div > div.flex-1 > div.max-w-5xl,
+#root > div > div.flex-1 > div.max-w-7xl { width:100%; }
+#root h1 { letter-spacing:-.04em; }
+#root h2 { letter-spacing:-.035em; }
+#root input:focus, #root select:focus, #root textarea:focus {
+  outline:2px solid rgba(8,124,255,.35) !important; outline-offset:1px; border-color:#087cff !important;
 }
-.premium-navbar { backdrop-filter: blur(18px); }
-@media (max-width: 640px) {
-  .hero-premium__masthead { min-height: 0; padding-top: 3.25rem !important; padding-bottom: 3.25rem !important; }
-  #hero-tracking-input-container { padding: 5px; }
-  #hero-quick-action-cards button { min-height: 82px; }
-  .hero-premium__visual { padding-top: 1.5rem !important; padding-bottom: 1.5rem !important; }
+#root button { transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background-color .18s ease; }
+#root form button[type="submit"], #root form button:not([type]) {
+  box-shadow:0 8px 22px rgba(8,124,255,.17);
+}
+#root .rounded-2xl.border, #root .rounded-3xl.border { border-color:rgba(100,140,185,.22); }
+#root .max-w-6xl.mx-auto.px-4.py-16,
+#root .max-w-5xl.mx-auto.px-4.py-16 {
+  position:relative;
+}
+#root .max-w-6xl.mx-auto.px-4.py-16 > .text-center,
+#root .max-w-5xl.mx-auto.px-4.py-16 > .space-y-5 {
+  position:relative;
+}
+#root .max-w-6xl.mx-auto.px-4.py-16 > .text-center h1,
+#root .max-w-5xl.mx-auto.px-4.py-16 h1 {
+  font-size:clamp(2rem,4vw,3.35rem); line-height:1.06;
+}
+#root .max-w-6xl.mx-auto.px-4.py-16 > .grid > div,
+#root .max-w-5xl.mx-auto.px-4.py-16 > div {
+  box-shadow:0 12px 34px rgba(15,43,77,.055);
+}
+#root .max-w-6xl.mx-auto.px-4.py-16 > .grid > div:hover {
+  border-color:rgba(8,124,255,.42) !important; transform:translateY(-2px);
+}
+#root .bg-\[\#1769e8\], #root .hover\:bg-\[\#1257bf\]:hover { background-color:#087cff !important; }
+#root .text-\[\#1769e8\] { color:#087cff !important; }
+#root .border-\[\#1769e8\] { border-color:#087cff !important; }
+.tracking-panel-premium { border-radius:18px !important; border-color:rgba(125,182,255,.28) !important; }
+.premium-navbar { backdrop-filter:blur(18px); }
+@media (max-width:640px) {
+  .hero-premium__masthead { min-height:0; padding-top:3.25rem !important; padding-bottom:3.25rem !important; }
+  #hero-tracking-input-container { padding:5px; }
+  #hero-quick-action-cards button { min-height:82px; }
+  .hero-premium__visual { padding-top:1.5rem !important; padding-bottom:1.5rem !important; }
+  #root .max-w-6xl.mx-auto.px-4.py-16, #root .max-w-5xl.mx-auto.px-4.py-16 { padding-top:2.5rem; padding-bottom:2.5rem; }
 }
