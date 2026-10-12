@@ -27,7 +27,7 @@ export default function Hero({ onNavigate, onSetTrackId, settings }: HeroProps) 
       {/* 1. HERO SECTION (TOP AREA) */}
       <section className="hero-premium__masthead logify-public-image-hero relative overflow-hidden bg-[#1f1f2e] text-white py-16 sm:py-24 border-b border-slate-900 px-4 sm:px-6 lg:px-8">
         {/* Public freight photography; admins can override it in settings. */}
-        <div className="absolute inset-0 pointer-events-none" aria-hidden="true"><img src={settings?.publicPageImages?.find((item) => item.page === 'home')?.imageUrl || airFreightImage} alt="" className="logify-public-hero-image h-full w-full object-cover opacity-60" /><div className="logify-public-hero-overlay absolute inset-0 bg-gradient-to-br from-[#1f1f2e]/75 via-[#1f1f2e]/62 to-[#1f1f2e]/85" /></div>
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true"><img src={settings?.publicPageImages?.find((item) => item.page === 'home')?.imageUrl || airFreightImage} onError={(event) => { event.currentTarget.onerror = null; event.currentTarget.src = airFreightImage; }} alt="" className="logify-public-hero-image h-full w-full object-cover opacity-60" /><div className="logify-public-hero-overlay absolute inset-0 bg-gradient-to-br from-[#1f1f2e]/75 via-[#1f1f2e]/62 to-[#1f1f2e]/85" /></div>
         {/* Subtle Decorative SVG grids and radial yellow glow spots */}
         <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px]" />
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[#1769e8]/5 rounded-full blur-3xl pointer-events-none" />
