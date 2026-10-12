@@ -54,3 +54,53 @@
 .faster-contact>div:first-child p,.faster-contact>div:first-child div{color:#d0e2fa}
 .faster-contact>div:nth-child(2){border-radius:22px;box-shadow:0 16px 45px rgba(7,39,85,.09)}
 @media(max-width:640px){.faster-about,.faster-pricing{padding-top:30px!important}.faster-contact{gap:20px!important}.faster-services{padding-top:22px!important}}
+
+/* Fidelity pass: match the uploaded Faster template's Poppins typography, orange accent, light navbar and gray sections. */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+:root{--faster-primary:#ff4800;--faster-secondary:#f2f2f4;--faster-ink:#1f1f2e;--faster-muted:#757575}
+html,body,#root{font-family:'Poppins',sans-serif!important}
+#root{color:var(--faster-ink)}
+#root .faster-page{background:#fff!important;color:var(--faster-ink)}
+#root .faster-page-hero{background:#f2f2f4!important;color:var(--faster-ink);padding:84px 0 88px}
+#root .faster-page-hero:after{display:none}
+#root .faster-page-hero h1{color:var(--faster-ink);font-size:clamp(2.5rem,5vw,4rem);font-weight:700;letter-spacing:-.045em;line-height:1.18}
+#root .faster-page-hero h1 span{color:var(--faster-primary)}
+#root .faster-page-hero p{color:#757575}
+#root .faster-eyebrow{color:var(--faster-primary);letter-spacing:.13em}
+#root .faster-primary-button{background:var(--faster-primary);color:#fff;border-radius:0;box-shadow:none}
+#root .faster-primary-button:hover{background:#cc3a00}
+#root .faster-secondary-button{border-radius:0;color:var(--faster-ink);border-color:#d8d8dc}
+#root .faster-article-card{border:0;border-radius:0;box-shadow:0 4px 22px rgba(31,31,46,.1)}
+#root .faster-article-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(31,31,46,.14)}
+#root .faster-article-art{background-color:var(--faster-secondary);background-image:none;color:var(--faster-primary);border-bottom:4px solid var(--faster-primary)}
+#root .faster-article-art span{color:var(--faster-primary)}
+#root .faster-article-body h2{color:var(--faster-ink);font-weight:600;letter-spacing:-.025em}
+#root .faster-cta{background:var(--faster-ink)}
+#root .faster-about,#root .faster-pricing{background:#fff!important}
+#root .faster-about .grid>div,#root .faster-pricing .grid>div{border-radius:0;box-shadow:0 2px 20px rgba(31,31,46,.08)}
+#root .faster-services>div:nth-child(2){background:var(--faster-secondary);border-radius:0;color:var(--faster-ink)}
+#root .faster-services>div:nth-child(2) h1{color:var(--faster-ink)!important}
+#root .faster-services>div:nth-child(2) p{color:var(--faster-muted)!important}
+#root .faster-services>div:nth-child(3)>div{border-radius:0;box-shadow:0 2px 20px rgba(31,31,46,.08)}
+#root .faster-contact>div:first-child{background:var(--faster-secondary);border-radius:0;color:var(--faster-ink)}
+#root .faster-contact>div:first-child h1{color:var(--faster-ink)!important}
+#root .faster-contact>div:first-child p,#root .faster-contact>div:first-child div{color:var(--faster-muted)}
+#root .faster-contact>div:nth-child(2){border-radius:0;box-shadow:0 2px 20px rgba(31,31,46,.08)}
+/* The source template uses an airy light navbar, bold uppercase wordmark and orange active/CTA states. */
+#root .premium-navbar{background:#fff!important;border-color:#e7e7ea!important;color:var(--faster-ink)}
+#root .premium-navbar .text-\[\#102b4e\],#root .premium-navbar .text-\[\#0b1f33\]{color:var(--faster-ink)!important}
+#root .premium-navbar button[aria-current="page"]{background:var(--faster-primary)!important;color:#fff!important;border-radius:0!important}
+#root .premium-navbar button.bg-\[\#1769e8\]{background:var(--faster-primary)!important;border-radius:0!important;color:#fff!important}
+#root .premium-navbar .bg-\[\#0b1f33\]{background:var(--faster-ink)!important;border-radius:0!important}
+#root .logistics-status-bar{background:var(--faster-ink);color:#fff}
+#root .hero-premium{background:#fff!important;color:var(--faster-ink)!important}
+#root .hero-premium__masthead{background:linear-gradient(rgba(0,0,0,.78),rgba(0,0,0,.78)),linear-gradient(135deg,#414149,#1f1f2e)!important}
+#root .hero-premium__masthead .text-\[\#1769e8\],#root .hero-premium__masthead .text-\[\#f28a32\]{color:var(--faster-primary)!important}
+#root .hero-premium__masthead button{background:var(--faster-primary)!important;color:#fff!important;border-radius:0!important}
+#root .hero-premium__visual{margin-top:0}
+#root .hero-premium__visual>div{border-radius:0!important;box-shadow:none!important}
+#root .hero-premium__visual .text-\[\#1769e8\],#root .hero-premium__visual .text-\[\#f28a32\]{color:var(--faster-primary)!important}
+#root .hero-premium__visual button{border-radius:0!important;background:var(--faster-primary)!important;color:#fff!important}
+#root button,#root input,#root textarea,#root select{font-family:'Poppins',sans-serif}
+#root input:focus,#root textarea:focus,#root select:focus{border-color:var(--faster-primary);box-shadow:0 0 0 3px rgba(255,72,0,.12)}
+@media(max-width:640px){#root .faster-page-hero{padding:54px 0 60px}#root .faster-article-grid{padding-top:28px;padding-bottom:36px}}
