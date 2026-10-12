@@ -292,7 +292,8 @@ html.dark .admin-metric { border-color: #203649; }
   border-color: rgba(255,255,255,.08) !important;
 }
 
-.hero-premium__masthead > div:first-child { opacity: .12; }
+/* Keep the freight photo layer fully visible; the overlay controls text contrast. */
+.hero-premium__masthead > div:first-child { opacity: 1 !important; }
 
 .hero-premium__title { text-transform: none !important; letter-spacing: -.055em !important; line-height: 1.04 !important; }
 
