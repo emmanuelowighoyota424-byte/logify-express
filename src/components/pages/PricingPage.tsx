@@ -3,6 +3,7 @@ import {
   Calculator, DollarSign, Scale, MapPin, Truck, HelpCircle, 
   ArrowRight, ShieldCheck, Tag, Loader2, Sparkles, Plane, Ship, Check 
 } from 'lucide-react';
+import oceanCargoImage from '../../assets/images/ocean_cargo_solution_1784467350305.jpg';
 import { Settings } from '../../types.js';
 
 interface PricingPageProps {
@@ -79,6 +80,17 @@ export default function PricingPage({ settings, onNavigate }: PricingPageProps) 
     <div className="faster-page faster-pricing flex-1 bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors py-12 text-left">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         
+        {/* Editorial freight banner */}
+        <section className="relative isolate min-h-[250px] sm:min-h-[320px] overflow-hidden rounded-2xl border border-blue-300/20 bg-[#061b35] shadow-xl">
+          <img src={oceanCargoImage} alt="Container vessel at a global shipping port" className="absolute inset-0 h-full w-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#03132d]/95 via-[#03132d]/70 to-[#03132d]/15" />
+          <div className="relative z-10 flex min-h-[250px] sm:min-h-[320px] max-w-3xl flex-col justify-center p-6 sm:p-10 text-left">
+            <span className="text-[10px] font-extrabold uppercase tracking-[.24em] text-blue-300">Plan your next shipment</span>
+            <h1 className="mt-3 max-w-2xl text-3xl font-black leading-tight text-white sm:text-5xl">Clearer rates. Smarter shipping decisions.</h1>
+            <p className="mt-3 max-w-xl text-sm leading-6 text-blue-100/90">Build a preliminary estimate, compare service types, and confirm the final route details with our team.</p>
+          </div>
+        </section>
+
         {/* Title */}
         <div className="text-center space-y-3 max-w-2xl mx-auto">
           <h1 className="text-xs font-black uppercase text-blue-600 dark:text-blue-400 tracking-widest font-mono">
