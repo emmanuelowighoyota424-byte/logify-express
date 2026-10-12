@@ -22,10 +22,10 @@ export default function Hero({ onNavigate, onSetTrackId }: HeroProps) {
     <div className="hero-premium flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen transition-colors duration-300">
       
       {/* 1. HERO SECTION (TOP AREA) */}
-      <section className="hero-premium__masthead relative overflow-hidden bg-gradient-to-br from-[#0b1f33] via-[#102b43] to-[#071521] text-white py-16 sm:py-24 border-b border-slate-900 px-4 sm:px-6 lg:px-8">
+      <section className="hero-premium__masthead relative overflow-hidden bg-gradient-to-br from-[#09264a] via-[#123a63] to-[#071521] text-white py-16 sm:py-24 border-b border-slate-900 px-4 sm:px-6 lg:px-8">
         {/* Subtle Decorative SVG grids and radial yellow glow spots */}
         <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px]" />
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[#FFCC00]/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[#1769e8]/5 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto relative z-10 text-center space-y-8">
           {/* Live Operational Status Badge */}
@@ -36,10 +36,10 @@ export default function Hero({ onNavigate, onSetTrackId }: HeroProps) {
             className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 dark:bg-slate-800/80 border border-white/10 text-white text-[10px] font-mono uppercase tracking-wider font-extrabold shadow-sm"
           >
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FFCC00] opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FFCC00]"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#1769e8] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#1769e8]"></span>
             </span>
-            Logify Operational Status: <span className="text-[#FFCC00] font-black">99.98% SLA On-Time</span>
+            Logify Operational Status: <span className="text-[#1769e8] font-black">99.98% SLA On-Time</span>
           </motion.div>
 
           {/* Large display Typography */}
@@ -50,7 +50,7 @@ export default function Hero({ onNavigate, onSetTrackId }: HeroProps) {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="hero-premium__title text-4xl sm:text-5xl md:text-6xl font-sans font-black tracking-tight leading-none"
             >
-              The World <span className="text-[#FFCC00]">On-Time</span>. <br />
+              The World <span className="text-[#1769e8]">On-Time</span>. <br />
               Delivered.
             </motion.h1>
             <motion.p 
@@ -74,17 +74,17 @@ export default function Hero({ onNavigate, onSetTrackId }: HeroProps) {
               
               {/* Card 1: Ship Now */}
               <motion.button
-                whileHover={{ y: -4, borderColor: '#FFCC00' }}
+                whileHover={{ y: -4, borderColor: '#1769e8' }}
                 onClick={() => onNavigate('send')}
                 className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-xl shadow-sm text-left flex items-start gap-4 transition-all hover:shadow-md group cursor-pointer"
                 id="action-card-ship-now"
               >
-                <div className="w-10 h-10 rounded-lg bg-[#FFCC00]/10 flex items-center justify-center text-[#D40511] shrink-0 font-bold group-hover:bg-[#FFCC00]/20 transition-colors">
+                <div className="w-10 h-10 rounded-lg bg-[#1769e8]/10 flex items-center justify-center text-[#f28a32] shrink-0 font-bold group-hover:bg-[#1769e8]/20 transition-colors">
                   <Package size={20} />
                 </div>
                 <div className="space-y-1">
                   <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-1">
-                    Ship Now <ChevronRight size={12} className="text-[#D40511]" />
+                    Ship Now <ChevronRight size={12} className="text-[#f28a32]" />
                   </h4>
                   <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium leading-normal">
                     Find the right service
@@ -94,17 +94,17 @@ export default function Hero({ onNavigate, onSetTrackId }: HeroProps) {
 
               {/* Card 2: Get a Quote */}
               <motion.button
-                whileHover={{ y: -4, borderColor: '#FFCC00' }}
+                whileHover={{ y: -4, borderColor: '#1769e8' }}
                 onClick={() => onNavigate('pricing')}
                 className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-xl shadow-sm text-left flex items-start gap-4 transition-all hover:shadow-md group cursor-pointer"
                 id="action-card-get-quote"
               >
-                <div className="w-10 h-10 rounded-lg bg-[#FFCC00]/10 flex items-center justify-center text-[#D40511] shrink-0 font-bold group-hover:bg-[#FFCC00]/20 transition-colors">
+                <div className="w-10 h-10 rounded-lg bg-[#1769e8]/10 flex items-center justify-center text-[#f28a32] shrink-0 font-bold group-hover:bg-[#1769e8]/20 transition-colors">
                   <DollarSign size={20} />
                 </div>
                 <div className="space-y-1">
                   <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-1">
-                    Get a Quote <ChevronRight size={12} className="text-[#D40511]" />
+                    Get a Quote <ChevronRight size={12} className="text-[#f28a32]" />
                   </h4>
                   <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium leading-normal">
                     Estimate cost to share and compare
@@ -114,17 +114,17 @@ export default function Hero({ onNavigate, onSetTrackId }: HeroProps) {
 
               {/* Card 3: Logify for Business */}
               <motion.button
-                whileHover={{ y: -4, borderColor: '#FFCC00' }}
+                whileHover={{ y: -4, borderColor: '#1769e8' }}
                 onClick={() => onNavigate('contact')}
                 className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-xl shadow-sm text-left flex items-start gap-4 transition-all hover:shadow-md group cursor-pointer"
                 id="action-card-logify-business"
               >
-                <div className="w-10 h-10 rounded-lg bg-[#FFCC00]/10 flex items-center justify-center text-[#D40511] shrink-0 font-bold group-hover:bg-[#FFCC00]/20 transition-colors">
+                <div className="w-10 h-10 rounded-lg bg-[#1769e8]/10 flex items-center justify-center text-[#f28a32] shrink-0 font-bold group-hover:bg-[#1769e8]/20 transition-colors">
                   <Building size={20} />
                 </div>
                 <div className="space-y-1">
                   <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-1">
-                    Logify for Business <ChevronRight size={12} className="text-[#D40511]" />
+                    Logify for Business <ChevronRight size={12} className="text-[#f28a32]" />
                   </h4>
                   <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium leading-normal">
                     Request business account for exclusive benefits
@@ -149,7 +149,7 @@ export default function Hero({ onNavigate, onSetTrackId }: HeroProps) {
           />
           {/* Stark overlay to add luxury feel and high contrast caption */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent flex flex-col justify-end p-6 sm:p-10 text-left">
-            <span className="text-[9px] font-mono font-black text-[#FFCC00] uppercase tracking-widest mb-1 block">
+            <span className="text-[9px] font-mono font-black text-[#1769e8] uppercase tracking-widest mb-1 block">
               Logify Operations Core
             </span>
             <h3 className="text-lg sm:text-2xl font-black text-white uppercase tracking-tight max-w-xl">
@@ -164,7 +164,7 @@ export default function Hero({ onNavigate, onSetTrackId }: HeroProps) {
 
       {/* 3. CORE SERVICES SECTION (Split into two distinct pillars) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10" id="core-services-section">
-        <div className="text-left space-y-1.5 border-l-4 border-[#D40511] pl-3">
+        <div className="text-left space-y-1.5 border-l-4 border-[#f28a32] pl-3">
           <span className="text-[10px] font-mono font-extrabold uppercase text-slate-500 tracking-widest block">
             Core Service Pillars
           </span>
@@ -180,7 +180,7 @@ export default function Hero({ onNavigate, onSetTrackId }: HeroProps) {
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-[#D40511] shadow-sm shrink-0">
+                  <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-[#f28a32] shadow-sm shrink-0">
                     <FileText size={22} />
                   </div>
                   <div>
@@ -233,7 +233,7 @@ export default function Hero({ onNavigate, onSetTrackId }: HeroProps) {
             <div className="pt-4">
               <button
                 onClick={() => onNavigate('send')}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-[#111111] hover:bg-black text-[#FFCC00] hover:text-white text-xs font-black uppercase tracking-wider rounded-xl transition-all cursor-pointer shadow-md"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-[#111111] hover:bg-black text-[#1769e8] hover:text-white text-xs font-black uppercase tracking-wider rounded-xl transition-all cursor-pointer shadow-md"
               >
                 <span>Explore Logify Express</span>
                 <ArrowRight size={14} className="stroke-[2.5]" />
@@ -246,14 +246,14 @@ export default function Hero({ onNavigate, onSetTrackId }: HeroProps) {
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-[#D40511] shadow-sm shrink-0">
+                  <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-[#f28a32] shadow-sm shrink-0">
                     <Ship size={22} />
                   </div>
                   <div>
                     <h3 className="text-lg font-black text-slate-900 dark:text-white tracking-tight uppercase">
                       Cargo Shipping
                     </h3>
-                    <p className="text-[10px] font-mono font-bold text-[#D40511]">BUSINESS ONLY</p>
+                    <p className="text-[10px] font-mono font-bold text-[#f28a32]">BUSINESS ONLY</p>
                   </div>
                 </div>
               </div>
@@ -271,7 +271,7 @@ export default function Hero({ onNavigate, onSetTrackId }: HeroProps) {
                   
                   {/* Air Freight */}
                   <div className="flex items-center gap-2.5 p-2.5 border border-slate-100 dark:border-slate-800 rounded-xl bg-slate-50/50 dark:bg-slate-900/50">
-                    <div className="w-8 h-8 rounded-lg bg-[#FFCC00]/10 flex items-center justify-center text-[#D40511] shrink-0">
+                    <div className="w-8 h-8 rounded-lg bg-[#1769e8]/10 flex items-center justify-center text-[#f28a32] shrink-0">
                       <Plane size={16} />
                     </div>
                     <span className="text-xs font-bold text-slate-900 dark:text-white">Air Freight</span>
@@ -279,7 +279,7 @@ export default function Hero({ onNavigate, onSetTrackId }: HeroProps) {
 
                   {/* Road Freight */}
                   <div className="flex items-center gap-2.5 p-2.5 border border-slate-100 dark:border-slate-800 rounded-xl bg-slate-50/50 dark:bg-slate-900/50">
-                    <div className="w-8 h-8 rounded-lg bg-[#FFCC00]/10 flex items-center justify-center text-[#D40511] shrink-0">
+                    <div className="w-8 h-8 rounded-lg bg-[#1769e8]/10 flex items-center justify-center text-[#f28a32] shrink-0">
                       <Truck size={16} />
                     </div>
                     <span className="text-xs font-bold text-slate-900 dark:text-white">Road Freight</span>
@@ -287,7 +287,7 @@ export default function Hero({ onNavigate, onSetTrackId }: HeroProps) {
 
                   {/* Ocean Freight */}
                   <div className="flex items-center gap-2.5 p-2.5 border border-slate-100 dark:border-slate-800 rounded-xl bg-slate-50/50 dark:bg-slate-900/50">
-                    <div className="w-8 h-8 rounded-lg bg-[#FFCC00]/10 flex items-center justify-center text-[#D40511] shrink-0">
+                    <div className="w-8 h-8 rounded-lg bg-[#1769e8]/10 flex items-center justify-center text-[#f28a32] shrink-0">
                       <Ship size={16} />
                     </div>
                     <span className="text-xs font-bold text-slate-900 dark:text-white">Ocean Freight</span>
@@ -295,7 +295,7 @@ export default function Hero({ onNavigate, onSetTrackId }: HeroProps) {
 
                   {/* Rail Freight */}
                   <div className="flex items-center gap-2.5 p-2.5 border border-slate-100 dark:border-slate-800 rounded-xl bg-slate-50/50 dark:bg-slate-900/50">
-                    <div className="w-8 h-8 rounded-lg bg-[#FFCC00]/10 flex items-center justify-center text-[#D40511] shrink-0">
+                    <div className="w-8 h-8 rounded-lg bg-[#1769e8]/10 flex items-center justify-center text-[#f28a32] shrink-0">
                       <Train size={16} />
                     </div>
                     <span className="text-xs font-bold text-slate-900 dark:text-white">Rail Freight</span>
@@ -308,7 +308,7 @@ export default function Hero({ onNavigate, onSetTrackId }: HeroProps) {
             <div className="pt-4">
               <button
                 onClick={() => onNavigate('pricing')}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-[#111111] hover:bg-black text-[#FFCC00] hover:text-white text-xs font-black uppercase tracking-wider rounded-xl transition-all cursor-pointer shadow-md"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-[#111111] hover:bg-black text-[#1769e8] hover:text-white text-xs font-black uppercase tracking-wider rounded-xl transition-all cursor-pointer shadow-md"
               >
                 <span>Explore Global Forwarding</span>
                 <ArrowRight size={14} className="stroke-[2.5]" />
@@ -321,7 +321,7 @@ export default function Hero({ onNavigate, onSetTrackId }: HeroProps) {
 
       {/* 4. TARIFF UPDATE BANNER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full">
-        <div className="bg-[#FFCC00] text-slate-950 rounded-2xl p-6 sm:p-8 shadow-lg border-l-8 border-[#D40511] text-left relative overflow-hidden">
+        <div className="bg-[#1769e8] text-slate-950 rounded-2xl p-6 sm:p-8 shadow-lg border-l-8 border-[#f28a32] text-left relative overflow-hidden">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
             <div className="space-y-2.5 max-w-2xl">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-950/10 border border-slate-950/10 text-slate-950 text-[9px] font-mono uppercase tracking-widest font-black">
@@ -355,7 +355,7 @@ export default function Hero({ onNavigate, onSetTrackId }: HeroProps) {
           {/* Main Title */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="space-y-3 md:border-r border-slate-150 dark:border-slate-800 pr-4">
-              <span className="text-[10px] font-mono font-black text-[#D40511] uppercase tracking-widest block">
+              <span className="text-[10px] font-mono font-black text-[#f28a32] uppercase tracking-widest block">
                 Bulletin Desk
               </span>
               <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight">
@@ -368,7 +368,7 @@ export default function Hero({ onNavigate, onSetTrackId }: HeroProps) {
 
             <div className="md:col-span-2 space-y-5">
               <div className="flex gap-3 items-start text-xs border-b border-slate-100 dark:border-slate-850 pb-4">
-                <div className="w-5 h-5 rounded bg-[#FFCC00]/10 flex items-center justify-center text-[#D40511] font-bold shrink-0 mt-0.5">
+                <div className="w-5 h-5 rounded bg-[#1769e8]/10 flex items-center justify-center text-[#f28a32] font-bold shrink-0 mt-0.5">
                   <AlertCircle size={12} />
                 </div>
                 <div>
@@ -383,7 +383,7 @@ export default function Hero({ onNavigate, onSetTrackId }: HeroProps) {
               </div>
 
               <div className="flex gap-3 items-start text-xs pb-1">
-                <div className="w-5 h-5 rounded bg-[#FFCC00]/10 flex items-center justify-center text-[#D40511] font-bold shrink-0 mt-0.5">
+                <div className="w-5 h-5 rounded bg-[#1769e8]/10 flex items-center justify-center text-[#f28a32] font-bold shrink-0 mt-0.5">
                   <ShieldAlert size={12} />
                 </div>
                 <div>
