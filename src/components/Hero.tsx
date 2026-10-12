@@ -1,5 +1,9 @@
 import React from 'react';
 import airFreightImage from '../assets/images/air_freight_solution_1784467339500.jpg';
+import lastMileImage from '../assets/images/last_mile_solution_1784467362755.jpg';
+import portTeamImage from '../assets/images/logistics_personnel_port_1784465855777.jpg';
+import oceanCargoImage from '../assets/images/ocean_cargo_solution_1784467350305.jpg';
+import warehouseImage from '../assets/images/warehouse_solution_1784467375578.jpg';
 import { 
   Truck, Package, Warehouse, FileText, Ship, Plane, Train, 
   ArrowRight, ShieldAlert, Globe, Leaf, Briefcase, 
@@ -173,7 +177,48 @@ export default function Hero({ onNavigate, onSetTrackId, settings }: HeroProps) 
         </div>
       </section>
 
-      {/* 3. CORE SERVICES SECTION (Split into two distinct pillars) */}
+      {/* 3. LOGISTICS PHOTO GALLERY */}
+      <section className="logify-photo-gallery w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16" id="logify-photo-gallery">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-7">
+          <div className="max-w-2xl">
+            <span className="text-xs font-extrabold uppercase tracking-[.22em] text-[#60a5fa]">Across every mile</span>
+            <h2 className="mt-2 text-3xl sm:text-4xl font-black tracking-tight text-white">A closer look at logistics in motion.</h2>
+            <p className="mt-3 max-w-xl text-sm leading-6 text-slate-300">From global air and ocean freight to the warehouse and final doorstep, explore the network moving your shipments forward.</p>
+          </div>
+          <button onClick={() => onNavigate('pricing')} className="inline-flex w-fit items-center gap-2 rounded-lg border border-blue-400/40 px-4 py-3 text-sm font-bold text-white hover:bg-blue-500/15">
+            Explore shipping services <ArrowRight size={16} />
+          </button>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-4">
+          <figure className="logify-gallery-card group relative min-h-[280px] sm:min-h-[340px] lg:col-span-7 overflow-hidden rounded-2xl border border-blue-300/20 bg-[#061b35]">
+            <img src={oceanCargoImage} alt="Ocean freight containers and cargo vessel at port" loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#03132d]/95 via-[#03132d]/20 to-transparent" />
+            <figcaption className="absolute inset-x-0 bottom-0 p-6 sm:p-8"><span className="text-xs font-bold uppercase tracking-[.2em] text-blue-300">01 / Global freight</span><h3 className="mt-2 text-2xl sm:text-3xl font-black text-white">Ocean freight, worldwide reach.</h3><p className="mt-2 max-w-lg text-sm text-blue-100/85">Connecting ports, businesses and markets through dependable cargo movement.</p></figcaption>
+          </figure>
+          <figure className="logify-gallery-card group relative min-h-[280px] sm:min-h-[340px] lg:col-span-5 overflow-hidden rounded-2xl border border-blue-300/20 bg-[#061b35]">
+            <img src={airFreightImage} alt="Air freight logistics and cargo operations" loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#03132d]/95 via-[#03132d]/15 to-transparent" />
+            <figcaption className="absolute inset-x-0 bottom-0 p-6"><span className="text-xs font-bold uppercase tracking-[.2em] text-blue-300">02 / Air cargo</span><h3 className="mt-2 text-2xl font-black text-white">Speed above borders.</h3><p className="mt-2 text-sm text-blue-100/85">For time-sensitive shipments that need a global connection.</p></figcaption>
+          </figure>
+          <figure className="logify-gallery-card group relative min-h-[240px] lg:col-span-4 overflow-hidden rounded-2xl border border-blue-300/20 bg-[#061b35]">
+            <img src={warehouseImage} alt="Warehouse logistics, sorting and shipment preparation" loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#03132d]/95 via-[#03132d]/10 to-transparent" />
+            <figcaption className="absolute inset-x-0 bottom-0 p-5"><span className="text-xs font-bold uppercase tracking-[.2em] text-blue-300">03 / Warehousing</span><h3 className="mt-2 text-xl font-black text-white">Ready at every stage.</h3></figcaption>
+          </figure>
+          <figure className="logify-gallery-card group relative min-h-[240px] lg:col-span-4 overflow-hidden rounded-2xl border border-blue-300/20 bg-[#061b35]">
+            <img src={portTeamImage} alt="Logistics team coordinating cargo operations at a port" loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#03132d]/95 via-[#03132d]/10 to-transparent" />
+            <figcaption className="absolute inset-x-0 bottom-0 p-5"><span className="text-xs font-bold uppercase tracking-[.2em] text-blue-300">04 / Port operations</span><h3 className="mt-2 text-xl font-black text-white">People behind every delivery.</h3></figcaption>
+          </figure>
+          <figure className="logify-gallery-card group relative min-h-[240px] lg:col-span-4 overflow-hidden rounded-2xl border border-blue-300/20 bg-[#061b35]">
+            <img src={lastMileImage} alt="Last-mile parcel delivery and local logistics" loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#03132d]/95 via-[#03132d]/10 to-transparent" />
+            <figcaption className="absolute inset-x-0 bottom-0 p-5"><span className="text-xs font-bold uppercase tracking-[.2em] text-blue-300">05 / Last mile</span><h3 className="mt-2 text-xl font-black text-white">The final mile matters.</h3></figcaption>
+          </figure>
+        </div>
+      </section>
+
+      {/* 4. CORE SERVICES SECTION (Split into two distinct pillars) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10" id="core-services-section">
         <div className="text-left space-y-1.5 border-l-4 border-[#f28a32] pl-3">
           <span className="text-[10px] font-mono font-extrabold uppercase text-slate-500 tracking-widest block">
@@ -330,7 +375,7 @@ export default function Hero({ onNavigate, onSetTrackId, settings }: HeroProps) 
         </div>
       </section>
 
-      {/* 4. TARIFF UPDATE BANNER */}
+      {/* 5. TARIFF UPDATE BANNER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full">
         <div className="bg-[#1769e8] text-slate-950 rounded-2xl p-6 sm:p-8 shadow-lg border-l-8 border-[#f28a32] text-left relative overflow-hidden">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
