@@ -220,3 +220,32 @@ html.dark .admin-metric { border-color: #203649; }
   .hero-premium__title { font-size: clamp(2.4rem, 11vw, 3.7rem) !important; }
   .hero-premium__visual > div { min-height: 220px; }
 }
+
+
+/* Admin control tower: premium operational workspace */
+.admin-control-tower { background: #f3f6f8 !important; color: #14283a; }
+html.dark .admin-control-tower { background: #071521 !important; color: #e6edf3; }
+.admin-control-tower aside { background: linear-gradient(180deg,#0b1f33 0%,#081827 100%) !important; border-color: rgba(255,255,255,.07) !important; }
+.admin-control-tower aside > div:first-child { border-color: rgba(255,255,255,.08) !important; }
+.admin-control-tower header { backdrop-filter: blur(18px); }
+.admin-control-tower main { max-width: 1440px; }
+.admin-control-tower main [class*="rounded-2xl"][class*="border"] { border-radius: 18px !important; }
+.admin-control-tower main [class*="bg-white"][class*="border"] { border-color: #e2e9ee !important; box-shadow: 0 4px 18px rgba(11,31,51,.025); }
+html.dark .admin-control-tower main [class*="bg-slate-900"][class*="border"] { border-color: #22394b !important; }
+.admin-control-tower main h1,.admin-control-tower main h2,.admin-control-tower main h3 { letter-spacing: -.025em; }
+.admin-control-tower main button { border-radius: 10px; }
+.admin-control-tower main input,.admin-control-tower main select,.admin-control-tower main textarea { border-radius: 11px; }
+.admin-control-tower header { border-bottom-color: #e2e9ee !important; }
+html.dark .admin-control-tower header { border-bottom-color: #203649 !important; }
+.admin-login-premium { min-height: 100vh; background:
+  radial-gradient(ellipse at 85% 12%,rgba(245,181,46,.12),transparent 30%),
+  radial-gradient(ellipse at 8% 85%,rgba(46,125,166,.17),transparent 34%),
+  linear-gradient(135deg,#071521 0%,#102b43 55%,#081a2a 100%) !important; }
+.admin-login-premium h1,.admin-login-premium h2 { letter-spacing: -.04em; }
+.admin-login-premium input { min-height: 48px; }
+.admin-login-premium button[type="submit"] { min-height: 48px; border-radius: 12px; }
+@media (max-width: 767px) {
+  .admin-control-tower aside { box-shadow: 18px 0 48px rgba(0,0,0,.22); }
+  .admin-control-tower header { padding-left: 14px !important; padding-right: 14px !important; }
+  .admin-control-tower main { padding-top: 18px !important; padding-bottom: 24px !important; }
+}
