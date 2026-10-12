@@ -266,6 +266,10 @@ app.get("/api/audit-logs", ...adminOnly, asyncRoute(async (_req, res) => {
   res.json(await prisma.auditLog.findMany({ orderBy: { createdAt: "desc" }, take: 500 }));
 }));
 
+app.get("/api/alerts", ...adminOnly, asyncRoute(async (_req, res) => {
+  res.json(await prisma.alert.findMany({ orderBy: { timestamp: "desc" }, take: 100 }));
+}));
+
 app.patch("/api/settings", ...adminOnly, asyncRoute(async (req: AuthedRequest, res) => {
   const current = await prisma.setting.findUnique({ where: { id: 1 } });
   const next = { ...(current?.data as any ?? {}), ...(req.body ?? {}) };
