@@ -33,3 +33,24 @@
 /* Harmonize existing React interior views with the template's premium blue visual system. */
 #root input:focus,#root textarea:focus,#root select:focus { border-color:#1684ff;box-shadow:0 0 0 3px rgba(8,124,255,.12); }
 #root button:focus-visible,#root a:focus-visible { outline:2px solid #38bdf8;outline-offset:3px; }
+
+/* Faster-inspired blue treatments for the existing About, Services, Pricing and Contact React pages. */
+.faster-about,.faster-pricing{background:#f5f8ff!important;color:#102b4e}
+.faster-about>div>div:first-of-type h1,.faster-pricing>div>div:first-of-type h1{letter-spacing:.18em}
+.faster-about h2,.faster-pricing h2{letter-spacing:-.045em}
+.faster-about img,.faster-pricing img{box-shadow:0 22px 60px rgba(7,39,85,.12);border-radius:20px}
+.faster-about .grid>div,.faster-pricing .grid>div{border-radius:18px;box-shadow:0 12px 32px rgba(7,39,85,.055);transition:transform .2s,box-shadow .2s}
+.faster-about .grid>div:hover,.faster-pricing .grid>div:hover{transform:translateY(-3px);box-shadow:0 18px 38px rgba(7,39,85,.1)}
+.faster-about button,.faster-pricing button{transition:transform .18s,box-shadow .18s}
+.faster-about button:hover,.faster-pricing button:hover{transform:translateY(-1px)}
+.faster-services{padding-top:38px!important;padding-bottom:70px!important}
+.faster-services>div:nth-child(2){padding:clamp(28px,5vw,58px);border-radius:22px;background:radial-gradient(circle at 90% 10%,rgba(8,124,255,.24),transparent 32%),linear-gradient(125deg,#041943,#0b3970);color:white}
+.faster-services>div:nth-child(2) h1{color:white!important}
+.faster-services>div:nth-child(2) p{color:#c5d6ef!important}
+.faster-services>div:nth-child(3)>div{border-radius:18px;box-shadow:0 12px 34px rgba(7,39,85,.07)}
+.faster-contact{padding-top:clamp(40px,7vw,80px)!important;padding-bottom:clamp(40px,7vw,80px)!important}
+.faster-contact>div:first-child{padding:clamp(24px,4vw,42px);border-radius:22px;background:radial-gradient(circle at 90% 10%,rgba(8,124,255,.25),transparent 35%),linear-gradient(125deg,#041943,#0b3970);color:#fff}
+.faster-contact>div:first-child h1{color:white!important}
+.faster-contact>div:first-child p,.faster-contact>div:first-child div{color:#d0e2fa}
+.faster-contact>div:nth-child(2){border-radius:22px;box-shadow:0 16px 45px rgba(7,39,85,.09)}
+@media(max-width:640px){.faster-about,.faster-pricing{padding-top:30px!important}.faster-contact{gap:20px!important}.faster-services{padding-top:22px!important}}
