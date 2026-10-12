@@ -275,17 +275,61 @@ export default function AdminSettingsView({
                   />
                 </div>
 
-                <div className="space-y-1 sm:col-span-2">
-                  <label className="text-[9px] text-[#aaa] font-bold uppercase font-mono tracking-wider">Brand Logo Image URL (HTTPS)</label>
-                  <input
-                    type="url"
-                    value={brandLogoUrl}
-                    onChange={(e) => setBrandLogoUrl(e.target.value)}
-                    placeholder="https://yourdomain.com/logo.png"
-                    className="w-full bg-neutral-950/80 border border-neutral-800 hover:border-neutral-700 focus:border-[#ff7a1a] rounded-xl p-3 outline-none font-medium text-white transition-colors"
-                  />
-                  <p className="text-[10px] text-neutral-500">Use a public HTTPS image URL. Leave blank to use the built-in shipment icon.</p>
-                  {brandLogoUrl.trim() && <img src={brandLogoUrl} alt="Brand logo preview" className="mt-2 max-h-16 max-w-48 rounded-lg border border-neutral-700 bg-white p-2 object-contain" />}
+                <div className="space-y-3 sm:col-span-2">
+                  <label className="text-[9px] text-[#aaa] font-bold uppercase font-mono tracking-wider">Brand Logo</label>
+                  <div className="rounded-xl border border-dashed border-neutral-700 bg-neutral-950/60 p-4 space-y-3">
+                    <label className="flex min-h-28 cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border border-neutral-800 bg-neutral-900/70 px-4 py-5 text-center transition hover:border-blue-500">
+                      <span className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-500/15 text-blue-300"><Globe size={20} /></span>
+                      <span className="text-xs font-bold text-white">Choose a logo photo from your device</span>
+                      <span className="text-[10px] text-neutral-500">PNG, JPG, WEBP or GIF · maximum 1 MB</span>
+                      <input
+                        type="file"
+                        accept="image/png,image/jpeg,image/webp,image/gif"
+                        className="sr-only"
+                        onChange={(e) => {
+                          const file = e.currentTarget.files?.[0];
+                          if (!file) return;
+                          if (!['image/png', 'image/jpeg', 'image/webp', 'image/gif'].includes(file.type)) {
+                            setGeneralError('Choose a PNG, JPG, WEBP, or GIF image.');
+                            e.currentTarget.value = '';
+                            return;
+                          }
+                          if (file.size > 1024 * 1024) {
+                            setGeneralError('Logo image must be 1 MB or smaller.');
+                            e.currentTarget.value = '';
+                            return;
+                          }
+                          const reader = new FileReader();
+                          reader.onload = () => {
+                            if (typeof reader.result === 'string') {
+                              setBrandLogoUrl(reader.result);
+                              setGeneralError(null);
+                            }
+                          };
+                          reader.onerror = () => setGeneralError('Could not read that image. Please try another file.');
+                          reader.readAsDataURL(file);
+                          e.currentTarget.value = '';
+                        }}
+                      />
+                    </label>
+                    {brandLogoUrl.trim() && (
+                      <div className="flex flex-wrap items-center gap-3">
+                        <img src={brandLogoUrl} alt="Brand logo preview" className="max-h-20 max-w-48 rounded-lg border border-neutral-700 bg-white p-2 object-contain" />
+                        <button type="button" onClick={() => setBrandLogoUrl('')} className="rounded-lg border border-neutral-700 px-3 py-2 text-[10px] font-bold text-neutral-200 hover:border-rose-500 hover:text-rose-300">Remove logo</button>
+                      </div>
+                    )}
+                    <div className="space-y-1">
+                      <label className="block text-[10px] text-neutral-400">Or use a public HTTPS image URL</label>
+                      <input
+                        type="url"
+                        value={brandLogoUrl.startsWith('data:image/') ? '' : brandLogoUrl}
+                        onChange={(e) => setBrandLogoUrl(e.target.value)}
+                        placeholder="https://yourdomain.com/logo.png"
+                        className="w-full bg-neutral-950/80 border border-neutral-800 hover:border-neutral-700 focus:border-[#ff7a1a] rounded-xl p-3 outline-none font-medium text-white transition-colors"
+                      />
+                    </div>
+                    <p className="text-[10px] leading-5 text-neutral-500">Uploaded logos are saved with site settings. Click Commit & Save General Settings to publish the change.</p>
+                  </div>
                 </div>
 
                 <div className="space-y-1">
