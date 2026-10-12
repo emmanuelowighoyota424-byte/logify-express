@@ -28,17 +28,13 @@ export default function Footer({ onNavigate, settings }: FooterProps) {
                 <Truck size={18} className="fill-current" />
               </div>
               <span className="font-sans font-black text-lg tracking-tight text-white uppercase">
-                <span className="text-[#FFCC00]">Log</span><span className="text-white">ify</span>
+                <span className="text-[#65a2ff]">{companyName}</span>
               </span>
             </div>
             <p className="text-xs text-slate-500 leading-relaxed">
-              {companyName} is a next-generation smart supply chain solution, delivering freight, documents, express cargo, and digital order tracking globally with extreme precision.
+              Shipment services, support information, and digital tracking tools from {companyName}.
             </p>
-            <div className="flex gap-3 text-slate-500">
-              <a href="#" className="hover:text-white transition-colors" aria-label="Facebook"><Facebook size={16} /></a>
-              <a href="#" className="hover:text-[#FFCC00] transition-colors" aria-label="LinkedIn"><Linkedin size={16} /></a>
-              <a href="#" className="hover:text-[#FFCC00] transition-colors" aria-label="Instagram"><Instagram size={16} /></a>
-            </div>
+
           </div>
 
           {/* Column 2: Quick Links */}
@@ -46,17 +42,17 @@ export default function Footer({ onNavigate, settings }: FooterProps) {
             <h4 className="text-white text-xs font-black tracking-wider uppercase font-mono border-l-2 border-[#f28a32] pl-2">Quick Links</h4>
             <ul className="space-y-2 text-xs text-slate-500">
               <li>
-                <button onClick={() => onNavigate('contact')} className="hover:text-[#FFCC00] transition-colors cursor-pointer">
+                <button onClick={() => onNavigate('contact')} className="hover:text-[#65a2ff] transition-colors cursor-pointer">
                   Customer Service
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('track')} className="hover:text-[#FFCC00] transition-colors cursor-pointer">
+                <button onClick={() => onNavigate('track')} className="hover:text-[#65a2ff] transition-colors cursor-pointer">
                   Portals & Tracking
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('pricing')} className="hover:text-[#FFCC00] transition-colors cursor-pointer">
+                <button onClick={() => onNavigate('pricing')} className="hover:text-[#65a2ff] transition-colors cursor-pointer">
                   Get a Quote & Rates
                 </button>
               </li>
@@ -65,20 +61,20 @@ export default function Footer({ onNavigate, settings }: FooterProps) {
 
           {/* Column 3: Our Divisions */}
           <div className="space-y-3 col-span-1">
-            <h4 className="text-white text-xs font-black tracking-wider uppercase font-mono border-l-2 border-[#D40511] pl-2">Our Divisions</h4>
+            <h4 className="text-white text-xs font-black tracking-wider uppercase font-mono border-l-2 border-[#1769e8] pl-2">Our Divisions</h4>
             <ul className="space-y-2 text-xs text-slate-500">
               <li>
-                <button onClick={() => onNavigate('send')} className="hover:text-[#FFCC00] transition-colors cursor-pointer">
+                <button onClick={() => onNavigate('send')} className="hover:text-[#65a2ff] transition-colors cursor-pointer">
                   Logify Express
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('pricing')} className="hover:text-[#FFCC00] transition-colors cursor-pointer">
+                <button onClick={() => onNavigate('pricing')} className="hover:text-[#65a2ff] transition-colors cursor-pointer">
                   Global Forwarding
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('about')} className="hover:text-[#FFCC00] transition-colors cursor-pointer">
+                <button onClick={() => onNavigate('about')} className="hover:text-[#65a2ff] transition-colors cursor-pointer">
                   Supply Chain Solutions
                 </button>
               </li>
@@ -89,10 +85,8 @@ export default function Footer({ onNavigate, settings }: FooterProps) {
           <div className="space-y-3 col-span-1 text-xs">
             <h4 className="text-white text-xs font-black tracking-wider uppercase font-mono border-l-2 border-[#D40511] pl-2">Company Information</h4>
             <div className="space-y-2.5 text-slate-500">
-              <div className="flex gap-2 items-start">
-              </div>
               <div className="flex gap-2 items-center">
-                <Phone size={14} className="text-[#D40511] shrink-0" />
+                <Phone size={14} className="text-[#65a2ff] shrink-0" />
                 <span>{contactPhone}</span>
               </div>
               <div className="flex gap-2 items-center">
@@ -104,12 +98,8 @@ export default function Footer({ onNavigate, settings }: FooterProps) {
         </div>
 
         <div className="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row md:justify-between text-[11px] text-slate-600 gap-4 text-left md:text-center">
-          <p>© 2026 {companyName} Ltd. All rights reserved.</p>
-          <div className="flex gap-4">
-            <a href="#" className="hover:text-[#FFCC00] transition-colors">Security Guidelines</a>
-            <a href="#" className="hover:text-[#FFCC00] transition-colors">Terms & Conditions</a>
-            <a href="#" className="hover:text-[#FFCC00] transition-colors">Privacy Policy</a>
-          </div>
+          <p>© 2026 {companyName}. All rights reserved.</p>
+
         </div>
       </div>
     </footer>
