@@ -20,6 +20,7 @@ export default function AdminSettingsView({
   // Brand States
   const [companyName, setCompanyName] = useState(settings.companyName || 'Logify Logistics');
   const [brandLogoUrl, setBrandLogoUrl] = useState(settings.brandLogoUrl || '');
+  const [publicPageImages, setPublicPageImages] = useState<NonNullable<Settings['publicPageImages']>>(settings.publicPageImages || []);
   const [testimonialsJson, setTestimonialsJson] = useState(() => JSON.stringify(settings.testimonials || [], null, 2));
   const [contactEmail, setContactEmail] = useState(settings.contactEmail || 'support@logify.com');
   const [contactPhone, setContactPhone] = useState(settings.contactPhone || '+1 (800) 555-LOGI');
@@ -95,6 +96,7 @@ export default function AdminSettingsView({
         ...settings,
         companyName,
         brandLogoUrl: brandLogoUrl.trim(),
+        publicPageImages,
         testimonials: JSON.parse(testimonialsJson),
         contactEmail,
         contactPhone,
@@ -273,6 +275,58 @@ export default function AdminSettingsView({
                     placeholder="e.g. Logify Logistics"
                     className="w-full bg-neutral-950/80 border border-neutral-800 hover:border-neutral-700 focus:border-[#ff7a1a] rounded-xl p-3 outline-none font-medium text-white transition-colors"
                   />
+                </div>
+
+                <div className="space-y-4 sm:col-span-2 rounded-2xl border border-blue-500/30 bg-blue-950/30 p-4">
+                  <div>
+                    <label className="text-xs text-blue-200 font-bold uppercase tracking-wider">Public Page Photos</label>
+                    <p className="mt-1 text-[11px] text-blue-100/70">Upload images for the homepage, About page, services, and public tracking page. Each image must be 1 MB or smaller. Save general settings to publish changes.</p>
+                  </div>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {(['home', 'about', 'services', 'tracking'] as const).map((page) => {
+                      const current = publicPageImages.find((item) => item.page === page);
+                      const title = page === 'home' ? 'Homepage banner' : page === 'about' ? 'About us photo' : page === 'services' ? 'Services photo' : 'Tracking page photo';
+                      return (
+                        <div key={page} className="rounded-xl border border-blue-400/20 bg-blue-950/40 p-3 space-y-3">
+                          <div className="flex items-center justify-between gap-2">
+                            <span className="text-xs font-bold text-white">{title}</span>
+                            {current && <button type="button" onClick={() => setPublicPageImages((items) => items.filter((item) => item.page !== page))} className="text-[10px] font-bold text-rose-300 hover:text-rose-200">Remove</button>}
+                          </div>
+                          {current && <img src={current.imageUrl} alt={current.alt || title} className="h-32 w-full rounded-lg object-cover" />}
+                          <label className="block cursor-pointer rounded-lg border border-dashed border-blue-400/40 p-3 text-center text-[11px] font-semibold text-blue-100 hover:bg-blue-900/40">
+                            {current ? 'Replace photo' : 'Choose photo'}
+                            <input type="file" accept="image/png,image/jpeg,image/webp" className="sr-only" onChange={(e) => {
+                              const input = e.currentTarget;
+                              const file = input.files?.[0];
+                              if (!file) return;
+                              if (!['image/png', 'image/jpeg', 'image/webp'].includes(file.type)) {
+                                setGeneralError('Choose a PNG, JPG, or WEBP photo.');
+                                input.value = '';
+                                return;
+                              }
+                              if (file.size > 1024 * 1024) {
+                                setGeneralError('Each public page photo must be 1 MB or smaller.');
+                                input.value = '';
+                                return;
+                              }
+                              const reader = new FileReader();
+                              reader.onload = () => {
+                                if (typeof reader.result !== 'string') return;
+                                setPublicPageImages((items) => {
+                                  const rest = items.filter((item) => item.page !== page);
+                                  return [...rest, { id: page, title, page, imageUrl: reader.result as string, alt: title }];
+                                });
+                                setGeneralError(null);
+                              };
+                              reader.onerror = () => setGeneralError('Could not read that image. Try another file.');
+                              reader.readAsDataURL(file);
+                              input.value = '';
+                            }} />
+                          </label>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
 
                 <div className="space-y-3 sm:col-span-2">
