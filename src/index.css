@@ -347,3 +347,69 @@ html.dark .admin-shipments-premium tbody tr:hover { background: rgba(29,155,240,
   .admin-settings-premium > div:first-child { padding: 18px !important; }
   .admin-settings-premium form { padding: 16px !important; }
 }
+
+
+/* Logify Express — final reference-led polish: clear hierarchy, freight-grade contrast,
+   consistent interaction states and mobile-first layout safeguards. */
+:root {
+  --logify-ink: #0b1f33;
+  --logify-navy: #102b43;
+  --logify-blue: #155e8a;
+  --logify-amber: #f5b52e;
+  --logify-line: #dfe7ed;
+}
+body { text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }
+button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+a, button { transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease; }
+:where(button, a, input, select, textarea):focus-visible {
+  outline: 3px solid rgba(21,94,138,.32);
+  outline-offset: 3px;
+}
+::selection { background: rgba(245,181,46,.32); color: #0b1f33; }
+.premium-navbar {
+  background: rgba(255,255,255,.94);
+  border-bottom: 1px solid rgba(223,231,237,.9);
+  box-shadow: 0 4px 22px rgba(11,31,51,.035);
+  backdrop-filter: blur(18px);
+}
+html.dark .premium-navbar {
+  background: rgba(7,21,33,.94);
+  border-bottom-color: rgba(148,163,184,.16);
+}
+.hero-premium { isolation: isolate; }
+.hero-premium__title { text-wrap: balance; }
+.hero-premium__masthead { letter-spacing: -.045em; }
+.hero-premium__visual { min-width: 0; }
+.tracking-panel-premium { border-radius: 20px !important; }
+.admin-control-tower { min-height: 100vh; }
+.admin-control-tower main { min-width: 0; }
+.admin-control-tower main > * { min-width: 0; }
+.admin-control-tower table th { padding-top: 14px; padding-bottom: 14px; }
+.admin-control-tower table td { vertical-align: middle; }
+.admin-control-tower button:disabled { cursor: not-allowed; opacity: .55; }
+.admin-login-premium form { backdrop-filter: blur(16px); }
+.admin-login-premium input:focus { box-shadow: 0 0 0 4px rgba(245,181,46,.12); }
+.admin-settings-premium input:focus,
+.admin-settings-premium select:focus,
+.admin-settings-premium textarea:focus,
+.admin-shipments-premium input:focus {
+  outline: 2px solid rgba(21,94,138,.22);
+  outline-offset: 1px;
+}
+@media (max-width: 767px) {
+  .hero-premium { overflow: hidden; }
+  .hero-premium__title { font-size: clamp(2.35rem, 11vw, 4rem); line-height: .98; }
+  .premium-navbar { padding-left: max(16px, env(safe-area-inset-left)); padding-right: max(16px, env(safe-area-inset-right)); }
+  .admin-control-tower main { overflow-x: hidden; }
+  .admin-control-tower table { white-space: nowrap; }
+  .admin-settings-premium [class*="grid-cols-2"],
+  .admin-settings-premium [class*="grid-cols-3"] { grid-template-columns: minmax(0,1fr) !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
