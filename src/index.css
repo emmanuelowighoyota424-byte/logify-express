@@ -562,3 +562,94 @@ html:not(.dark) .text-\[\#1769e8\] { color: #66a7ff !important; }
 html:not(.dark) .bg-blue-600,
 html:not(.dark) .bg-\[\#1769e8\] { background-color: #1769e8 !important; color: #fff !important; }
 html:not(.dark) .hover\:bg-blue-700:hover { background-color: #1257bf !important; }
+
+
+/* SITE-WIDE BLUE SURFACE PASS — all routes and shared components */
+html:not(.dark) {
+  color-scheme: dark;
+  --lx-surface: #103b68;
+  --lx-page: #08264a;
+  --lx-ink: #edf5ff;
+  --lx-muted: #b7cbe2;
+  --lx-border: #28527b;
+  --lx-brand: #2f83ff;
+}
+html:not(.dark) body,
+html:not(.dark) #root,
+html:not(.dark) #root > div {
+  background-color: #08264a;
+  color: #edf5ff;
+}
+/* Catch light surfaces used by pages, dialogs, forms, cards, menus and tables. */
+html:not(.dark) :is(
+  .bg-white,.bg-slate-50,.bg-slate-100,.bg-slate-200,
+  .bg-gray-50,.bg-gray-100,.bg-gray-200,
+  .bg-neutral-50,.bg-neutral-100,.bg-neutral-200,
+  .bg-zinc-50,.bg-zinc-100,.bg-zinc-200,
+  .bg-stone-50,.bg-stone-100,.bg-stone-200
+) {
+  background-color: #103b68 !important;
+}
+html:not(.dark) [class*="bg-white/"],
+html:not(.dark) [class*="bg-slate-50/"],
+html:not(.dark) [class*="bg-gray-50/"],
+html:not(.dark) [class*="bg-neutral-50/"] {
+  background-color: rgb(16 59 104 / 88%) !important;
+}
+html:not(.dark) :is(
+  .border-white,.border-slate-100,.border-slate-200,.border-slate-300,
+  .border-gray-100,.border-gray-200,.border-gray-300,
+  .border-neutral-100,.border-neutral-200,.border-zinc-100,.border-zinc-200
+) {
+  border-color: #28527b !important;
+}
+/* Ensure old light-theme typography remains readable on the blue surfaces. */
+html:not(.dark) :is(
+  .text-slate-950,.text-slate-900,.text-slate-800,.text-slate-700,
+  .text-gray-950,.text-gray-900,.text-gray-800,.text-gray-700,
+  .text-neutral-900,.text-neutral-800,.text-zinc-900,.text-zinc-800,
+  .text-stone-900,.text-stone-800
+) {
+  color: #edf5ff !important;
+}
+html:not(.dark) :is(
+  .text-slate-600,.text-slate-500,.text-gray-600,.text-gray-500,
+  .text-neutral-600,.text-neutral-500,.text-zinc-600,.text-zinc-500,
+  .text-stone-600,.text-stone-500
+) {
+  color: #b7cbe2 !important;
+}
+/* Blue-based fields, select menus, popovers, modal panels and operational views. */
+html:not(.dark) :is(input,select,textarea,[role="dialog"],[role="menu"],[role="listbox"]) {
+  border-color: #37658f;
+}
+html:not(.dark) select option {
+  background: #103b68;
+  color: #edf5ff;
+}
+html:not(.dark) :is(.bg-blue-50,.bg-blue-100,.bg-indigo-50,.bg-indigo-100) {
+  background-color: #174f89 !important;
+}
+html:not(.dark) :is(.text-blue-700,.text-blue-800,.text-indigo-700,.text-indigo-800) {
+  color: #9bc5ff !important;
+}
+html:not(.dark) :is(.border-blue-100,.border-blue-200,.border-indigo-100,.border-indigo-200) {
+  border-color: #376da3 !important;
+}
+html:not(.dark) :is(button,a)[class*="bg-blue-600"],
+html:not(.dark) :is(button,a)[class*="bg-[#1769e8]"] {
+  background-color: #1769e8 !important;
+  color: #ffffff !important;
+}
+html:not(.dark) :is(button,a):hover[class*="bg-blue-600"] {
+  background-color: #1257bf !important;
+}
+html:not(.dark) hr { border-color: #28527b; }
+html:not(.dark) ::-webkit-scrollbar-track { background: #08264a; }
+html:not(.dark) ::-webkit-scrollbar-thumb { background: #37658f; }
+html:not(.dark) ::-webkit-scrollbar-thumb:hover { background: #4f85bb; }
+/* Preserve semantic success/warning/error colors for statuses and alerts. */
+html:not(.dark) :is(.text-emerald-500,.text-emerald-600,.text-green-500,.text-green-600,
+.text-red-500,.text-red-600,.text-rose-500,.text-rose-600,.text-amber-500,.text-orange-500) {
+  color: revert-layer;
+}
