@@ -1257,3 +1257,9 @@ body { font-family:Poppins,Arial,sans-serif; }
   #root .logify-public-banner-caption { padding:.5rem 1.25rem; }
   #root .logify-public-banner-caption h1 { max-width:90%; }
 }
+
+
+/* Dark navy treatment for the dependable OSM tracking tiles. */
+.leaflet-tile.logify-dark-map-tiles {
+  filter: brightness(0.58) saturate(0.82) hue-rotate(165deg) contrast(1.08);
+}
