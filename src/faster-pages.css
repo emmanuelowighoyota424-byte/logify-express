@@ -1,0 +1,48 @@
+/* Faster HTML template visual language, rebuilt for Logify's component routes. */
+:root { --faster-navy:#041943; --faster-blue:#087cff; --faster-sky:#38bdf8; }
+body { text-rendering: optimizeLegibility; }
+main, #root { min-width: 320px; }
+#root > div { isolation:isolate; }
+#root input, #root textarea, #root select {
+  transition: border-color .18s ease, box-shadow .18s ease, background-color .18s ease;
+}
+#root input:focus, #root textarea:focus, #root select:focus {
+  border-color:#2589ff !important;
+  box-shadow:0 0 0 3px rgba(37,137,255,.13);
+}
+#root button { -webkit-tap-highlight-color: transparent; }
+#root button:focus-visible, #root a:focus-visible {
+  outline:3px solid rgba(56,189,248,.85); outline-offset:3px;
+}
+#root h1, #root h2, #root h3 { text-wrap:balance; }
+#root .max-w-5xl.mx-auto.px-4.py-16.grid,
+#root .max-w-6xl.mx-auto.px-4.py-16.space-y-12 {
+  position:relative;
+}
+#root .max-w-5xl.mx-auto.px-4.py-16.grid:before,
+#root .max-w-6xl.mx-auto.px-4.py-16.space-y-12:before {
+  content:""; position:absolute; top:0; left:1rem; right:1rem; height:3px;
+  border-radius:99px; background:linear-gradient(90deg,#087cff,#38bdf8,transparent);
+}
+#root .max-w-5xl.mx-auto.px-4.py-16.grid > div:last-child,
+#root .max-w-6xl.mx-auto.px-4.py-16.space-y-12 .grid > div {
+  box-shadow:0 14px 40px rgba(3,25,67,.06);
+  transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
+}
+#root .max-w-6xl.mx-auto.px-4.py-16.space-y-12 .grid > div:hover {
+  transform:translateY(-3px); border-color:rgba(8,124,255,.38);
+  box-shadow:0 20px 46px rgba(3,25,67,.11);
+}
+#root footer { border-top:1px solid rgba(125,182,255,.18); }
+#root .hero-premium__masthead { isolation:isolate; }
+#root .hero-premium__masthead > .absolute { z-index:-1; }
+@media (prefers-reduced-motion:reduce) {
+  #root *, #root *:before, #root *:after {
+    scroll-behavior:auto !important; animation-duration:.01ms !important;
+    animation-iteration-count:1 !important; transition-duration:.01ms !important;
+  }
+}
+@media(max-width:640px) {
+  #root .max-w-5xl.mx-auto.px-4.py-16.grid,
+  #root .max-w-6xl.mx-auto.px-4.py-16.space-y-12 { padding-top:3.25rem; padding-bottom:3.25rem; }
+}
