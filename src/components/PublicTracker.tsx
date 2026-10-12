@@ -1308,8 +1308,6 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
                       currentCoords={simulatedCoords || shipment.currentCoords}
                       status={isSimulating ? `In Transit (Simulating)` : shipment.status}
                       driverName={shipment.assignedDriverId ? "Dedicated Courier" : "Logify Logistics Team"}
-                      pickupAddress={shipment.pickupAddress}
-                      deliveryAddress={shipment.deliveryAddress}
                       theme="dark"
                     />
                   </div>
