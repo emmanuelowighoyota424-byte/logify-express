@@ -307,3 +307,43 @@ html.dark .admin-shipments-premium tbody tr:hover { background: rgba(29,155,240,
   .admin-shipments-premium table { min-width: 680px; }
   .tracking-panel-premium { padding: 18px !important; }
 }
+
+
+/* Admin settings: grouped configuration, security and feedback */
+.admin-settings-premium { width: 100%; }
+.admin-settings-premium > div:first-child {
+  background: linear-gradient(125deg,#0b1f33 0%,#102b43 70%,#155e8a 145%) !important;
+  border-color: #24435b !important;
+  border-radius: 18px !important;
+  box-shadow: 0 14px 34px rgba(11,31,51,.12) !important;
+}
+.admin-settings-premium h2 { letter-spacing: -.025em; }
+.admin-settings-premium form,
+.admin-settings-premium section {
+  border-radius: 16px;
+}
+.admin-settings-premium label {
+  line-height: 1.45;
+}
+.admin-settings-premium input,
+.admin-settings-premium select,
+.admin-settings-premium textarea {
+  min-height: 42px;
+}
+.admin-settings-premium input[type="checkbox"],
+.admin-settings-premium input[type="radio"] {
+  accent-color: #155e8a;
+}
+.admin-settings-premium button[type="submit"] {
+  min-height: 44px;
+  border-radius: 11px;
+}
+.admin-settings-premium [class*="text-rose-"],
+.admin-settings-premium [class*="text-emerald-"] {
+  line-height: 1.5;
+}
+@media (max-width: 640px) {
+  .admin-settings-premium { gap: 16px; }
+  .admin-settings-premium > div:first-child { padding: 18px !important; }
+  .admin-settings-premium form { padding: 16px !important; }
+}
