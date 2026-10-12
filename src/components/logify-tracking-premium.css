@@ -72,3 +72,63 @@
   .logify-tracking-premium form { flex-wrap: wrap; }
   .logify-tracking-premium form input { min-width: 0; }
 }
+
+/* Layout polish for the shipment summary, milestones and route panels */
+.logify-tracking-premium > div:first-child {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #e3ebf4 !important;
+  border-radius: 22px !important;
+  background: #fff !important;
+  box-shadow: 0 12px 36px rgb(11 43 99 / 6%);
+}
+.logify-tracking-premium > div:first-child::before {
+  content: "";
+  display: block;
+  height: 5px;
+  margin: -1px -1px 22px;
+  background: linear-gradient(90deg, #0b2b63 0%, #1769e8 68%, #ff8a22 100%);
+}
+.logify-tracking-premium [class*="grid-cols-"] > div,
+.logify-tracking-premium [class*="border-"][class*="rounded-"] {
+  border-color: var(--lx-line);
+}
+.logify-tracking-premium [class*="bg-gradient-to-r"] {
+  background-image: linear-gradient(90deg, #1769e8, #65a2ff) !important;
+}
+.logify-tracking-premium [class*="bg-emerald-500"] {
+  background-color: #15966b !important;
+}
+.logify-tracking-premium [class*="bg-rose-500"] {
+  background-color: #e34b57 !important;
+}
+.logify-tracking-premium [class*="animate-ping"] { opacity: .25; }
+.logify-tracking-premium [class*="font-mono"][class*="uppercase"] {
+  letter-spacing: .075em;
+}
+.logify-tracking-premium svg { flex-shrink: 0; }
+.logify-tracking-premium .leaflet-container {
+  min-height: 320px;
+  overflow: hidden;
+  border-radius: 14px;
+  border: 1px solid var(--lx-line);
+  z-index: 0;
+}
+.logify-tracking-premium .leaflet-control-zoom a {
+  color: #0b2b63 !important;
+  background: #fff !important;
+}
+.logify-tracking-premium .leaflet-control-attribution {
+  font-size: 9px;
+}
+@media (min-width: 1024px) {
+  .logify-tracking-premium > div:first-child { padding: 28px !important; }
+}
+@media (max-width: 640px) {
+  .logify-tracking-premium > div:first-child {
+    border-radius: 16px !important;
+    padding: 16px !important;
+  }
+  .logify-tracking-premium .leaflet-container { min-height: 260px; }
+  .logify-tracking-premium [class*="text-2xl"] { overflow-wrap: anywhere; }
+}
