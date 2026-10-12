@@ -3,6 +3,7 @@ import {
   User, Mail, Phone, MapPin, Package, Scale, Layers, ChevronRight, 
   ArrowRight, ShieldCheck, CheckCircle2, Clipboard, ArrowLeft, Loader2, Sparkles
 } from 'lucide-react';
+import warehouseImage from '../../assets/images/warehouse_solution_1784467375578.jpg';
 import { Settings } from '../../types.js';
 
 interface SendPackagePageProps {
@@ -144,6 +145,17 @@ export default function SendPackagePage({ settings, onNavigate, onSetTrackId }: 
   return (
     <div className="flex-1 py-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950 transition-colors">
       <div className="max-w-4xl mx-auto">
+        {step < 4 && (
+          <section className="relative isolate mb-8 min-h-[190px] sm:min-h-[230px] overflow-hidden rounded-2xl border border-blue-300/20 bg-[#061b35] shadow-xl">
+            <img src={warehouseImage} alt="Packages being prepared for shipment in a logistics warehouse" className="absolute inset-0 h-full w-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#03132d]/95 via-[#03132d]/70 to-[#03132d]/15" />
+            <div className="relative z-10 flex min-h-[190px] sm:min-h-[230px] flex-col justify-center p-6 sm:p-8 text-left">
+              <span className="text-[10px] font-extrabold uppercase tracking-[.22em] text-blue-300">Shipment booking</span>
+              <h1 className="mt-2 max-w-xl text-2xl font-black leading-tight text-white sm:text-4xl">Every delivery starts with the right details.</h1>
+              <p className="mt-2 max-w-lg text-sm leading-6 text-blue-100/90">Complete the sender, receiver and package details to prepare your shipment request.</p>
+            </div>
+          </section>
+        )}
         
         {/* Progress Tracker bar */}
         {step < 4 && (
