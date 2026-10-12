@@ -1,0 +1,74 @@
+/* Logify Express — premium public tracking page */
+.logify-tracking-premium {
+  --lx-ink: #0b2b63;
+  --lx-blue: #1769e8;
+  --lx-orange: #ff8a22;
+  --lx-line: #e1eaf3;
+  --lx-muted: #627895;
+  color: var(--lx-ink) !important;
+  background: #f7fafd !important;
+  border-radius: 0 !important;
+  max-width: 1600px !important;
+  box-shadow: none !important;
+}
+.logify-tracking-premium > div { min-width: 0; }
+.logify-tracking-premium h1,
+.logify-tracking-premium h2,
+.logify-tracking-premium h3,
+.logify-tracking-premium h4 { color: var(--lx-ink); letter-spacing: -.025em; }
+.logify-tracking-premium p { line-height: 1.55; }
+.logify-tracking-premium input,
+.logify-tracking-premium select,
+.logify-tracking-premium textarea {
+  background: #fff !important;
+  color: #142d50 !important;
+  border-color: #d8e3ef !important;
+  border-radius: 10px !important;
+}
+.logify-tracking-premium input:focus,
+.logify-tracking-premium select:focus,
+.logify-tracking-premium textarea:focus {
+  border-color: var(--lx-blue) !important;
+  box-shadow: 0 0 0 3px rgb(23 105 232 / 10%) !important;
+}
+.logify-tracking-premium button { transition: background-color .18s ease, border-color .18s ease, transform .18s ease; }
+.logify-tracking-premium button:focus-visible { outline: 3px solid rgb(23 105 232 / 30%); outline-offset: 2px; }
+.logify-tracking-premium [class*="bg-[#181a22]"],
+.logify-tracking-premium [class*="bg-[#12141a]"],
+.logify-tracking-premium [class*="bg-[#20232e]"],
+.logify-tracking-premium [class*="bg-[#0c0d12]"] {
+  background-color: #fff !important;
+  border-color: var(--lx-line) !important;
+  color: var(--lx-ink) !important;
+  box-shadow: 0 3px 14px rgb(14 43 83 / 4%);
+}
+.logify-tracking-premium [class*="text-white"],
+.logify-tracking-premium [class*="text-slate-100"],
+.logify-tracking-premium [class*="text-slate-200"] { color: #18365e !important; }
+.logify-tracking-premium [class*="text-slate-300"],
+.logify-tracking-premium [class*="text-slate-400"] { color: var(--lx-muted) !important; }
+.logify-tracking-premium [class*="border-[#2b303e]"],
+.logify-tracking-premium [class*="border-[#282d3b]"] { border-color: var(--lx-line) !important; }
+.logify-tracking-premium [class*="bg-amber-500"]:not([class*="text-"]) { background-color: var(--lx-orange); }
+.logify-tracking-premium [class*="text-amber-400"],
+.logify-tracking-premium [class*="text-amber-500"],
+.logify-tracking-premium [class*="text-orange-400"] { color: #e87510 !important; }
+.logify-tracking-premium [class*="rounded-2xl"],
+.logify-tracking-premium [class*="rounded-xl"] { border-radius: 14px; }
+.logify-tracking-premium [class*="shadow-2xl"] { box-shadow: 0 14px 38px rgb(14 43 83 / 12%); }
+.logify-tracking-premium form button[type="submit"] {
+  background: var(--lx-ink);
+  color: white;
+  border-radius: 10px;
+  font-weight: 700;
+}
+.logify-tracking-premium form button[type="submit"]:hover { background: var(--lx-blue); }
+@media (min-width: 768px) {
+  .logify-tracking-premium { padding: 28px 32px !important; }
+}
+@media (max-width: 640px) {
+  .logify-tracking-premium { padding: 18px 12px !important; }
+  .logify-tracking-premium h1 { font-size: 1.75rem; line-height: 1.15; }
+  .logify-tracking-premium form { flex-wrap: wrap; }
+  .logify-tracking-premium form input { min-width: 0; }
+}
