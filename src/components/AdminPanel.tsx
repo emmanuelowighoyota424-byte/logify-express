@@ -144,7 +144,7 @@ export default function AdminPanel({
   ] as const;
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex transition-colors duration-200">
+    <div className="admin-control-tower min-h-screen bg-slate-50 dark:bg-slate-950 flex transition-colors duration-200">
       
       {/* 1. Left Fixed Sidebar Layout */}
       <aside className={`fixed inset-y-0 left-0 w-64 bg-slate-900 border-r border-slate-800 text-slate-300 z-40 transition-transform duration-300 transform lg:translate-x-0 ${
