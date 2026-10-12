@@ -519,9 +519,39 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
   const getBackgroundPresetStyles = () => {
     const preset = settings?.trackerCustomBackgroundPreset || 'dark-ash';
     switch (preset) {
+      case 'red-yellow':
+        return {
+          wrapper: 'rounded-[26px] border border-blue-400/20 bg-gradient-to-br from-[#071b35] via-[#0b2e55] to-[#071521] p-5 text-white shadow-2xl shadow-blue-950/30 transition-all duration-300 sm:p-8 lg:p-10',
+          cardBorder: 'border-amber-500',
+          accentText: 'text-amber-300',
+          accentBg: 'bg-amber-500/10 text-amber-300 border-amber-500/20',
+          btn: 'bg-blue-600 hover:bg-blue-500 text-white shadow-blue-600/20 focus:border-blue-400',
+          logoColor: 'text-blue-300',
+          logoTag: 'bg-amber-400 text-slate-950 font-black',
+        };
+      case 'slate':
+        return {
+          wrapper: 'rounded-[26px] border border-slate-600 bg-gradient-to-br from-[#111827] via-[#172033] to-[#090f1b] p-5 text-slate-100 shadow-2xl transition-all duration-300 sm:p-8 lg:p-10',
+          cardBorder: 'border-slate-400',
+          accentText: 'text-slate-200',
+          accentBg: 'bg-slate-400/10 text-slate-200 border-slate-400/20',
+          btn: 'bg-slate-200 hover:bg-white text-slate-950 shadow-slate-500/20 focus:border-slate-300',
+          logoColor: 'text-slate-200',
+          logoTag: 'bg-slate-200 text-slate-950',
+        };
+      case 'cyber':
+        return {
+          wrapper: 'rounded-[26px] border border-cyan-400/30 bg-gradient-to-br from-[#041a2b] via-[#062d42] to-[#071521] p-5 text-cyan-50 shadow-2xl shadow-cyan-950/30 transition-all duration-300 sm:p-8 lg:p-10',
+          cardBorder: 'border-cyan-400',
+          accentText: 'text-cyan-300',
+          accentBg: 'bg-cyan-400/10 text-cyan-200 border-cyan-400/20',
+          btn: 'bg-cyan-400 hover:bg-cyan-300 text-slate-950 shadow-cyan-500/20 focus:border-cyan-300',
+          logoColor: 'text-cyan-300',
+          logoTag: 'bg-cyan-400 text-slate-950',
+        };
       case 'emerald':
         return {
-          wrapper: 'rounded-[26px] border border-slate-200 bg-white p-5 text-slate-900 shadow-sm transition-all duration-300 sm:p-8 lg:p-10',
+          wrapper: 'rounded-[26px] border border-emerald-400/25 bg-gradient-to-br from-[#052e2b] via-[#064e3b] to-[#071521] p-5 text-emerald-50 shadow-2xl shadow-emerald-950/30 transition-all duration-300 sm:p-8 lg:p-10',
           cardBorder: 'border-emerald-500',
           accentText: 'text-emerald-400',
           accentBg: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
@@ -531,7 +561,7 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
         };
       case 'cosmic':
         return {
-          wrapper: 'rounded-[26px] border border-slate-200 bg-white p-5 text-slate-900 shadow-sm transition-all duration-300 sm:p-8 lg:p-10',
+          wrapper: 'rounded-[26px] border border-indigo-400/25 bg-gradient-to-br from-[#1b1644] via-[#25205c] to-[#071521] p-5 text-indigo-50 shadow-2xl shadow-indigo-950/30 transition-all duration-300 sm:p-8 lg:p-10',
           cardBorder: 'border-indigo-500',
           accentText: 'text-indigo-400',
           accentBg: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20',
@@ -542,7 +572,7 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
       case 'dark-ash':
       default:
         return {
-          wrapper: 'rounded-[26px] border border-slate-200 bg-white p-5 text-slate-900 shadow-sm transition-all duration-300 sm:p-8 lg:p-10',
+          wrapper: 'rounded-[26px] border border-blue-400/20 bg-gradient-to-br from-[#071b35] via-[#0b2e55] to-[#071521] p-5 text-white shadow-2xl shadow-blue-950/30 transition-all duration-300 sm:p-8 lg:p-10',
           cardBorder: 'border-amber-500',
           accentText: 'text-amber-400',
           accentBg: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
@@ -556,16 +586,16 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
   const presetStyle = getBackgroundPresetStyles();
 
   return (
-    <div className="logify-tracking-premium mx-auto min-h-[70vh] max-w-[1440px] space-y-7 rounded-[28px] bg-[#f4f6f8] px-3 py-5 text-slate-900 sm:px-6 sm:py-8 lg:px-8">
+    <div className="logify-tracking-premium mx-auto min-h-[70vh] max-w-[1440px] space-y-7 rounded-[28px] bg-[#08264a] px-3 py-5 text-white sm:px-6 sm:py-8 lg:px-8">
       <div className={presetStyle.wrapper}>
         {/* FedEx Style Corporate Header Branding */}
         <div className="text-center space-y-4 max-w-2xl mx-auto">
           <div className="flex items-center justify-center gap-3 font-sans">
             {settings?.brandLogoUrl && <img src={settings.brandLogoUrl} alt="" className="h-12 max-w-36 rounded-lg object-contain bg-white p-1" onError={(e) => { e.currentTarget.style.display = 'none'; }} />}
-            <span className="text-3xl sm:text-4xl font-black tracking-tight text-slate-950">{settings?.companyName || 'Logify'}</span>
+            <span className="text-3xl sm:text-4xl font-black tracking-tight text-white">{settings?.companyName || 'Logify'}</span>
           </div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">Track your shipment</h1>
-          <p className="mx-auto max-w-lg text-sm leading-6 text-slate-400">Every delivery, one clear view. Enter your tracking number for the latest shipment status and journey details.</p>
+          <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">Track your shipment</h1>
+          <p className="mx-auto max-w-lg text-sm leading-6 text-slate-300">Every delivery, one clear view. Enter your tracking number for the latest shipment status and journey details.</p>
         </div>
 
         {/* Track Search Form with Custom Focus & Style Button */}
