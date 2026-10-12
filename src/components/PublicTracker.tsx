@@ -1269,6 +1269,11 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
                 {/* 1. Interactive Map Column */}
                 {settings?.trackerShowMap !== false && (
                   <div className={settings?.trackerShowTelemetryDeck !== false ? "md:col-span-2 space-y-3" : "md:col-span-3 space-y-3"}>
+                    {shipment.coordinatesAvailable === false && (
+                      <div role="status" className="rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-xs leading-relaxed text-amber-200">
+                        Live GPS coordinates have not been recorded for this shipment yet. The map is showing a neutral reference view, not the parcel's confirmed location.
+                      </div>
+                    )}
                     {/* View Mode Toggle Bar */}
                     <div className="flex items-center justify-between bg-[#12141a] border border-[#282d3b] p-1.5 rounded-xl shadow-md">
                       <div className="flex items-center gap-1.5">
