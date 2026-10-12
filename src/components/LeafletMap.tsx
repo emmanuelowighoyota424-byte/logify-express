@@ -99,8 +99,13 @@ export default function LeafletMap({
       streetLayer.addTo(map);
     };
 
+    // CARTO supports a public browser key for basemap requests. Keep it in a
+    // VITE_ variable (never put private/server secrets in client-side env vars).
+    // The key is optional so local previews still work where anonymous tiles are allowed.
+    const cartoApiKey = import.meta.env.VITE_CARTO_API_KEY?.trim();
+    const cartoTileUrl = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
     const darkBlueLayer = L.tileLayer(
-      'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+      cartoApiKey ? `${cartoTileUrl}?api_key=${encodeURIComponent(cartoApiKey)}` : cartoTileUrl,
       {
         subdomains: 'abcd',
         maxZoom: 20,
