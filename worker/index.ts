@@ -65,4 +65,4 @@ async function handleApi(req: Request, env: Env): Promise<Response> {
   } finally { await prisma.$disconnect(); }
 }
 
-export default { async fetch(req: Request, env: Env): Promise<Response> { try { const url = new URL(req.url); const res = url.pathname.startsWith("/api/") ? await handleApi(req, env) : await env.ASSETS.fetch(req); return cors(res); } catch (e) { console.error(e); return cors(json({ error: "Internal server error" }, 500)); } } } satisfies ExportedHandler<Env>;
+export default { async fetch(req: Request, env: Env): Promise<Response> { try { const url = new URL(req.url); const res = url.pathname.startsWith("/api/") ? await handleApi(req, env) : await env.ASSETS.fetch(req); return cors(res); } catch (e) { console.error(e); return cors(json({ error: "Internal server error" }, 500)); } } };
