@@ -74,9 +74,9 @@ export default function AdminPanel({
       const [shipRes, driverRes, usersRes, paymentsRes, alertsRes] = await Promise.all([
         fetch('/api/shipments', { headers }),
         fetch('/api/drivers', { headers }),
-        fetch('/api/admin/users', { headers }),
+        fetch('/api/users', { headers }),
         fetch('/api/payments', { headers }),
-        fetch('/api/admin/alerts', { headers }),
+        fetch('/api/alerts', { headers }),
       ]);
 
       if (shipRes.ok) setShipments(await shipRes.json());
