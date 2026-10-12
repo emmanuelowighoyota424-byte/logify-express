@@ -152,7 +152,7 @@ export default function AdminShipmentsView({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="admin-shipments-premium space-y-6">
       {/* Shipment edit dispatcher side overlay or modal */}
       {editingShipment && (
         <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
