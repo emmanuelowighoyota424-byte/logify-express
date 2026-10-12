@@ -132,3 +132,45 @@
   .logify-tracking-premium .leaflet-container { min-height: 260px; }
   .logify-tracking-premium [class*="text-2xl"] { overflow-wrap: anywhere; }
 }
+
+/* Final single-theme pass: remove legacy dark dashboard surfaces from the public tracker. */
+.logify-tracking-premium [class*="bg-[#12141a]"],
+.logify-tracking-premium [class*="bg-[#0c0d12]"],
+.logify-tracking-premium [class*="bg-[#20232e]"],
+.logify-tracking-premium [class*="bg-[#181a22]"],
+.logify-tracking-premium [class*="bg-[#20232e]/"],
+.logify-tracking-premium [class*="bg-emerald-950/"],
+.logify-tracking-premium [class*="bg-rose-950/"],
+.logify-tracking-premium [class*="bg-blue-950/"],
+.logify-tracking-premium [class*="bg-amber-950/"] {
+  background-color: #fff !important;
+  border-color: var(--lx-line) !important;
+  color: var(--lx-ink) !important;
+}
+.logify-tracking-premium [class*="border-[#282d3b]"],
+.logify-tracking-premium [class*="border-[#2b303e]"],
+.logify-tracking-premium [class*="border-emerald-900/"],
+.logify-tracking-premium [class*="border-rose-900/"] {
+  border-color: var(--lx-line) !important;
+}
+.logify-tracking-premium [class*="text-slate-950"] { color: var(--lx-ink) !important; }
+.logify-tracking-premium [class*="text-emerald-400"],
+.logify-tracking-premium [class*="text-emerald-300"] { color: #087f5b !important; }
+.logify-tracking-premium [class*="text-rose-400"] { color: #c93443 !important; }
+.logify-tracking-premium [class*="text-blue-400"] { color: #1769e8 !important; }
+.logify-tracking-premium [class*="text-indigo-400"],
+.logify-tracking-premium [class*="text-violet-400"],
+.logify-tracking-premium [class*="text-sky-400"] { color: #315a91 !important; }
+.logify-tracking-premium [class*="hover:bg-[#20232e]"]:hover,
+.logify-tracking-premium [class*="hover:bg-[#282d3b]"]:hover {
+  background-color: #edf4fc !important;
+}
+.logify-tracking-premium button:not([class*="bg-amber-500"]):not([class*="bg-emerald-500"]):not([class*="bg-blue-600"]):not([class*="bg-rose-500"]) {
+  border-color: #dce6f1;
+}
+.logify-tracking-premium .leaflet-container,
+.logify-tracking-premium .leaflet-container * {
+  color: inherit;
+}
+.logify-tracking-premium .leaflet-container { color: #0b2b63; }
+.logify-tracking-premium .leaflet-control-attribution a { color: #1769e8 !important; }
