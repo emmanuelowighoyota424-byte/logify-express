@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import oceanCargoImage from './assets/images/ocean_cargo_solution_1784467350305.jpg';
 import lastMileImage from './assets/images/last_mile_solution_1784467362755.jpg';
+import warehouseImage from './assets/images/warehouse_solution_1784467375578.jpg';
 import { Mail, Phone, MapPin, Send, HelpCircle, ShieldCheck, Ship, Plane, Truck, Warehouse, Lock, ArrowRight, Loader2, Package } from 'lucide-react';
 import Navbar from './components/Navbar.tsx';
 import Footer from './components/Footer.tsx';
