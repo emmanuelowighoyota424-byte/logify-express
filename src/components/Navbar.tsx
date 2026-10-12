@@ -1,5 +1,5 @@
 import React from 'react';
-import { Truck, LogOut, LayoutDashboard, Menu, X, Sun, Moon, MapPinned, Package, ChevronRight } from 'lucide-react';
+import { Truck, LogOut, Menu, X, Sun, Moon, MapPinned, Package, ChevronRight } from 'lucide-react';
 import { User, Settings } from '../types.js';
 
 interface NavbarProps {
@@ -64,7 +64,6 @@ export default function Navbar({ currentView, onNavigate, user, onLogout, theme,
                 <MapPinned size={14} /> Track shipment
               </button>
               {user && <>
-                <button onClick={() => navigate('admin')} className="flex items-center gap-1.5 px-3.5 py-2.5 bg-[#0b1f33] hover:bg-[#123552] text-white text-[11px] font-black rounded-lg transition-colors cursor-pointer"><LayoutDashboard size={14} /> Control tower</button>
                 <button onClick={onLogout} className="p-2.5 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-900 cursor-pointer" aria-label="Log out"><LogOut size={15} /></button>
               </>}
             </div>
@@ -80,7 +79,7 @@ export default function Navbar({ currentView, onNavigate, user, onLogout, theme,
           {navItems.map((item) => <button key={item.view} onClick={() => navigate(item.view)} aria-current={currentView === item.view ? "page" : undefined} className={`flex items-center justify-between w-full text-left px-3 py-3 rounded-lg text-sm font-bold cursor-pointer ${currentView === item.view ? 'bg-slate-100 text-[#0b1f33] dark:bg-slate-800 dark:text-white' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900'}`}><span className="flex items-center gap-2"><Package size={15} />{item.label}</span><ChevronRight size={14} /></button>)}
           <div className="pt-3 mt-2 border-t border-slate-100 dark:border-slate-800 space-y-2">
             <button onClick={() => navigate('track')} className="w-full min-h-12 py-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-[#0b1f33] text-xs font-black shadow-sm cursor-pointer">Track a shipment <span aria-hidden="true">→</span></button>
-            {user && <><button onClick={() => navigate('admin')} className="w-full min-h-12 py-3 rounded-xl bg-[#0b1f33] hover:bg-[#123552] text-white text-xs font-black cursor-pointer">Open control tower</button><button onClick={() => { setIsOpen(false); onLogout(); }} className="w-full min-h-12 py-3 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 text-xs font-bold cursor-pointer"><span className="inline-flex items-center justify-center gap-2"><LogOut size={14} /> Log out</span></button></>}
+            {user && <><button onClick={() => { setIsOpen(false); onLogout(); }} className="w-full min-h-12 py-3 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 text-xs font-bold cursor-pointer"><span className="inline-flex items-center justify-center gap-2"><LogOut size={14} /> Log out</span></button></>}
           </div>
         </div>}
       </nav>
