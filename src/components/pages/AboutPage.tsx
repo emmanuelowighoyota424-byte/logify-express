@@ -7,27 +7,27 @@ interface AboutPageProps {
 
 export default function AboutPage({ onNavigate }: AboutPageProps) {
   const stats = [
-    { value: '25M+', label: 'Successful Shipments' },
-    { value: '99.98%', label: 'On-Time SLA Delivery' },
-    { value: '220+', label: 'Countries Connected' },
-    { value: '15,000+', label: 'Internal Fleet Vehicles' }
+    { value: 'Track', label: 'Shipment visibility' },
+    { value: 'Plan', label: 'Quote and rate tools' },
+    { value: 'Connect', label: 'Customer support' },
+    { value: 'Manage', label: 'Delivery workflows' }
   ];
 
   const pillars = [
     {
       icon: <Clock size={24} className="text-blue-500" />,
       title: 'Real-Time Precision Tracking',
-      desc: 'Our advanced tracking systems use proprietary telemetry waybill logs and high-frequency GPS positioning to guarantee total shipment transparency.'
+      desc: 'Follow available shipment events and location updates in one place, with the information supplied by the shipment system.'
     },
     {
       icon: <Shield size={24} className="text-blue-500" />,
       title: 'Cargo Guard SLA',
-      desc: 'We are the only carrier providing standard temperature-controlled monitoring, impact logs, and cargo insurance guarantees backed by smart-contracts.'
+      desc: 'Clear shipment records help customers understand status changes and the next available step. Special handling and coverage depend on the service selected.'
     },
     {
       icon: <Globe size={24} className="text-blue-500" />,
       title: 'Nationwide & Global Coverage',
-      desc: 'Through our intelligent multi-modal shipping network, we seamlessly coordinate sea cargo, air express, and last-mile dispatch schedules.'
+      desc: 'Explore the shipping options available in the platform and request a quote based on origin, destination, package weight, and service type.'
     }
   ];
 
@@ -38,7 +38,7 @@ export default function AboutPage({ onNavigate }: AboutPageProps) {
         {/* 1. Header Hero section */}
         <div className="text-center space-y-4 max-w-3xl mx-auto">
           <h1 className="text-xs font-black uppercase text-blue-600 dark:text-blue-400 tracking-widest font-mono">
-            Operational Excellence Since 2012
+            A clearer way to manage shipping
           </h1>
           <h2 className="text-4xl sm:text-5xl font-sans font-black text-slate-900 dark:text-white tracking-tight leading-none">
             Fast, Reliable Logistics <br />
@@ -47,7 +47,7 @@ export default function AboutPage({ onNavigate }: AboutPageProps) {
             </span>
           </h2>
           <p className="text-sm sm:text-base text-slate-500 dark:text-slate-400 leading-relaxed">
-            Logify is a premier internal logistics operator managing a high-performance fleet, smart warehousing, and global shipping lanes. We build software and run operations that keep the modern supply chain moving at the speed of light.
+            Logify Express brings shipment tracking, shipping requests, rate tools, and customer support into one straightforward digital experience. Service availability and delivery options depend on your shipment details and configured operations.
           </p>
         </div>
 
