@@ -21,7 +21,7 @@ export default function App() {
   const [user, setUser] = useState<User | null>(null);
   const [authLoading, setAuthLoading] = useState(false);
   const [settings, setSettings] = useState<Settings>({companyName:'Logify Logistics',contactEmail:'',contactPhone:'+1 (800) 555-LOGI',pricing:{basePrice:15,pricePerKg:2.5,pricePerKm:.15}});
-  const [theme, setTheme] = useState<'light'|'dark'>(()=>{try{const s=localStorage.getItem('logify_theme');if(s==='dark'||s==='light')return s as 'light'|'dark';if(typeof window!=='undefined'&&window.matchMedia?.('(prefers-color-scheme: dark)').matches)return'dark'}catch(e){}return'light'});
+  const [theme, setTheme] = useState<'light'|'dark'>(()=>{try{const s=localStorage.getItem('logify_theme');if(s==='dark'||s==='light')return s as 'light'|'dark'}catch(e){}return'dark'});
   useEffect(()=>{document.documentElement.classList.toggle('dark',theme==='dark');try{localStorage.setItem('logify_theme',theme)}catch(e){}},[theme]);
   const toggleTheme=()=>setTheme(p=>p==='light'?'dark':'light');
   useEffect(()=>{fetch('/api/settings').then(r=>r.ok?r.json():Promise.reject()).then(setSettings).catch(()=>{})},[]);
