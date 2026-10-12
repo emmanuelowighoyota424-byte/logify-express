@@ -88,6 +88,19 @@ function normalizeString(value: unknown, max = 500) {
 }
 
 function shipmentPublicView(shipment: any) {
+  // Keep the public tracking response compatible with the frontend Shipment model.
+  // Older records may not have GPS coordinates, so use a neutral map center only
+  // for rendering and expose coordinatesAvailable=false to avoid implying a GPS fix.
+  const hasPickupCoordinates = Number.isFinite(shipment.pickupLat) && Number.isFinite(shipment.pickupLng);
+  const hasDeliveryCoordinates = Number.isFinite(shipment.deliveryLat) && Number.isFinite(shipment.deliveryLng);
+  const hasCurrentCoordinates = Number.isFinite(shipment.currentLat) && Number.isFinite(shipment.currentLng);
+  const neutralCenter = { lat: 39.8283, lng: -98.5795 };
+  const pickupCoords = hasPickupCoordinates ? { lat: shipment.pickupLat, lng: shipment.pickupLng } : neutralCenter;
+  const deliveryCoords = hasDeliveryCoordinates ? { lat: shipment.deliveryLat, lng: shipment.deliveryLng } : pickupCoords;
+  const currentCoords = hasCurrentCoordinates
+    ? { lat: shipment.currentLat, lng: shipment.currentLng }
+    : pickupCoords;
+
   return {
     id: shipment.id,
     senderName: shipment.senderName,
@@ -98,13 +111,20 @@ function shipmentPublicView(shipment: any) {
     type: shipment.type,
     weight: shipment.weight,
     price: shipment.price,
+    packageValue: shipment.packageValue,
+    packageDimensions: shipment.packageDimensions,
     location: shipment.location,
+    pickupCoords,
+    deliveryCoords,
+    currentCoords,
+    coordinatesAvailable: hasPickupCoordinates && hasDeliveryCoordinates,
     currentLat: shipment.currentLat,
     currentLng: shipment.currentLng,
+    assignedDriverId: shipment.assignedDriverId,
     estimatedDelivery: shipment.estimatedDelivery,
     createdAt: shipment.createdAt,
     updatedAt: shipment.updatedAt,
-    timeline: shipment.timeline,
+    timeline: Array.isArray(shipment.timeline) ? shipment.timeline : [],
   };
 }
 
