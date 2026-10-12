@@ -19,6 +19,8 @@ export default function AdminSettingsView({
 }: AdminSettingsViewProps) {
   // Brand States
   const [companyName, setCompanyName] = useState(settings.companyName || 'Logify Logistics');
+  const [brandLogoUrl, setBrandLogoUrl] = useState(settings.brandLogoUrl || '');
+  const [testimonialsJson, setTestimonialsJson] = useState(() => JSON.stringify(settings.testimonials || [], null, 2));
   const [contactEmail, setContactEmail] = useState(settings.contactEmail || 'support@logify.com');
   const [contactPhone, setContactPhone] = useState(settings.contactPhone || '+1 (800) 555-LOGI');
   
@@ -92,6 +94,8 @@ export default function AdminSettingsView({
       const updated: Settings = {
         ...settings,
         companyName,
+        brandLogoUrl: brandLogoUrl.trim(),
+        testimonials: JSON.parse(testimonialsJson),
         contactEmail,
         contactPhone,
         isSiteActive,
@@ -271,6 +275,19 @@ export default function AdminSettingsView({
                   />
                 </div>
 
+                <div className="space-y-1 sm:col-span-2">
+                  <label className="text-[9px] text-[#aaa] font-bold uppercase font-mono tracking-wider">Brand Logo Image URL (HTTPS)</label>
+                  <input
+                    type="url"
+                    value={brandLogoUrl}
+                    onChange={(e) => setBrandLogoUrl(e.target.value)}
+                    placeholder="https://yourdomain.com/logo.png"
+                    className="w-full bg-neutral-950/80 border border-neutral-800 hover:border-neutral-700 focus:border-[#ff7a1a] rounded-xl p-3 outline-none font-medium text-white transition-colors"
+                  />
+                  <p className="text-[10px] text-neutral-500">Use a public HTTPS image URL. Leave blank to use the built-in shipment icon.</p>
+                  {brandLogoUrl.trim() && <img src={brandLogoUrl} alt="Brand logo preview" className="mt-2 max-h-16 max-w-48 rounded-lg border border-neutral-700 bg-white p-2 object-contain" />}
+                </div>
+
                 <div className="space-y-1">
                   <label className="text-[9px] text-[#aaa] font-bold uppercase font-mono tracking-wider">Contact Email *</label>
                   <input
@@ -296,6 +313,23 @@ export default function AdminSettingsView({
                   />
                 </div>
               </div>
+            </div>
+
+            {/* PUBLIC TESTIMONIALS */}
+            <div className="bg-neutral-900/60 backdrop-blur-md border border-neutral-800/80 rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
+              <h3 className="text-sm font-black text-white flex items-center gap-2.5">
+                <MessageSquare size={15} className="text-[#ff7a1a]" />
+                Public Testimonials & Customer Photos
+              </h3>
+              <p className="text-[10px] text-neutral-400 leading-relaxed">Add up to 12 testimonials as a JSON list. Each item needs a name and quote; role and photoUrl are optional. Photo URLs must be public HTTPS links. These appear on the public homepage.</p>
+              <textarea
+                rows={8}
+                value={testimonialsJson}
+                onChange={(e) => setTestimonialsJson(e.target.value)}
+                spellCheck={false}
+                placeholder={'[\n  { "name": "Customer name", "role": "Business owner", "quote": "A great delivery experience.", "photoUrl": "https://yourdomain.com/customer.jpg" }\n]'}
+                className="w-full bg-neutral-950 border border-neutral-800 hover:border-neutral-700 focus:border-[#ff7a1a] rounded-xl p-3 outline-none text-white font-mono text-xs"
+              />
             </div>
 
             {/* STATUS (MAINTENANCE) SECTION */}
