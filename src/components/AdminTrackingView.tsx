@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { 
   Package, Search, MapPin, Calendar, Clock, CheckCircle2, Circle, 
   Truck, Sparkles, User, FileText, ArrowRight, Edit, Plus, Trash2, 
-  Settings, Check, Loader2, RefreshCw, X, Shield, Map, Info
+  Settings, Check, Loader2, RefreshCw, X, Shield, Map, Info, Copy, ExternalLink
 } from 'lucide-react';
 import { Shipment, Driver } from '../types.js';
 
@@ -26,6 +26,7 @@ export default function AdminTrackingView({
     shipments.find(s => s.id.toLowerCase() === initialTrackId.toLowerCase()) || null
   );
   const [searched, setSearched] = useState<boolean>(initialTrackId !== '');
+  const [linkCopied, setLinkCopied] = useState(false);
   const [activeSubTab, setActiveSubTab] = useState<'timeline' | 'edit' | 'milestones'>('timeline');
 
   // Form states for Edit Details
@@ -412,6 +413,23 @@ export default function AdminTrackingView({
           )}
 
           {/* Sub-Tab Selector Navigation */}
+          <div className="rounded-2xl border border-blue-200 bg-blue-50/80 dark:border-blue-900/60 dark:bg-blue-950/30 p-4 sm:p-5 space-y-3">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div>
+                <p className="text-[10px] font-black uppercase tracking-widest text-blue-700 dark:text-blue-300">Public tracking link</p>
+                <p className="text-xs text-slate-600 dark:text-slate-300 mt-1">Generated automatically for this tracking number. Share it with the customer to view the latest saved milestones.</p>
+              </div>
+              <div className="flex gap-2 shrink-0">
+                <button type="button" onClick={async () => { const url = window.location.origin + "/track?track=" + encodeURIComponent(activeShipment.id); try { await navigator.clipboard.writeText(url); setLinkCopied(true); window.setTimeout(() => setLinkCopied(false), 1800); } catch { setErrorMsg("Could not copy link. Copy the URL from the field instead."); } }} className="inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 hover:bg-blue-700 px-3 py-2 text-xs font-bold text-white">
+                  {linkCopied ? <Check size={14} /> : <Copy size={14} />}{linkCopied ? 'Copied' : 'Copy link'}
+                </button>
+                <a href={"/track?track=" + encodeURIComponent(activeShipment.id)} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 rounded-lg border border-blue-200 dark:border-blue-800 px-3 py-2 text-xs font-bold text-blue-700 dark:text-blue-300">
+                  <ExternalLink size={14} /> Open
+                </a>
+              </div>
+            </div>
+            <input readOnly value={window.location.origin + "/track?track=" + encodeURIComponent(activeShipment.id)} onFocus={(event) => event.currentTarget.select()} className="w-full rounded-lg border border-blue-200 dark:border-blue-900 bg-white dark:bg-slate-950 px-3 py-2.5 text-xs font-mono text-slate-700 dark:text-slate-200 outline-none" aria-label="Generated public tracking URL" />
+          </div>
           <div className="flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-1">
             <button
               onClick={() => setActiveSubTab('timeline')}
