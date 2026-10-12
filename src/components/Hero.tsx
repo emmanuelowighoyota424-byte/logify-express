@@ -19,10 +19,10 @@ export default function Hero({ onNavigate, onSetTrackId }: HeroProps) {
   };
 
   return (
-    <div className="flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen transition-colors duration-300">
+    <div className="hero-premium flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen transition-colors duration-300">
       
       {/* 1. HERO SECTION (TOP AREA) */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#111111] via-slate-900 to-[#111111] text-white py-14 sm:py-20 border-b border-slate-900 px-4 sm:px-6 lg:px-8">
+      <section className="hero-premium__masthead relative overflow-hidden bg-gradient-to-br from-[#0b1f33] via-[#102b43] to-[#071521] text-white py-16 sm:py-24 border-b border-slate-900 px-4 sm:px-6 lg:px-8">
         {/* Subtle Decorative SVG grids and radial yellow glow spots */}
         <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px]" />
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[#FFCC00]/5 rounded-full blur-3xl pointer-events-none" />
@@ -48,7 +48,7 @@ export default function Hero({ onNavigate, onSetTrackId }: HeroProps) {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-4xl sm:text-5xl md:text-6xl font-sans font-black tracking-tight leading-none uppercase"
+              className="hero-premium__title text-4xl sm:text-5xl md:text-6xl font-sans font-black tracking-tight leading-none"
             >
               The World <span className="text-[#FFCC00]">On-Time</span>. <br />
               Delivered.
@@ -139,7 +139,7 @@ export default function Hero({ onNavigate, onSetTrackId }: HeroProps) {
       </section>
 
       {/* 2. FULL-WIDTH VISUAL BANNER */}
-      <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8" id="visual-banner-section">
+      <section className="hero-premium__visual w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10" id="visual-banner-section">
         <div className="relative h-[220px] sm:h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-lg border border-slate-200 dark:border-slate-800">
           <img
             src="/src/assets/images/logistics_personnel_port_1784465855777.jpg"
