@@ -161,7 +161,7 @@ export default function LeafletMap({
         [deliveryCoords.lat, deliveryCoords.lng],
       ];
       markersRef.current.route = L.polyline(polylinePoints, {
-        color: '#ff7a1a',
+        color: '#1769e8',
         weight: 3.5,
         opacity: 0.85,
         dashArray: '6, 8',
@@ -207,7 +207,7 @@ export default function LeafletMap({
         );
         if (markersRef.current.route) map.removeLayer(markersRef.current.route);
         markersRef.current.route = L.polyline(roadPath, {
-          color: '#ff7a1a',
+          color: '#1769e8',
           weight: 4,
           opacity: 0.9,
           lineCap: 'round',
