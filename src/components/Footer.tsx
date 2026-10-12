@@ -60,11 +60,6 @@ export default function Footer({ onNavigate, settings }: FooterProps) {
                   Get a Quote & Rates
                 </button>
               </li>
-              <li>
-                <button onClick={() => onNavigate('auth')} className="hover:text-[#FFCC00] transition-colors cursor-pointer text-slate-500 hover:text-amber-400 font-mono text-[11px] flex items-center gap-1 mt-1">
-                  <Lock size={10} className="text-amber-500" /> Admin Portal
-                </button>
-              </li>
             </ul>
           </div>
 
