@@ -192,7 +192,7 @@ app.put("/api/shipments/:id", ...adminOnly, asyncRoute(async (req: AuthedRequest
   const stringFields: Record<string, number> = {
     senderName: 120, senderEmail: 320, senderPhone: 40, receiverName: 120,
     receiverEmail: 320, receiverPhone: 40, pickupAddress: 500, deliveryAddress: 500,
-    tag: 100, description: 2000, deliveryType: 50, proofOfDelivery: 2000
+    tag: 100, description: 2000, deliveryType: 50, proofOfDelivery: 2000, location: 300
   };
   for (const [key, max] of Object.entries(stringFields)) {
     if (Object.prototype.hasOwnProperty.call(b, key)) {
