@@ -452,7 +452,7 @@ app.patch("/api/settings", ...adminOnly, asyncRoute(async (req: AuthedRequest, r
   const next: Record<string, any> = { ...previous };
   const stringLimits: Record<string, number> = {
     companyName: 120,
-    brandLogoUrl: 2048,
+    brandLogoUrl: 1400000,
     contactEmail: 320,
     contactPhone: 50,
     faviconEmoji: 32,
