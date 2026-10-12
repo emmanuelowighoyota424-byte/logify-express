@@ -21,6 +21,7 @@ export default function Navbar({ currentView, onNavigate, user, onLogout, theme,
     { label: 'Tracking', view: 'track' },
     { label: 'Rates', view: 'pricing' },
     { label: 'Company', view: 'about' },
+    { label: 'Journal', view: 'blog' },
     { label: 'Support', view: 'contact' },
   ];
 
