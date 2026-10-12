@@ -560,9 +560,9 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
       <div className={presetStyle.wrapper}>
         {/* FedEx Style Corporate Header Branding */}
         <div className="text-center space-y-4 max-w-2xl mx-auto">
-          <div className="flex items-center justify-center gap-1 font-sans">
-            <span className="text-4xl font-black tracking-[-0.06em] text-slate-950">Logify</span>
-            <span className="rounded-md bg-orange-500 px-2 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-white">Express</span>
+          <div className="flex items-center justify-center gap-3 font-sans">
+            {settings?.brandLogoUrl && <img src={settings.brandLogoUrl} alt="" className="h-12 max-w-36 rounded-lg object-contain bg-white p-1" onError={(e) => { e.currentTarget.style.display = 'none'; }} />}
+            <span className="text-3xl sm:text-4xl font-black tracking-tight text-slate-950">{settings?.companyName || 'Logify'}</span>
           </div>
           <h1 className="text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">Track your shipment</h1>
           <p className="mx-auto max-w-lg text-sm leading-6 text-slate-400">Every delivery, one clear view. Enter your tracking number for the latest shipment status and journey details.</p>
