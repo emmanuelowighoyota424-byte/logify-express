@@ -1031,7 +1031,7 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
                     <div className="flex items-center justify-between pb-3 border-b border-[#2b303e]">
                       <span className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider">Chronological Tracking Scan Log</span>
                       <span className="text-[10px] font-mono font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
-                        {shipment.timeline.length} Recorded Checkpoints
+                        {shipment.timeline?.length ?? 0} Recorded Checkpoints
                       </span>
                     </div>
                     
