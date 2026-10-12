@@ -484,6 +484,33 @@ app.patch("/api/settings", ...adminOnly, asyncRoute(async (req: AuthedRequest, r
     }
   }
 
+  if (Object.prototype.hasOwnProperty.call(body, "publicPageImages")) {
+    const incoming = body.publicPageImages;
+    if (!Array.isArray(incoming) || incoming.length > 4) {
+      return res.status(400).json({ error: "Public page images must be a list of up to four entries" });
+    }
+    const allowedPages = ["home", "about", "services", "tracking"];
+    const seenPages = new Set<string>();
+    const images = [];
+    for (const item of incoming) {
+      if (!item || typeof item !== "object" || Array.isArray(item) || !allowedPages.includes(item.page) || seenPages.has(item.page)) {
+        return res.status(400).json({ error: "Invalid or duplicate public page image" });
+      }
+      const id = normalizeString(item.id, 40);
+      const title = normalizeString(item.title, 100);
+      const alt = normalizeString(item.alt, 160);
+      const imageUrl = typeof item.imageUrl === "string" ? item.imageUrl.trim() : "";
+      const isHttpsUrl = /^https:\/\//i.test(imageUrl);
+      const isUploadedImage = /^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/i.test(imageUrl) && imageUrl.length <= 1400000;
+      if (!imageUrl || imageUrl.length > 1400000 || (!isHttpsUrl && !isUploadedImage)) {
+        return res.status(400).json({ error: "Each public page photo must be a public HTTPS URL or an uploaded PNG, JPEG, or WEBP image under 1 MB" });
+      }
+      seenPages.add(item.page);
+      images.push({ id: id || item.page, title: title || item.page, page: item.page, imageUrl, alt });
+    }
+    next.publicPageImages = images;
+  }
+
   if (Object.prototype.hasOwnProperty.call(body, "testimonials")) {
     const incoming = body.testimonials;
     if (!Array.isArray(incoming) || incoming.length > 12) {
