@@ -33,7 +33,7 @@ export default function TrackingBox({ onTrack, className = '' }: TrackingBoxProp
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: 'easeOut' }}
-      className={`bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80 rounded-2xl shadow-xl p-5 sm:p-6 w-full max-w-xl mx-auto ${className}`}
+      className={`tracking-panel-premium bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80 rounded-2xl shadow-xl p-5 sm:p-6 w-full max-w-xl mx-auto ${className}`}
       id="tracking-box-container"
     >
       <div className="space-y-4">
