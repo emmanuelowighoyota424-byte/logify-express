@@ -235,7 +235,7 @@ export default function AdminSettingsView({
   };
 
   return (
-    <div className="space-y-6 max-w-4xl mx-auto">
+    <div className="admin-settings-premium space-y-6 max-w-4xl mx-auto">
       {/* Title */}
       <div className="flex justify-between items-center bg-neutral-950/60 backdrop-blur-md border border-neutral-800 rounded-2xl p-5 shadow-xl shadow-black/30">
         <div className="space-y-1">
