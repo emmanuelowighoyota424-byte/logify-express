@@ -611,7 +611,22 @@ app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
   res.status(500).json({ error: "Internal server error" });
 });
 
+export default app;
+
 async function start() {
+  if (process.env.VERCEL) {
+    // Vercel invokes the exported Express app as a serverless function.
+    // The production Vite build is included with the function (see vercel.json).
+    const dist = path.join(process.cwd(), "dist");
+    if (fs.existsSync(dist)) app.use(express.static(dist, { maxAge: "1y", immutable: true }));
+    app.get("*", (_req, res) => {
+      const indexFile = path.join(dist, "index.html");
+      if (!fs.existsSync(indexFile)) return res.status(503).send("Frontend build is missing.");
+      res.sendFile(indexFile);
+    });
+    return;
+  }
+
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({ server: { middlewareMode: true }, appType: "spa" });
     app.use(vite.middlewares);
@@ -620,9 +635,21 @@ async function start() {
     if (fs.existsSync(dist)) app.use(express.static(dist));
     app.get("*", (_req, res) => res.sendFile(path.join(dist, "index.html")));
   }
+
   const server = app.listen(PORT, () => console.log(`Logify server listening on :${PORT}`));
   const shutdown = async () => { server.close(); await prisma.$disconnect(); process.exit(0); };
   process.on("SIGINT", shutdown); process.on("SIGTERM", shutdown);
 }
 
-start().catch(async error => { console.error(error); await prisma.$disconnect(); process.exit(1); });
+if (!process.env.VERCEL) {
+  start().catch(async error => { console.error(error); await prisma.$disconnect(); process.exit(1); });
+} else {
+  // Configure static serving before Vercel begins dispatching requests.
+  const dist = path.join(process.cwd(), "dist");
+  if (fs.existsSync(dist)) app.use(express.static(dist, { maxAge: "1y", immutable: true }));
+  app.get("*", (_req, res) => {
+    const indexFile = path.join(dist, "index.html");
+    if (!fs.existsSync(indexFile)) return res.status(503).send("Frontend build is missing.");
+    res.sendFile(indexFile);
+  });
+}
