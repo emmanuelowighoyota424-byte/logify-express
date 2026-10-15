@@ -161,8 +161,8 @@ export default function AdminSettingsView({
       return;
     }
 
-    if (newPassword.length < 6) {
-      setPasswordError('Password must be at least 6 characters long.');
+    if (newPassword.length < 12) {
+      setPasswordError('Password must be at least 12 characters long.');
       return;
     }
 
