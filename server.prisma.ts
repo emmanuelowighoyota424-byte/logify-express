@@ -212,6 +212,29 @@ app.get("/api/auth/verify-session", authenticate, asyncRoute(async (req: AuthedR
   res.json({ valid: true, user: { ...user, role: user.role.toLowerCase(), status: user.status.toLowerCase() } });
 }));
 
+app.put("/api/admin/change-password", ...adminOnly, asyncRoute(async (req: AuthedRequest, res) => {
+  const currentPassword = typeof req.body?.currentPassword === "string" ? req.body.currentPassword : "";
+  const newPassword = typeof req.body?.newPassword === "string" ? req.body.newPassword : "";
+  if (!currentPassword || !newPassword) return res.status(400).json({ error: "Current and new passwords are required" });
+  if (currentPassword.length > 1024 || newPassword.length > 1024) return res.status(400).json({ error: "Password is too long" });
+  if (newPassword.length < 12) return res.status(400).json({ error: "New password must contain at least 12 characters" });
+  if (currentPassword === newPassword) return res.status(400).json({ error: "New password must be different from the current password" });
+
+  const user = await prisma.user.findUnique({ where: { id: req.auth!.id } });
+  if (!user || user.status !== UserStatus.ACTIVE) return res.status(401).json({ error: "Administrator account is unavailable" });
+  if (!safeEqual(hashPassword(currentPassword, user.salt), user.passwordHash)) {
+    return res.status(400).json({ error: "Current password is incorrect" });
+  }
+
+  const salt = crypto.randomBytes(16).toString("hex");
+  await prisma.user.update({
+    where: { id: user.id },
+    data: { salt, passwordHash: hashPassword(newPassword, salt) },
+  });
+  await audit(user.id, "CHANGE_PASSWORD", "User", user.id);
+  res.json({ success: true, message: "Administrator password updated successfully" });
+}));
+
 app.post("/api/auth/register", registrationRateLimit, asyncRoute(async (req, res) => {
   const email = normalizeString(req.body?.email, 320).toLowerCase();
   const name = normalizeString(req.body?.name, 120);
