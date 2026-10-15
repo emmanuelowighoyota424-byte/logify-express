@@ -3,7 +3,6 @@ import path from "node:path";
 import fs from "node:fs";
 import crypto from "node:crypto";
 import dotenv from "dotenv";
-import { createServer as createViteServer } from "vite";
 import { PrismaClient, UserRole, UserStatus, ShipmentStatus, ShipmentType, DriverStatus, PaymentStatus, PaymentMethod, ChatStatus } from "@prisma/client";
 
 dotenv.config();
@@ -628,6 +627,10 @@ async function start() {
   }
 
   if (process.env.NODE_ENV !== "production") {
+    // Load Vite only for local development. Importing it at module startup can
+    // crash the Vercel serverless function when its optional native Rollup
+    // package is not included in the production function bundle.
+    const { createServer: createViteServer } = await import("vite");
     const vite = await createViteServer({ server: { middlewareMode: true }, appType: "spa" });
     app.use(vite.middlewares);
   } else {
