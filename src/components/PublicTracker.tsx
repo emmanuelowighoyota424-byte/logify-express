@@ -99,6 +99,11 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
   const [trackId, setTrackId] = useState(initialTrackId || '');
   const partner = detectLogisticsPartner(trackId);
   const [shipment, setShipment] = useState<Shipment | null>(null);
+  // During a hold, preserve the furthest confirmed milestone from the shipment history.
+  // The live status remains "On Hold"; this derived status is only for progress visuals.
+  const progressStatus = shipment?.status === 'On Hold'
+    ? ([...(shipment.timeline || [])].reverse().find((event) => event.status !== 'On Hold' && event.status !== 'Cancelled')?.status || 'Pending')
+    : shipment?.status || 'Pending';
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [progressWidth, setProgressWidth] = useState('0%');
@@ -865,10 +870,10 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
                     className="absolute top-5 left-[10%] h-[3px] bg-gradient-to-r from-amber-500 to-amber-300 transition-all duration-[1200ms] ease-out hidden md:block"
                     style={{
                       width: 
-                        shipment.status === 'Delivered' ? '80%' :
-                        shipment.status === 'Out for Delivery' ? '60%' :
-                        shipment.status === 'In Transit' ? '40%' :
-                        shipment.status === 'Picked Up' ? '20%' : '0%'
+                        progressStatus === 'Delivered' ? '80%' :
+                        progressStatus === 'Out for Delivery' ? '60%' :
+                        progressStatus === 'In Transit' ? '40%' :
+                        progressStatus === 'Picked Up' ? '20%' : '0%'
                     }}
                   />
 
@@ -886,14 +891,14 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
                   {/* Step 2: Picked Up */}
                   <div className="flex flex-row md:flex-col items-center gap-3 md:gap-2 relative z-10 w-full md:w-1/5 text-left md:text-center">
                     <div className={`w-10 h-10 rounded-full flex items-center justify-center border-2 font-mono font-bold text-xs shadow-sm transition-colors duration-500 ${
-                      ['Picked Up', 'In Transit', 'Out for Delivery', 'Delivered'].includes(shipment.status)
+                      ['Picked Up', 'In Transit', 'Out for Delivery', 'Delivered'].includes(progressStatus)
                         ? 'border-amber-500 bg-amber-500 text-slate-950'
                         : 'border-[#2e3444] bg-[#20232e] text-slate-300'
                     }`}>
-                      {['Picked Up', 'In Transit', 'Out for Delivery', 'Delivered'].includes(shipment.status) ? '✓' : '02'}
+                      {['Picked Up', 'In Transit', 'Out for Delivery', 'Delivered'].includes(progressStatus) ? '✓' : '02'}
                     </div>
                     <div>
-                      <h4 className={`text-[11px] font-bold ${['Picked Up', 'In Transit', 'Out for Delivery', 'Delivered'].includes(shipment.status) ? 'text-slate-100' : 'text-slate-300'}`}>Picked Up</h4>
+                      <h4 className={`text-[11px] font-bold ${['Picked Up', 'In Transit', 'Out for Delivery', 'Delivered'].includes(progressStatus) ? 'text-slate-100' : 'text-slate-300'}`}>Picked Up</h4>
                       <p className="text-[9px] font-mono text-slate-300">Manifest Verified</p>
                     </div>
                   </div>
@@ -901,14 +906,14 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
                   {/* Step 3: In Transit */}
                   <div className="flex flex-row md:flex-col items-center gap-3 md:gap-2 relative z-10 w-full md:w-1/5 text-left md:text-center">
                     <div className={`w-10 h-10 rounded-full flex items-center justify-center border-2 font-mono font-bold text-xs shadow-sm transition-colors duration-500 ${
-                      ['In Transit', 'Out for Delivery', 'Delivered'].includes(shipment.status)
+                      ['In Transit', 'Out for Delivery', 'Delivered'].includes(progressStatus)
                         ? 'border-amber-500 bg-amber-500 text-slate-950'
                         : 'border-[#2e3444] bg-[#20232e] text-slate-300'
                     }`}>
-                      {['In Transit', 'Out for Delivery', 'Delivered'].includes(shipment.status) ? '✓' : '03'}
+                      {['In Transit', 'Out for Delivery', 'Delivered'].includes(progressStatus) ? '✓' : '03'}
                     </div>
                     <div>
-                      <h4 className={`text-[11px] font-bold ${['In Transit', 'Out for Delivery', 'Delivered'].includes(shipment.status) ? 'text-slate-100' : 'text-slate-300'}`}>In Transit</h4>
+                      <h4 className={`text-[11px] font-bold ${['In Transit', 'Out for Delivery', 'Delivered'].includes(progressStatus) ? 'text-slate-100' : 'text-slate-300'}`}>In Transit</h4>
                       <p className="text-[9px] font-mono text-slate-300">En Route Corridor</p>
                     </div>
                   </div>
@@ -916,14 +921,14 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
                   {/* Step 4: Out for Delivery */}
                   <div className="flex flex-row md:flex-col items-center gap-3 md:gap-2 relative z-10 w-full md:w-1/5 text-left md:text-center">
                     <div className={`w-10 h-10 rounded-full flex items-center justify-center border-2 font-mono font-bold text-xs shadow-sm transition-colors duration-500 ${
-                      ['Out for Delivery', 'Delivered'].includes(shipment.status)
+                      ['Out for Delivery', 'Delivered'].includes(progressStatus)
                         ? 'border-amber-500 bg-amber-500 text-slate-950 animate-pulse'
                         : 'border-[#2e3444] bg-[#20232e] text-slate-300'
                     }`}>
-                      {['Out for Delivery', 'Delivered'].includes(shipment.status) ? '✓' : '04'}
+                      {['Out for Delivery', 'Delivered'].includes(progressStatus) ? '✓' : '04'}
                     </div>
                     <div>
-                      <h4 className={`text-[11px] font-bold ${['Out for Delivery', 'Delivered'].includes(shipment.status) ? 'text-slate-100' : 'text-slate-300'}`}>Out for Delivery</h4>
+                      <h4 className={`text-[11px] font-bold ${['Out for Delivery', 'Delivered'].includes(progressStatus) ? 'text-slate-100' : 'text-slate-300'}`}>Out for Delivery</h4>
                       <p className="text-[9px] font-mono text-slate-300">Local Dispatch Courier</p>
                     </div>
                   </div>
@@ -931,14 +936,14 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
                   {/* Step 5: Delivered */}
                   <div className="flex flex-row md:flex-col items-center gap-3 md:gap-2 relative z-10 w-full md:w-1/5 text-left md:text-center">
                     <div className={`w-10 h-10 rounded-full flex items-center justify-center border-2 font-mono font-bold text-xs shadow-sm transition-colors duration-500 ${
-                      shipment.status === 'Delivered'
+                      progressStatus === 'Delivered'
                         ? 'border-emerald-500 bg-emerald-500 text-white'
                         : 'border-[#2e3444] bg-[#20232e] text-slate-300'
                     }`}>
-                      {shipment.status === 'Delivered' ? '✓' : '05'}
+                      {progressStatus === 'Delivered' ? '✓' : '05'}
                     </div>
                     <div>
-                      <h4 className={`text-[11px] font-bold ${shipment.status === 'Delivered' ? 'text-emerald-400 font-extrabold' : 'text-slate-300'}`}>Delivered</h4>
+                      <h4 className={`text-[11px] font-bold ${progressStatus === 'Delivered' ? 'text-emerald-400 font-extrabold' : 'text-slate-300'}`}>Delivered</h4>
                       <p className="text-[9px] font-mono text-slate-300">Signature Captured</p>
                     </div>
                   </div>
@@ -955,17 +960,17 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
                 <div className="flex justify-between items-center text-xs">
                   <span className="font-mono text-slate-300 uppercase font-bold tracking-wider">Delivery Transit Progress</span>
                   <span className={`font-mono font-bold ${presetStyle.accentText}`}>
-                    {shipment.status === 'Delivered' ? '100% (Delivered)' :
-                     shipment.status === 'Out for Delivery' ? '85% (Out for Delivery)' :
-                     shipment.status === 'In Transit' ? '60% (In Transit)' :
-                     shipment.status === 'Picked Up' ? '30% (Picked Up)' :
-                     shipment.status === 'Pending' ? '10% (Pending)' : '0%'}
+                    {progressStatus === 'Delivered' ? '100% (Delivered)' :
+                     progressStatus === 'Out for Delivery' ? '85% (Out for Delivery)' :
+                     progressStatus === 'In Transit' ? '60% (In Transit)' :
+                     progressStatus === 'Picked Up' ? '30% (Picked Up)' :
+                     progressStatus === 'Pending' ? '10% (Pending)' : '0%'}
                   </span>
                 </div>
                 <div className="relative h-2 w-full bg-[#20232e] rounded-full overflow-hidden my-1">
                   <div 
                     className={`h-full bg-gradient-to-r from-amber-500 to-amber-300 rounded-full transition-all duration-[1500ms] ease-out ${
-                      shipment.status === 'In Transit' ? 'animate-pulse' : ''
+                      progressStatus === 'In Transit' ? 'animate-pulse' : ''
                     }`}
                     style={{
                       width: progressWidth
@@ -973,11 +978,11 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
                   />
                 </div>
                 <div className="flex justify-between text-[9px] font-mono text-slate-300 pt-1">
-                  <span className={shipment.status === 'Pending' ? `${presetStyle.accentText} font-bold` : ''}>Ordered</span>
-                  <span className={shipment.status === 'Picked Up' ? `${presetStyle.accentText} font-bold` : ''}>Picked Up</span>
-                  <span className={shipment.status === 'In Transit' ? `${presetStyle.accentText} font-bold animate-pulse` : ''}>In Transit</span>
-                  <span className={shipment.status === 'Out for Delivery' ? `${presetStyle.accentText} font-bold` : ''}>Out for Delivery</span>
-                  <span className={shipment.status === 'Delivered' ? 'text-emerald-400 font-bold' : ''}>Delivered</span>
+                  <span className={progressStatus === 'Pending' ? `${presetStyle.accentText} font-bold` : ''}>Ordered</span>
+                  <span className={progressStatus === 'Picked Up' ? `${presetStyle.accentText} font-bold` : ''}>Picked Up</span>
+                  <span className={progressStatus === 'In Transit' ? `${presetStyle.accentText} font-bold animate-pulse` : ''}>In Transit</span>
+                  <span className={progressStatus === 'Out for Delivery' ? `${presetStyle.accentText} font-bold` : ''}>Out for Delivery</span>
+                  <span className={progressStatus === 'Delivered' ? 'text-emerald-400 font-bold' : ''}>Delivered</span>
                 </div>
               </div>
 
