@@ -194,7 +194,16 @@ export default function AdminTrackingView({
       receiverEmail,
       receiverPhone,
       proofOfDelivery,
-      timeline: timelineEvents // Save the timeline checklists
+      timeline: status !== activeShipment.status
+        ? [...timelineEvents, {
+            status,
+            location: activeShipment.location || pickupAddress || 'Shipment facility',
+            timestamp: new Date().toISOString(),
+            description: status === 'On Hold'
+              ? 'Shipment placed on hold by the logistics team. Tracking will resume when the shipment is released.'
+              : 'Shipment status updated to ' + status + ' by the logistics team.',
+          }]
+        : timelineEvents // Save the timeline checklists
     };
 
     try {
@@ -629,6 +638,7 @@ export default function AdminTrackingView({
                         <option value="Picked Up">Picked Up (Consignment Collected)</option>
                         <option value="In Transit">In Transit (En Route)</option>
                         <option value="Out for Delivery">Out for Delivery (Courier Dispatched)</option>
+                        <option value="On Hold">On Hold (Temporarily Paused)</option>
                         <option value="Delivered">Delivered (Completed)</option>
                         <option value="Cancelled">Cancelled (Void)</option>
                       </select>
