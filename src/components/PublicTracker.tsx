@@ -482,13 +482,15 @@ export default function PublicTracker({ initialTrackId, onClearTrackId, theme, s
   useEffect(() => {
     if (shipment && !loading) {
       setProgressWidth('0%');
-      const targetWidth = 
-        shipment.status === 'On Hold' ? '60%' :
-        shipment.status === 'Delivered' ? '100%' :
-        shipment.status === 'Out for Delivery' ? '85%' :
-        shipment.status === 'In Transit' ? '60%' :
-        shipment.status === 'Picked Up' ? '30%' :
-        shipment.status === 'Pending' ? '10%' : '0%';
+      const heldProgressStatus = shipment.status === 'On Hold'
+        ? ([...(shipment.timeline || [])].reverse().find((event) => event.status !== 'On Hold' && event.status !== 'Cancelled')?.status || 'Pending')
+        : shipment.status;
+      const targetWidth =
+        heldProgressStatus === 'Delivered' ? '100%' :
+        heldProgressStatus === 'Out for Delivery' ? '85%' :
+        heldProgressStatus === 'In Transit' ? '60%' :
+        heldProgressStatus === 'Picked Up' ? '30%' :
+        heldProgressStatus === 'Pending' ? '10%' : '0%';
       
       const timer = setTimeout(() => {
         setProgressWidth(targetWidth);
